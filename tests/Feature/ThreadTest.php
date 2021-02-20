@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Reply;
 use App\Models\Thread;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -10,24 +11,38 @@ class ThreadTest extends TestCase
 {
     use RefreshDatabase;
 
+    private $thread;
+
+    protected function setUp(): void
+    {
+        parent::setUp(); // because we are extending Illuminate\Foundation\Testing\TestCase
+
+        $this->thread = Thread::factory()->create();
+    }
+
     /** @test */
     public function users_can_see_threads()
     {
-        $thread = Thread::factory()->create();
-
         $this->get('/threads')
             ->assertViewIs('threads.index')
-            ->assertSee($thread->title);
+            ->assertSee($this->thread->title);
     }
 
     /** @test */
     public function users_can_see_single_thread()
     {
-        $thread = Thread::factory()->create();
-
-        $this->get('/threads/' . $thread->id)
+        $this->get('/threads/' . $this->thread->id)
             ->assertViewIs('threads.show')
-            ->assertSee($thread->title);
+            ->assertSee($this->thread->title);
+    }
+
+    /** @test */
+    public function users_can_see_associated_replies()
+    {
+        $reply = Reply::factory()->create(['thread_id' => $this->thread->id]);
+
+        $this->get('/threads/' . $this->thread->id)
+            ->assertSee($reply->body);
     }
 
 }
