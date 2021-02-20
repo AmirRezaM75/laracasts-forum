@@ -31,7 +31,7 @@ class ThreadTest extends TestCase
     /** @test */
     public function users_can_see_single_thread()
     {
-        $this->get('/threads/' . $this->thread->id)
+        $this->get($this->thread->path())
             ->assertViewIs('threads.show')
             ->assertSee($this->thread->title);
     }
@@ -41,7 +41,7 @@ class ThreadTest extends TestCase
     {
         $reply = Reply::factory()->create(['thread_id' => $this->thread->id]);
 
-        $this->get('/threads/' . $this->thread->id)
+        $this->get($this->thread->path())
             ->assertSee($reply->body);
     }
 
