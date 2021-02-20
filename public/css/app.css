@@ -137,6 +137,14 @@ input:-ms-input-placeholder,textarea:-ms-input-placeholder {
     color: #a1a1aa
 }
 
+input::-moz-placeholder, textarea::-moz-placeholder {
+    color: #a1a1aa
+}
+
+input:-ms-input-placeholder, textarea:-ms-input-placeholder {
+    color: #a1a1aa
+}
+
 input::placeholder,textarea::placeholder {
     color: #a1a1aa
 }
@@ -10697,59 +10705,49 @@ body.skill .skill-thumbnail-card.is-techniques.is-current {
     border-radius: 2px;
 }
 .swal-icon--error__line--left {
-    -webkit-transform: rotate(45deg);
     transform: rotate(45deg);
     left: 17px;
 }
 .swal-icon--error__line--right {
-    -webkit-transform: rotate(-45deg);
     transform: rotate(-45deg);
     right: 16px;
 }
 @-webkit-keyframes animateErrorIcon {
     0% {
-        -webkit-transform: rotateX(100deg);
         transform: rotateX(100deg);
         opacity: 0;
     }
     to {
-        -webkit-transform: rotateX(0deg);
         transform: rotateX(0deg);
         opacity: 1;
     }
 }
 @keyframes animateErrorIcon {
     0% {
-        -webkit-transform: rotateX(100deg);
         transform: rotateX(100deg);
         opacity: 0;
     }
     to {
-        -webkit-transform: rotateX(0deg);
         transform: rotateX(0deg);
         opacity: 1;
     }
 }
 @-webkit-keyframes animateXMark {
     0% {
-        -webkit-transform: scale(0.4);
         transform: scale(0.4);
         margin-top: 26px;
         opacity: 0;
     }
     50% {
-        -webkit-transform: scale(0.4);
         transform: scale(0.4);
         margin-top: 26px;
         opacity: 0;
     }
     80% {
-        -webkit-transform: scale(1.15);
         transform: scale(1.15);
         margin-top: -6px;
     }
     to {
-        -webkit-transform: scale(1);
         transform: scale(1);
         margin-top: 0;
         opacity: 1;
@@ -10757,24 +10755,20 @@ body.skill .skill-thumbnail-card.is-techniques.is-current {
 }
 @keyframes animateXMark {
     0% {
-        -webkit-transform: scale(0.4);
         transform: scale(0.4);
         margin-top: 26px;
         opacity: 0;
     }
     50% {
-        -webkit-transform: scale(0.4);
         transform: scale(0.4);
         margin-top: 26px;
         opacity: 0;
     }
     80% {
-        -webkit-transform: scale(1.15);
         transform: scale(1.15);
         margin-top: -6px;
     }
     to {
-        -webkit-transform: scale(1);
         transform: scale(1);
         margin-top: 0;
         opacity: 1;
@@ -10832,25 +10826,20 @@ body.skill .skill-thumbnail-card.is-techniques.is-current {
     width: 60px;
     height: 120px;
     background: #fff;
-    -webkit-transform: rotate(45deg);
     transform: rotate(45deg);
 }
 .swal-icon--success:before {
     border-radius: 120px 0 0 120px;
     top: -7px;
     left: -33px;
-    -webkit-transform: rotate(-45deg);
     transform: rotate(-45deg);
-    -webkit-transform-origin: 60px 60px;
     transform-origin: 60px 60px;
 }
 .swal-icon--success:after {
     border-radius: 0 120px 120px 0;
     top: -11px;
     left: 30px;
-    -webkit-transform: rotate(-45deg);
     transform: rotate(-45deg);
-    -webkit-transform-origin: 0 60px;
     transform-origin: 0 60px;
     -webkit-animation: rotatePlaceholder 4.25s ease-in;
     animation: rotatePlaceholder 4.25s ease-in;
@@ -10875,7 +10864,6 @@ body.skill .skill-thumbnail-card.is-techniques.is-current {
     left: 28px;
     top: 8px;
     z-index: 1;
-    -webkit-transform: rotate(-45deg);
     transform: rotate(-45deg);
 }
 .swal-icon--success__line {
@@ -10890,7 +10878,6 @@ body.skill .skill-thumbnail-card.is-techniques.is-current {
     width: 25px;
     left: 14px;
     top: 46px;
-    -webkit-transform: rotate(45deg);
     transform: rotate(45deg);
     -webkit-animation: animateSuccessTip 0.75s;
     animation: animateSuccessTip 0.75s;
@@ -10899,44 +10886,35 @@ body.skill .skill-thumbnail-card.is-techniques.is-current {
     width: 47px;
     right: 8px;
     top: 38px;
-    -webkit-transform: rotate(-45deg);
     transform: rotate(-45deg);
     -webkit-animation: animateSuccessLong 0.75s;
     animation: animateSuccessLong 0.75s;
 }
 @-webkit-keyframes rotatePlaceholder {
     0% {
-        -webkit-transform: rotate(-45deg);
         transform: rotate(-45deg);
     }
     5% {
-        -webkit-transform: rotate(-45deg);
         transform: rotate(-45deg);
     }
     12% {
-        -webkit-transform: rotate(-405deg);
         transform: rotate(-405deg);
     }
     to {
-        -webkit-transform: rotate(-405deg);
         transform: rotate(-405deg);
     }
 }
 @keyframes rotatePlaceholder {
     0% {
-        -webkit-transform: rotate(-45deg);
         transform: rotate(-45deg);
     }
     5% {
-        -webkit-transform: rotate(-45deg);
         transform: rotate(-45deg);
     }
     12% {
-        -webkit-transform: rotate(-405deg);
         transform: rotate(-405deg);
     }
     to {
-        -webkit-transform: rotate(-405deg);
         transform: rotate(-405deg);
     }
 }
@@ -11241,7 +11219,6 @@ body.skill .skill-thumbnail-card.is-techniques.is-current {
     z-index: 2;
     left: 50%;
     top: 50%;
-    -webkit-transform: translateX(-50%) translateY(-50%);
     transform: translateX(-50%) translateY(-50%);
     text-align: center;
     pointer-events: none;
@@ -11343,14 +11320,10 @@ body.skill .skill-thumbnail-card.is-techniques.is-current {
     margin: 20px auto;
     display: inline-block;
     vertical-align: middle;
-    -webkit-transform: scale(1);
     transform: scale(1);
-    -webkit-transform-origin: 50% 50%;
     transform-origin: 50% 50%;
     z-index: 10001;
-    transition: opacity 0.2s, -webkit-transform 0.3s;
     transition: transform 0.3s, opacity 0.2s;
-    transition: transform 0.3s, opacity 0.2s, -webkit-transform 0.3s;
 }
 @media (max-width: 500px) {
     .swal-modal {
@@ -11359,45 +11332,36 @@ body.skill .skill-thumbnail-card.is-techniques.is-current {
 }
 @-webkit-keyframes showSweetAlert {
     0% {
-        -webkit-transform: scale(1);
         transform: scale(1);
     }
     1% {
-        -webkit-transform: scale(0.5);
         transform: scale(0.5);
     }
     45% {
-        -webkit-transform: scale(1.05);
         transform: scale(1.05);
     }
     80% {
-        -webkit-transform: scale(0.95);
         transform: scale(0.95);
     }
     to {
-        -webkit-transform: scale(1);
         transform: scale(1);
     }
 }
 @keyframes showSweetAlert {
     0% {
-        -webkit-transform: scale(1);
         transform: scale(1);
     }
     1% {
-        -webkit-transform: scale(0.5);
         transform: scale(0.5);
     }
     45% {
-        -webkit-transform: scale(1.05);
         transform: scale(1.05);
     }
     80% {
-        -webkit-transform: scale(0.95);
         transform: scale(0.95);
     }
     to {
-        -webkit-transform: scale(1);
         transform: scale(1);
     }
 }
+
