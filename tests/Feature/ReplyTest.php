@@ -27,7 +27,7 @@ class ReplyTest extends TestCase
     /** @test */
     public function auth_users_can_leave_a_reply()
     {
-        $this->be($user = User::factory()->create());
+        $this->login();
 
         $reply = Reply::factory()->raw();
 

@@ -29,6 +29,16 @@
         integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
         crossorigin="anonymous">
 </script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("[data-toggle='modal']").on('click', function (event) {
+            event.preventDefault();
+            $target = $("[data-modal='"+ $(this).data('target') +"']");
+
+            $target.toggleClass('hidden')
+        })
+    });
+</script>
 @stack('scripts')
 </body>
 </html>

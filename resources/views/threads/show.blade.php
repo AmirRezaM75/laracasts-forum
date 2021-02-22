@@ -227,16 +227,3 @@
         </div>
     </div>
 @endsection
-
-@push('scripts')
-    <script type="text/javascript">
-        $(document).ready(function() {
-           $("[data-toggle='modal']").on('click', function (event) {
-               event.preventDefault();
-               $target = $("[data-modal='"+ $(this).data('target') +"']");
-
-               $target.toggleClass('hidden')
-           })
-        });
-    </script>
-@endpush

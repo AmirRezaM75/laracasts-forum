@@ -4,7 +4,7 @@
     <div class="flex flex-col flex-col-reverse md:flex-row mx-auto" style="max-width: 1070px;">
         <div class="hidden lg:block lg:sticky lg:self-start flex-none mr-9" style="min-width: 200px; top: 40px;">
             <div class="lg:sticky lg:text-center">
-                <a id="js-new-discussion-button" dusk="new-discussion-button" class="btn btn-blue mb-8 w-full" style="box-shadow: rgb(215, 232, 253) 0px 4px 10px 1px;">
+                <a data-toggle="modal" data-target="thread-modal" class="btn btn-blue mb-8 w-full" style="box-shadow: rgb(215, 232, 253) 0px 4px 10px 1px;">
                     New Discussion
                 </a>
                 <ul class="mobile:hidden">
@@ -382,6 +382,7 @@
                             <img src="../dist/images/icons/reply-mobile-button.svg" alt="Create a New Discussion Button" />
                         </a>
                     </div>
+                    @includeWhen(auth()->check(), 'partials.modal', ['id' => 'thread-modal', 'action' => route('threads.store') ])
                 </div>
             </div>
         </div>

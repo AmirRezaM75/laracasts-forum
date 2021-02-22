@@ -50,7 +50,7 @@ class ThreadTest extends TestCase
     /** @test */
     public function users_can_create_thread()
     {
-        $this->actingAs(User::factory()->create());
+        $this->login();
 
         $thread = Thread::factory()->raw();
 
