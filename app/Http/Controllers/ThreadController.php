@@ -21,7 +21,13 @@ class ThreadController extends Controller
 
     public function store(Request $request)
     {
-        //
+        $thread = Thread::create([
+            'user_id' => auth()->id(),
+            'title' => $request->get('title'),
+            'body' => $request->get('body')
+        ]);
+
+        return redirect($thread->path());
     }
 
     public function show(Thread $thread)

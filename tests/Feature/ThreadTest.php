@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\Reply;
 use App\Models\Thread;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -45,4 +46,28 @@ class ThreadTest extends TestCase
             ->assertSee($reply->body);
     }
 
+
+    /** @test */
+    public function users_can_create_thread()
+    {
+        $this->actingAs(User::factory()->create());
+
+        $thread = Thread::factory()->raw();
+
+        $this->post(route('threads.store'), $thread);
+
+        $this->get('threads')
+            ->assertSee($thread['title'])
+            ->assertSee($thread['body']);
+    }
+
+    /** @test */
+    public function guest_can_not_create_thread()
+    {
+        $this->withoutExceptionHandling();
+
+        $this->expectException('Illuminate\Auth\AuthenticationException');
+
+        $this->post(route('threads.store'), []);
+    }
 }
