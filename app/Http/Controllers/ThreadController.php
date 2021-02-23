@@ -14,9 +14,13 @@ class ThreadController extends Controller
         $this->middleware('auth')->except(['show', 'index']);
     }
 
-    public function index()
+    public function index(Category $category)
     {
-        $threads = Thread::latest()->get();
+        if ($category->exists) {
+            $threads = $category->threads()->latest()->get();
+        } else {
+            $threads = Thread::latest()->get();
+        }
 
         return view('threads.index', compact('threads'));
     }

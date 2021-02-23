@@ -14,8 +14,9 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 
+Route::resource('threads', ThreadController::class)->except(['create', 'edit', 'show', 'index']);
+Route::get('threads/{category?}', [ThreadController::class, 'index'])->name('threads.index');
 Route::get('threads/{category}/{thread}', [ThreadController::class, 'show'])->name('threads.show');
-Route::resource('threads', ThreadController::class)->except(['create', 'edit', 'show']);
 
 Route::post('threads/{thread}/replies', [ReplyController::class, 'store'])
     ->middleware('auth')

@@ -2,9 +2,9 @@
 
 namespace Tests\Feature;
 
+use App\Models\Category;
 use App\Models\Reply;
 use App\Models\Thread;
-use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -64,9 +64,9 @@ class ThreadTest extends TestCase
 
         $thread = Thread::factory()->raw();
 
-        $this->post(route('threads.store'), $thread);
+        $response = $this->post(route('threads.store'), $thread);
 
-        $this->get('threads')
+        $this->get($response->headers->get('Location'))
             ->assertSee($thread['title'])
             ->assertSee($thread['body']);
     }
@@ -93,6 +93,18 @@ class ThreadTest extends TestCase
 
         $this->publishThread(['category_id' => 999])
             ->assertSessionHasErrors('category_id');
+    }
+
+    /** @test */
+    public function filter_threads_by_category()
+    {
+        $category = Category::factory()->create();
+        $threadInCategory = Thread::factory()->create(['category_id' => $category->id]);
+        $randomThread = Thread::factory()->create();
+
+        $this->get("threads/{$category->slug}")
+            ->assertSee($threadInCategory->title)
+            ->assertDontSee($randomThread->title);
     }
 
     protected function publishThread($overrides)
