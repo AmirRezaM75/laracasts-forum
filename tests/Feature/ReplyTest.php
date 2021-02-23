@@ -39,4 +39,16 @@ class ReplyTest extends TestCase
             ->assertSee($reply['body']);
     }
 
+    /** @test */
+    public function reply_requires_body()
+    {
+        $this->login();
+
+        $reply = Reply::factory()->raw(['body' => null]);
+
+        $thread = Thread::factory()->create();
+
+        $this->post(route('threads.replies.store', $thread), $reply)
+            ->assertSessionHasErrors('body');
+    }
 }

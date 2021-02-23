@@ -46,6 +46,16 @@ class ThreadTest extends TestCase
             ->assertSee($reply->body);
     }
 
+    /** @test */
+    public function guest_can_not_create_thread()
+    {
+        $this->withoutExceptionHandling();
+
+        $this->expectException('Illuminate\Auth\AuthenticationException');
+
+        $this->post(route('threads.store'), []);
+    }
+
 
     /** @test */
     public function users_can_create_thread()
@@ -62,12 +72,35 @@ class ThreadTest extends TestCase
     }
 
     /** @test */
-    public function guest_can_not_create_thread()
+    public function thread_requires_title()
     {
-        $this->withoutExceptionHandling();
+        $this->publishThread(['title' => null])
+            ->assertSessionHasErrors('title');
+    }
 
-        $this->expectException('Illuminate\Auth\AuthenticationException');
+    /** @test */
+    public function thread_requires_body()
+    {
+        $this->publishThread(['body' => null])
+            ->assertSessionHasErrors('body');
+    }
 
-        $this->post(route('threads.store'), []);
+    /** @test */
+    public function thread_requires_category()
+    {
+        $this->publishThread(['category_id' => null])
+            ->assertSessionHasErrors('category_id');
+
+        $this->publishThread(['category_id' => 999])
+            ->assertSessionHasErrors('category_id');
+    }
+
+    protected function publishThread($overrides)
+    {
+        $this->login();
+
+        $thread = Thread::factory()->raw($overrides);
+
+        return $this->post(route('threads.store'), $thread);
     }
 }
