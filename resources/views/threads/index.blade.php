@@ -302,7 +302,7 @@
                                         <div class="md:flex md:items-start lg:-mt-1">
                                             <h4 class="mb-4 lg:mb-0 md:pr-6 text-base lg:clamp one-line" style="word-break: break-word;">
                                                 <a
-                                                    href="{{ route('threads.show', $thread) }}"
+                                                    href="{{ $thread->path() }}"
                                                     class="conversation-list-link text-lg text-black font-semibold hover:text-black link"
                                                     title="Pressing TAB perm deletes text"
                                                 >

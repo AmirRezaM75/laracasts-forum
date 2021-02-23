@@ -33,7 +33,7 @@ class ReplyTest extends TestCase
 
         $thread = Thread::factory()->create();
 
-        $this->post($thread->path() .'/replies', $reply);
+        $this->post(route('threads.replies.store', $thread), $reply);
 
         $this->get($thread->path())
             ->assertSee($reply['body']);
