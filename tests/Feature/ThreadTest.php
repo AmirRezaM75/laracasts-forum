@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\Category;
 use App\Models\Reply;
 use App\Models\Thread;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -105,6 +106,17 @@ class ThreadTest extends TestCase
         $this->get("threads/{$category->slug}")
             ->assertSee($threadInCategory->title)
             ->assertDontSee($randomThread->title);
+    }
+
+    /** @test */
+    public function filter_threads_by_user()
+    {
+        $user = User::factory()->create();
+        $thread = Thread::factory()->create(['user_id' => $user->id]);
+
+        $this->get('threads?by=' . $user->name)
+            ->assertSee($thread->title)
+            ->assertDontSee($this->thread->title);
     }
 
     protected function publishThread($overrides)
