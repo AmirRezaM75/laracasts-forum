@@ -208,26 +208,9 @@
                                 <div class="select-wrap">
                                     <select class="text-grey-darker text-sm bg-grey-panel rounded-full px-5 cursor-pointer" style="width: 92px;">
                                         <option value="all">All</option>
-                                        <option value="code-review">Assistance</option>
-                                        <option value="eloquent">Eloquent</option>
-                                        <option value="envoyer">Envoyer</option>
-                                        <option value="site-improvements">Feedback</option>
-                                        <option value="forge">Forge</option>
-                                        <option value="general-discussion">General</option>
-                                        <option value="guides">Guides</option>
-                                        <option value="javascript">JavaScript</option>
-                                        <option value="laravel">Laravel</option>
-                                        <option value="livewire">Livewire</option>
-                                        <option value="lumen">Lumen</option>
-                                        <option value="elixir">Mix</option>
-                                        <option value="nova">Nova</option>
-                                        <option value="requests">Requests</option>
-                                        <option value="servers">Servers</option>
-                                        <option value="spark">Spark</option>
-                                        <option value="testing">Testing</option>
-                                        <option value="tips">Tips</option>
-                                        <option value="vapor">Vapor</option>
-                                        <option value="vue">Vue</option>
+                                        @foreach(\App\Models\Category::all() as $category)
+                                            <option value="{{ $category->slug }}">{{ $category->name }}</option>
+                                        @endforeach
                                     </select>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="10" height="16" viewBox="0 0 10 16" class="fill-current text-grey-darker"><path d="M5 11L0 6l1.5-1.5L5 8.25 8.5 4.5 10 6z"></path></svg>
                                 </div>

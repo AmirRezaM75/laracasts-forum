@@ -102,6 +102,17 @@
                                 </p>
                             </div>
                         @else
+                            <div class="mb-4">
+                                <div class="select-wrap">
+                                    <select name="category_id" class="text-grey-darker text-sm bg-grey-panel rounded-full px-5 cursor-pointer w-full">
+                                        <option value="">All</option>
+                                        @foreach(\App\Models\Category::all() as $category)
+                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="10" height="16" viewBox="0 0 10 16" class="fill-current text-grey-darker"><path d="M5 11L0 6l1.5-1.5L5 8.25 8.5 4.5 10 6z"></path></svg>
+                                </div>
+                            </div>
                             <div class="md:flex-1 mr-4 mb-2 md:mb-0">
                                 <label for="title">
                                     <input
