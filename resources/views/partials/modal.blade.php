@@ -106,7 +106,7 @@
                                 <div class="select-wrap">
                                     <select name="category_id" class="text-grey-darker text-sm bg-grey-panel rounded-full px-5 cursor-pointer w-full">
                                         <option value="">All</option>
-                                        @foreach(\App\Models\Category::all() as $category)
+                                        @foreach($categories as $category)
                                             <option value="{{ $category->id }}">{{ $category->name }}</option>
                                         @endforeach
                                     </select>
