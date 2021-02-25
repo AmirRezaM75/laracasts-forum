@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Filters\ThreadFilters;
 use App\Models\Category;
 use App\Models\Thread;
 use App\Models\User;
@@ -15,19 +16,15 @@ class ThreadController extends Controller
         $this->middleware('auth')->except(['show', 'index']);
     }
 
-    public function index(Request $request, Category $category)
+    public function index(Request $request, Category $category, ThreadFilters $filters)
     {
+        $threads = Thread::query()->latest();
+
         if ($category->exists) {
-            $threads = $category->threads()->latest();
-        } else {
-            $threads = Thread::latest();
+            $threads->where('category_id', $category->id);
         }
 
-        if ($username = $request->get('by')) {
-            $user = User::where('name', $username)->firstOrFail();
-
-            $threads->where('user_id', $user->id);
-        }
+        $threads = $threads->filter($filters);
 
         return view('threads.index', ['threads' => $threads->get()]);
     }

@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Filters\ThreadFilters;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -34,5 +36,14 @@ class Thread extends Model
     public function addReply($reply)
     {
         return $this->replies()->create($reply);
+    }
+
+    /**
+     * @param Builder $query
+     * @param ThreadFilters $filters
+    */
+    public function scopeFilter(Builder $query, ThreadFilters $filters)
+    {
+        return $filters->apply($query);
     }
 }
