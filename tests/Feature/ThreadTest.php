@@ -119,6 +119,24 @@ class ThreadTest extends TestCase
             ->assertDontSee($this->thread->title);
     }
 
+    /** @test */
+    public function filter_threads_by_popularity()
+    {
+        Thread::factory()
+            ->has(Reply::factory()->count(3))
+            ->create();
+
+        Thread::factory()
+            ->has(Reply::factory()->count(2))
+            ->create();
+
+        // Notice: We are creating a thread with no reply before each test.
+
+        $response = $this->getJson('threads?popular=1')->json();
+
+        $this->assertEquals([3, 2, 0], array_column($response, 'replies_count'));
+    }
+
     protected function publishThread($overrides)
     {
         $this->login();

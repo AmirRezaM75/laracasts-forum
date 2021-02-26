@@ -10,7 +10,7 @@
                 <ul class="mobile:hidden">
                     <li>
                         <a
-                            href="/discuss"
+                            href="{{ url('/threads') }}"
                             class="flex items-center mb-2 text-grey-dark text-sm mb-1 hover:text-blue hover:border-blue-light hover:bg-blue-lighter py-2 px-6 border border-solid border-black-transparent-3 rounded-xl text-blue font-semibold border-blue-light bg-blue-lighter"
                             style="height: 41px;"
                         >
@@ -33,7 +33,7 @@
                     @auth
                         <li>
                             <a
-                                href="/threads?by={{ auth()->user()->name }}"
+                                href="{{ url('/threads?by=' . auth()->user()->name) }}"
                                 class="flex items-center mb-2 text-grey-dark text-sm mb-1 hover:text-blue hover:border-blue-light hover:bg-blue-lighter py-2 px-6 border border-solid border-black-transparent-3 rounded-xl"
                                 style="height: 41px;"
                             >
@@ -110,7 +110,7 @@
                     </li>
                     <li>
                         <a
-                            href="/discuss?popular=1"
+                            href="{{ url("/threads?popular=1") }}"
                             class="flex items-center mb-2 text-grey-dark text-sm mb-1 hover:text-blue hover:border-blue-light hover:bg-blue-lighter py-2 px-6 border border-solid border-black-transparent-3 rounded-xl"
                             style="height: 41px;"
                         >
@@ -312,7 +312,7 @@
                                                             ></path>
                                                         </svg>
                                                     </div>
-                                                    <span class="text-xs text-grey-dark font-semibold text-left leading-none relative">0</span>
+                                                    <span class="text-xs text-grey-dark font-semibold text-left leading-none relative">{{ $thread->replies_count }}</span>
                                                 </div>
                                                 <div class="flex items-center justify-center">
                                                     <div class="mr-1">

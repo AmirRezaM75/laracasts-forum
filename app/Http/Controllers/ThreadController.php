@@ -17,15 +17,12 @@ class ThreadController extends Controller
 
     public function index(Request $request, Category $category, ThreadFilters $filters)
     {
-        $threads = Thread::query()->latest();
+        $threads = $this->getThreads($category, $filters);
 
-        if ($category->exists) {
-            $threads->where('category_id', $category->id);
-        }
+        if ($request->wantsJson())
+            return $threads;
 
-        $threads = $threads->filter($filters);
-
-        return view('threads.index', ['threads' => $threads->get()]);
+        return view('threads.index', compact('threads'));
     }
 
     public function store(Request $request)
@@ -62,5 +59,16 @@ class ThreadController extends Controller
     public function destroy(Thread $thread)
     {
         //
+    }
+
+    protected function getThreads(Category $category, ThreadFilters $filters)
+    {
+        $threads = Thread::query()->latest()->filter($filters);
+
+        if ($category->exists) {
+            $threads->where('category_id', $category->id);
+        }
+
+        return $threads->get();
     }
 }
