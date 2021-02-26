@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Filters\ThreadFilters;
 use App\Models\Category;
 use App\Models\Thread;
-use App\Models\User;
 use Illuminate\Http\Request;
 
 class ThreadController extends Controller
@@ -49,7 +48,10 @@ class ThreadController extends Controller
 
     public function show(Category $category, Thread $thread)
     {
-        return view('threads.show', compact('thread'));
+        return view('threads.show', [
+            'thread' => $thread,
+            'replies' => $thread->replies()->paginate(10)
+        ]);
     }
 
     public function update(Request $request, Thread $thread)

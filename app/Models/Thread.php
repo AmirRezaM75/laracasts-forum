@@ -13,6 +13,13 @@ class Thread extends Model
 
     protected $guarded = [];
 
+    public static function booted()
+    {
+        static::addGlobalScope('repliesCount', function($builder) {
+            $builder->withCount('replies');
+        });
+    }
+
     public function replies()
     {
         return $this->hasMany(Reply::class);
@@ -38,10 +45,6 @@ class Thread extends Model
         return $this->replies()->create($reply);
     }
 
-    /**
-     * @param Builder $query
-     * @param ThreadFilters $filters
-    */
     public function scopeFilter(Builder $query, ThreadFilters $filters)
     {
         return $filters->apply($query);

@@ -56,7 +56,7 @@
                                         opacity=".5"
                                     ></path>
                                 </svg>
-                                <span class="text-xs text-grey-dark font-semibold">4</span>
+                                <span class="text-xs text-grey-dark font-semibold">{{ $thread->replies_count }}</span>
                             </div>
                             <a href="https://laracasts.com/discuss/channels/laravel" class="btn btn-channel is-laravel py-2 px-6 text-2xs block text-center">
                                 Laravel
@@ -176,9 +176,12 @@
                     </div>
                     <div class="relative">
                         <div>
-                            @foreach($thread->replies as $index => $reply)
+                            @foreach($replies as $index => $reply)
                                 @include('threads.reply')
                             @endforeach
+                            <div class="my-4">
+                                {{ $replies->links() }}
+                            </div>
                             <div id="js-conversation-replies" class="relative">
                                 @includeWhen(auth()->check(), 'partials.modal', ['id' => 'reply-modal', 'action' => route('threads.replies.store', $thread) ])
                                 <div class="participate-button fixed z-40" style="">
