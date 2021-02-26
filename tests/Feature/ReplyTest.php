@@ -4,7 +4,6 @@ namespace Tests\Feature;
 
 use App\Models\Reply;
 use App\Models\Thread;
-use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -19,9 +18,7 @@ class ReplyTest extends TestCase
 
         $this->expectException('Illuminate\Auth\AuthenticationException');
 
-        $thread = Thread::factory()->create();
-
-        $this->post('threads/'. $thread->id .'/replies', []);
+        $this->post('threads/1/replies', []);
     }
 
     /** @test */
