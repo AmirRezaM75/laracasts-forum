@@ -81,20 +81,25 @@
                 <p>{{ $reply->body }}</p>
             </div>
             <div class="forum-comment-edit-links flex justify-end lg:justify-start relative mt-4 -mb-1 md:leading-none justify-start" style="height: 34px;">
-                <button
-                    class="transition-all border border-solid border-black-transparent-3 hover:border-black-transparent-10 bg-black-transparent-2 hover:bg-black-transparent-3 font-semibold inline-flex items-center px-3 md:text-xs mobile:text-sm mobile:p-2 mobile:flex mobile:items-center reply-likes mobile:text-sm mr-2 has-none border-black-transparent-3 bg-black-transparent-1"
-                    style="border-radius: 12px;"
-                >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 14 13" class="fill-current cursor-pointer text-grey">
-                        <path
-                            fill-rule="nonzero"
-                            d="M13.59 1.778c-.453-.864-3.295-3.755-6.59.431C3.54-1.977.862.914.41 1.778c-.825 1.596-.33 4.014.823 5.18L7.001 13l5.767-6.043c1.152-1.165 1.647-3.582.823-5.18z"
-                        >
-                            <title>Like this reply.</title>
-                        </path>
-                    </svg>
-                    <!---->
-                </button>
+                <form class="inline-flex" action="{{ url('/replies/' . $reply->id . '/favorites') }}" method="POST">
+                    @csrf
+                    <button
+                        class="transition-all border border-solid border-black-transparent-3 hover:border-black-transparent-10 bg-black-transparent-2 hover:bg-black-transparent-3 font-semibold inline-flex items-center px-3 md:text-xs mobile:text-sm mobile:p-2 mobile:flex mobile:items-center reply-likes mobile:text-sm mr-2 {{ $reply->isFavorited() ? 'has-likes border-blue-light bg-blue-lighter' : 'has-none border-black-transparent-3 bg-black-transparent-1' }}"
+                        style="border-radius: 12px;"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 14 13" class="fill-current cursor-pointer {{ $reply->isFavorited() ? 'text-blue' : 'text-grey' }}">
+                            <path
+                                fill-rule="nonzero"
+                                d="M13.59 1.778c-.453-.864-3.295-3.755-6.59.431C3.54-1.977.862.914.41 1.778c-.825 1.596-.33 4.014.823 5.18L7.001 13l5.767-6.043c1.152-1.165 1.647-3.582.823-5.18z"
+                            >
+                                <title>Like this reply.</title>
+                            </path>
+                        </svg>
+                        @if($reply->favorites_count > 0)
+                            <span class="text-xs font-semibold text-blue" style="margin-left: 6px; cursor: help;">{{ $reply->favorites_count }}</span>
+                        @endif
+                    </button>
+                </form>
                 <div class="flex show-on-hover">
                     <a
                         class="transition-all border border-solid border-black-transparent-3 hover:border-black-transparent-10 bg-black-transparent-2 hover:bg-black-transparent-3 font-semibold inline-flex items-center px-3 md:text-xs mobile:text-sm mobile:p-2 mobile:flex mobile:items-center mr-2 text-black"

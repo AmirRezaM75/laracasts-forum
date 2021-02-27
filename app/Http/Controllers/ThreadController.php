@@ -63,7 +63,7 @@ class ThreadController extends Controller
 
     protected function getThreads(Category $category, ThreadFilters $filters)
     {
-        $threads = Thread::query()->latest()->filter($filters);
+        $threads = Thread::with('category')->latest()->filter($filters);
 
         if ($category->exists) {
             $threads->where('category_id', $category->id);
