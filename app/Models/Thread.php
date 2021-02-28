@@ -13,6 +13,8 @@ class Thread extends Model
 
     protected $guarded = [];
 
+    protected $with = ['user', 'category'];
+
     public static function booted()
     {
         static::addGlobalScope('repliesCount', function($builder) {
@@ -22,9 +24,7 @@ class Thread extends Model
 
     public function replies()
     {
-        return $this->hasMany(Reply::class)
-            ->withCount('favorites')
-            ->with('user');
+        return $this->hasMany(Reply::class);
     }
 
     public function user()
