@@ -166,11 +166,11 @@
                                             </button>
                                         </div>
                                         <div class="dropdown-menu absolute z-10 py-2 rounded-lg shadow mt-2 left-0 is-light hidden" style="width: 200px;">
-                                            @auth
+                                            @can('update', $thread)
                                                 <li class="dropdown-menu-link">
                                                     <a href="#" class="js-delete-thread" data-thread="{{ $thread->id }}">Delete</a>
                                                 </li>
-                                            @endauth
+                                            @endcan
                                         </div>
                                     </div>
                                     <!---->

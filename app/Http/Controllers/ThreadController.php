@@ -58,6 +58,8 @@ class ThreadController extends Controller
 
     public function destroy(Request $request, Thread $thread)
     {
+        $this->authorize('update', $thread);
+
         $thread->delete();
 
         if ($request->wantsJson())

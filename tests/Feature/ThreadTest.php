@@ -83,16 +83,26 @@ class ThreadTest extends TestCase
     }
 
     /** @test */
+    public function users_cant_delete_other_people_thread()
+    {
+        $this->login();
+
+        $this->json('DELETE', route('threads.destroy', $this->thread->id))
+            ->assertStatus(403);
+    }
+
+    /** @test */
     public function users_can_delete_thread()
     {
         $this->login();
 
-        $reply = Reply::factory()->create(['thread_id' => $this->thread->id]);
+        $thread = Thread::factory()->create(['user_id' => auth()->id()]);
+        $reply = Reply::factory()->create(['thread_id' => $thread->id]);
 
-        $this->json('DELETE', route('threads.destroy', $this->thread->id))
+        $this->json('DELETE', route('threads.destroy', $thread->id))
             ->assertStatus(204);
 
-        $this->assertDatabaseMissing('threads', ['id' => $this->thread->id]);
+        $this->assertDatabaseMissing('threads', ['id' => $thread->id]);
         $this->assertDatabaseMissing('replies', ['id' => $reply->id]);
     }
 
