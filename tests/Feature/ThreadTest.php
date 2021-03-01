@@ -48,7 +48,7 @@ class ThreadTest extends TestCase
     }
 
     /** @test */
-    public function guest_can_not_create_thread()
+    public function guests_can_not_create_thread()
     {
         $this->withoutExceptionHandling();
 
@@ -70,6 +70,30 @@ class ThreadTest extends TestCase
         $this->get($response->headers->get('Location'))
             ->assertSee($thread['title'])
             ->assertSee($thread['body']);
+    }
+
+    /** @test */
+    public function guests_can_not_delete_thread()
+    {
+        $this->withoutExceptionHandling();
+
+        $this->expectException('Illuminate\Auth\AuthenticationException');
+
+        $this->delete(route('threads.destroy', 1), []);
+    }
+
+    /** @test */
+    public function users_can_delete_thread()
+    {
+        $this->login();
+
+        $reply = Reply::factory()->create(['thread_id' => $this->thread->id]);
+
+        $this->json('DELETE', route('threads.destroy', $this->thread->id))
+            ->assertStatus(204);
+
+        $this->assertDatabaseMissing('threads', ['id' => $this->thread->id]);
+        $this->assertDatabaseMissing('replies', ['id' => $reply->id]);
     }
 
     /** @test */

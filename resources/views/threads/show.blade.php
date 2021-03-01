@@ -156,7 +156,7 @@
                                     {{ $thread->body }}
                                 </div>
                                 <div class="forum-comment-edit-links flex justify-end lg:justify-start relative mt-4 -mb-1 md:leading-none justify-start" style="height: 34px;">
-                                    <div class="dropdown relative">
+                                    <div class="dropdown relative" data-toggle="dropdown">
                                         <div aria-haspopup="true" class="dropdown-toggle h-full">
                                             <button
                                                 class="transition-all border border-solid border-black-transparent-3 hover:border-black-transparent-10 bg-black-transparent-2 hover:bg-black-transparent-3 font-semibold inline-flex items-center px-3 md:text-xs mobile:text-sm mobile:p-2 mobile:flex mobile:items-center h-full text-black-transparent-50 font-bold hover:text-blue text-sm"
@@ -165,8 +165,12 @@
                                                 <span class="relative" style="top: -3px;">...</span>
                                             </button>
                                         </div>
-                                        <div class="dropdown-menu absolute z-10 py-2 rounded-lg shadow mt-2 left-0 is-light" style="width: 200px; display: none;">
-                                            <li class="dropdown-menu-link"><a>Report Spam</a></li>
+                                        <div class="dropdown-menu absolute z-10 py-2 rounded-lg shadow mt-2 left-0 is-light hidden" style="width: 200px;">
+                                            @auth
+                                                <li class="dropdown-menu-link">
+                                                    <a href="#" class="js-delete-thread" data-thread="{{ $thread->id }}">Delete</a>
+                                                </li>
+                                            @endauth
                                         </div>
                                     </div>
                                     <!---->
@@ -230,3 +234,21 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.js-delete-thread').on('click', function(event) {
+                event.preventDefault();
+                const threadId = $(this).data('thread')
+
+                $.ajax({
+                    method: 'DELETE',
+                    url: "{{ route('threads.destroy', ':threadId') }}".replace(':threadId', threadId),
+                }).done(function() {
+                    window.location.href = "{{ route('threads.index') }}"
+                })
+            })
+        })
+    </script>
+@endpush

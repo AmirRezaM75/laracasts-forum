@@ -56,9 +56,12 @@ class ThreadController extends Controller
         //
     }
 
-    public function destroy(Thread $thread)
+    public function destroy(Request $request, Thread $thread)
     {
-        //
+        $thread->delete();
+
+        if ($request->wantsJson())
+            return response()->noContent();
     }
 
     protected function getThreads(Category $category, ThreadFilters $filters)

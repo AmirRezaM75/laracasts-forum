@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <meta name="description" content="The most popular PHP and Laravel forum.">
     <!-- TODO: https://css-tricks.com/essential-meta-tags-social-media/ -->
-    <!-- TODO: CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Chatter Web Development Forum</title>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&amp;display=swap"
           rel="stylesheet">
@@ -31,11 +31,22 @@
 </script>
 <script type="text/javascript">
     $(document).ready(function() {
+        $.ajaxSetup({
+            headers: {
+                "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr('content')
+            }
+        });
+
         $("[data-toggle='modal']").on('click', function (event) {
             event.preventDefault();
             $target = $("[data-modal='"+ $(this).data('target') +"']");
 
             $target.toggleClass('hidden')
+        })
+
+        $("[data-toggle='dropdown']").on('click', function (event) {
+            event.preventDefault();
+            $(this).find('.dropdown-menu').toggleClass('hidden')
         })
     });
 </script>
