@@ -1,8 +1,12 @@
 <?php
 
-use App\Http\Controllers\FavoriteController;
-use App\Http\Controllers\ReplyController;
-use App\Http\Controllers\ThreadController;
+use App\Http\Controllers\ {
+    FavoriteController,
+    ProfileController,
+    ThreadController,
+    ReplyController,
+};
+
 use Illuminate\Support\Facades\Route;
 
 
@@ -27,5 +31,6 @@ Route::post('threads/{thread}/replies', [ReplyController::class, 'store'])
 Route::post('replies/{reply}/favorites', [FavoriteController::class, 'store'])
     ->middleware('auth');
 
+Route::get('users/{user}', [ProfileController::class, 'show']);
 
 require __DIR__.'/auth.php';

@@ -12,12 +12,15 @@
           rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     @stack('styles')
+    @php
+        $fluidSection = isset($fluidSection) ? $fluidSection : false;
+    @endphp
 <body class="antialiased">
 <div class="xl:flex bg-white">
     <div class="xl:flex-1">
         @include('partials.navbar')
         <div class="wrapper">
-            <div class="section">
+            <div class="{{ $fluidSection ? '' : 'section' }}">
                 <div class="forum-wrapper">
                     @yield('content')
                 </div>
