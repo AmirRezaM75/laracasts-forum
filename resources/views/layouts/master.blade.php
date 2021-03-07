@@ -16,7 +16,7 @@
         $fluidSection = isset($fluidSection) ? $fluidSection : false;
     @endphp
 <body class="antialiased">
-<div class="xl:flex bg-white">
+<div id="app" class="xl:flex bg-white">
     <div class="xl:flex-1">
         @include('partials.navbar')
         <div class="wrapper">
@@ -25,6 +25,7 @@
                     @yield('content')
                 </div>
             </div>
+            <flash message="{{ session('flash') }}"></flash>
         </div>
     </div>
 </div>
@@ -32,6 +33,7 @@
         integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
         crossorigin="anonymous">
 </script>
+<script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
 <script type="text/javascript">
     $(document).ready(function() {
         $.ajaxSetup({

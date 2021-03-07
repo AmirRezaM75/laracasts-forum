@@ -40,7 +40,7 @@ class ThreadController extends Controller
             'body' => $request->get('body')
         ]);
 
-        return redirect($thread->path());
+        return redirect($thread->path())->with('flash', 'Your thread has been published.');
     }
 
     public function show(Category $category, Thread $thread)
