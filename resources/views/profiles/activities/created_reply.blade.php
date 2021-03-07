@@ -9,7 +9,7 @@
     </div>
     <p class="text-lg text-black font-semibold rounded-lg mb-4 tracking-normal" style="word-break: break-word;">
         Replied to
-        <a href="{{ $activity->subject->thread->path() }}?reply=693865" class="font-normal">
+        <a href="{{ $activity->subject->thread->path() }}" class="font-normal">
             {{ $activity->subject->thread->title }}
         </a>
     </p>

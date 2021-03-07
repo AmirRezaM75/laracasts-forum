@@ -29,7 +29,7 @@
                     </div>
                     <div class="timeline-contents flex-1">
                         @foreach($activities as $activity)
-                            @include("profiles.activities.{$activity->type}")
+                            @includeWhen(view()->exists($view = "profiles.activities.{$activity->type}"), $view)
                         @endforeach
                     </div>
                 </div>

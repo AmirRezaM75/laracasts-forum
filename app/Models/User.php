@@ -45,4 +45,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Activity::class);
     }
+
+    public function getAvatarAttribute()
+    {
+        return asset('images/avatars/default-avatar-1.png');
+    }
 }
