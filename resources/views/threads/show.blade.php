@@ -187,34 +187,36 @@
                                 {{ $replies->links() }}
                             </div>
                             <div id="js-conversation-replies" class="relative">
-                                @includeWhen(auth()->check(), 'partials.modal', ['id' => 'reply-modal', 'action' => route('threads.replies.store', $thread) ])
                                 <div class="participate-button fixed z-40" style="">
-                                    <a class="bg-blue hover:bg-blue-dark rounded-full w-16 h-16 text-center flex items-center justify-center shadow-lg"><img src="/images/forum/reply-mobile-button.svg" alt="Post Reply Button" /></a>
+                                    <a class="bg-blue hover:bg-blue-dark rounded-full w-16 h-16 text-center flex items-center justify-center shadow-lg">
+                                        <img src="{{ asset('images/icons/reply-mobile-button.svg') }}" alt="Post Reply Button" />
+                                    </a>
                                 </div>
                                 <a href="https://laracasts.com/discuss" class="lg:hidden rounded-full w-16 h-16 z-50 text-center flex items-center justify-center shadow-lg fixed bottom-0 mb-6 ml-6 left-0">
-                                    <img src="/images/mobile-back-button.svg?v=2" alt="Back to Discussions Button" class="rounded-full bg-white" />
+                                    <img src="{{ asset('images/icons/mobile-back-button.svg') }}" alt="Back to Discussions Button" class="rounded-full bg-white" />
                                 </a>
                             </div>
                         </div>
                         <div class="participate-button fixed z-40" style="">
                             <a class="bg-blue hover:bg-blue-dark rounded-full w-16 h-16 text-center flex items-center justify-center shadow-lg">
-                                <img src="/images/forum/reply-mobile-button.svg" alt="Post Reply Button" />
+                                <img src="{{ asset('images/icons/reply-mobile-button.svg') }}" alt="Post Reply Button" />
                             </a>
                         </div>
                         <a
                             href="https://laracasts.com/discuss"
                             class="lg:hidden rounded-full w-16 h-16 z-50 text-center flex items-center justify-center shadow-lg fixed bottom-0 mb-6 ml-6 left-0"
                         >
-                            <img src="/images/mobile-back-button.svg?v=2" alt="Back to Discussions Button" class="rounded-full bg-white" />
+                            <img src="{{ asset('images/icons/mobile-back-button.svg') }}" alt="Back to Discussions Button" class="rounded-full bg-white" />
                         </a>
                     </div>
                     @auth
                         <div class="border border-grey-light hover:border-blue transition-all border-dashed text-grey-darkest text-sm rounded-xl">
                             <a class="block flex items-center inherits-color p-8"
+                               @click.prevent="openReplyModal"
                                data-toggle="modal"
                                data-target="reply-modal">
                                 <div class="mr-4">
-                                    <img src="//unavatar.now.sh/github/amirrezam75?fallback=https://s3.amazonaws.com/laracasts/images/forum/avatars/default-avatar-1.png"
+                                    <img src="{{ auth()->user()->avatar }}"
                                          alt="amirrezam75"
                                          width="37.5"
                                          class="is-circle" />

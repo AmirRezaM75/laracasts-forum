@@ -31,6 +31,8 @@ Route::post('threads/{thread}/replies', [ReplyController::class, 'store'])
 Route::post('replies/{reply}/favorites', [FavoriteController::class, 'store'])
     ->middleware('auth');
 
+Route::patch('replies/{reply}', [ReplyController::class, 'update']);
+
 Route::get('users/{user}', [ProfileController::class, 'show']);
 
 require __DIR__.'/auth.php';

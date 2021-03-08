@@ -1,5 +1,9 @@
-<div class="forum-comment relative rounded-xl bg-black-transparent-1 border border-solid border-black-transparent-3 mb-2 is-reply"
-     id="reply-{{ $reply->id }}">
+<reply
+    inline-template
+    :model="{{ $reply }}"
+    class="forum-comment relative rounded-xl bg-black-transparent-1 border border-solid border-black-transparent-3 mb-2 is-reply"
+    id="reply-{{ $reply->id }}"
+>
     <div class="flex px-6 py-4 lg:p-5">
         <div class="hidden md:block mr-5 text-left">
             <a href="{{ url('users/' . $reply->user->id) }}" class="block relative rounded-lg overflow-hidden mb-1">
@@ -36,7 +40,7 @@
                 </div>
             </header>
             <div class="content user-content text-black md:text-sm">
-                <p>{{ $reply->body }}</p>
+                <p v-text="reply.body"></p>
             </div>
             <div class="forum-comment-edit-links flex justify-end lg:justify-start relative mt-4 -mb-1 md:leading-none justify-start" style="height: 34px;">
                 <form class="inline-flex" action="{{ url('/replies/' . $reply->id . '/favorites') }}" method="POST">
@@ -77,7 +81,7 @@
                     </a>
                     <!---->
                 </div>
-                <div class="dropdown relative show-on-hover lg:ml-auto">
+                <div data-toggle="dropdown" class="dropdown relative show-on-hover lg:ml-auto">
                     <div aria-haspopup="true" class="dropdown-toggle h-full">
                         <button
                             class="transition-all border border-solid border-black-transparent-3 hover:border-black-transparent-10 bg-black-transparent-2 hover:bg-black-transparent-3 font-semibold inline-flex items-center px-3 md:text-xs mobile:text-sm mobile:p-2 mobile:flex mobile:items-center h-full text-black-transparent-50 font-bold hover:text-blue text-sm"
@@ -86,11 +90,12 @@
                             <span class="relative" style="top: -3px;">...</span>
                         </button>
                     </div>
-                    <div class="dropdown-menu absolute z-10 py-2 rounded-lg shadow mt-2 right-0 is-light" style="width: 200px; display: none;">
+                    <div class="dropdown-menu absolute z-10 py-2 rounded-lg shadow mt-2 right-0 is-light hidden" style="width: 200px;">
+                        <li class="dropdown-menu-link" @click="edit"><a>Edit</a></li>
                         <li class="dropdown-menu-link"><a>Report Spam</a></li>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</reply>

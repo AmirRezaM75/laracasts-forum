@@ -364,7 +364,7 @@
                     </div>
                     <div class="participate-button fixed z-40" style="display: none;">
                         <a class="bg-blue hover:bg-blue-dark rounded-full w-16 h-16 text-center flex items-center justify-center shadow-lg">
-                            <img src="../dist/images/icons/reply-mobile-button.svg" alt="Create a New Discussion Button" />
+                            <img src="{{ asset('images/icons/reply-mobile-button.svg') }}" alt="Create a New Discussion Button" />
                         </a>
                     </div>
                     @includeWhen(auth()->check(), 'partials.modal', ['id' => 'thread-modal', 'action' => route('threads.store') ])

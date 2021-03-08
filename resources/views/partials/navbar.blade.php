@@ -32,17 +32,16 @@
                 </svg>
             </button>
             <div class="mr-4">
-                <div>
-                    <div class="v-portal" style="display: none;"></div>
+                @auth
                     <a class="block leading-none">
                         <img
-                            src="../dist/images/default-avatar-1.png"
+                            src="{{ auth()->user()->avatar }}"
                             alt="mehdi_ahd23"
                             width="27.5"
                             class="is-circle bg-white relative"
                         />
                     </a>
-                </div>
+                @endauth
             </div>
             <div>
                 <div class="v-portal" style="display: none;"></div>
@@ -70,20 +69,21 @@
                 </button>
                 <div>
                     <ul class="flex items-center cursor-pointer ml-4 relative">
-                        <li>
-                            <div>
-                                <a class="block leading-none">
-                                    <!---->
-                                    <img
-                                        src="../dist/images/default-avatar-1.png"
-                                        alt="mehdi_ahd23 avatar"
-                                        width="35"
-                                        class="is-circle"
-                                    />
-                                </a>
-                                <div class="v-portal" style="display: none;"></div>
-                            </div>
-                        </li>
+                        @auth
+                            <li>
+                                <div>
+                                    <a class="block leading-none">
+                                        <img
+                                            src="{{ auth()->user()->avatar }}"
+                                            alt="mehdi_ahd23 avatar"
+                                            width="35"
+                                            class="is-circle"
+                                        />
+                                    </a>
+                                </div>
+                            </li>
+                            </li>
+                        @endauth
                     </ul>
                 </div>
             </div>

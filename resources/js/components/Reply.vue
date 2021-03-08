@@ -1,0 +1,35 @@
+<script>
+    import ReplyModal from "./ReplyModal";
+
+    export default {
+        props: ['model'],
+        data() {
+            return {
+                reply: null
+            }
+        },
+        methods: {
+            edit() {
+                this.$modal.show(ReplyModal,
+                    { reply: this.reply },
+                    {
+                        height: "auto",
+                        width: "800",
+                        adaptive: true,
+                        'pivot-y': 1,
+                        transition: "modal-slide-up",
+                        shiftY: 1,
+                        'click-to-close': false,
+                        name: "edit-reply"
+                    }
+                );
+            }
+        },
+        created() {
+            this.reply = this.model
+            window.events.$on('reply-updated-' + this.reply.id, e => {
+                this.reply.body = e.body;
+            })
+        }
+    }
+</script>
