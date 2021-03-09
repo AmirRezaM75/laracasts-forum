@@ -91,7 +91,10 @@
                         </button>
                     </div>
                     <div class="dropdown-menu absolute z-10 py-2 rounded-lg shadow mt-2 right-0 is-light hidden" style="width: 200px;">
-                        <li class="dropdown-menu-link" @click="edit"><a>Edit</a></li>
+                        @can('update', $reply)
+                            <li class="dropdown-menu-link"><a @click.prevent="edit">Edit</a></li>
+                            <li class="dropdown-menu-link"><a @click.prevent="destroy">Delete</a></li>
+                        @endcan
                         <li class="dropdown-menu-link"><a>Report Spam</a></li>
                     </div>
                 </div>

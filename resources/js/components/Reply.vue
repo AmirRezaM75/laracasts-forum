@@ -23,6 +23,12 @@
                         name: "edit-reply"
                     }
                 );
+            },
+            destroy() {
+                axios.delete('/replies/' + this.reply.id)
+                    .then(function() {
+                        window.location.reload();
+                    })
             }
         },
         created() {

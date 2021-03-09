@@ -367,7 +367,7 @@
                             <img src="{{ asset('images/icons/reply-mobile-button.svg') }}" alt="Create a New Discussion Button" />
                         </a>
                     </div>
-                    @includeWhen(auth()->check(), 'partials.modal', ['id' => 'thread-modal', 'action' => route('threads.store') ])
+{{--                    @includeWhen(auth()->check(), 'partials.modal', ['id' => 'thread-modal', 'action' => route('threads.store') ])--}}
                 </div>
             </div>
         </div>

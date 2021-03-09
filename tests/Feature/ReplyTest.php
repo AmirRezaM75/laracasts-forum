@@ -12,7 +12,7 @@ class ReplyTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function unauthenticated_users_can_not_add_reply()
+    public function guests_can_not_add_reply()
     {
         $this->withoutExceptionHandling();
 
@@ -22,7 +22,7 @@ class ReplyTest extends TestCase
     }
 
     /** @test */
-    public function auth_users_can_leave_a_reply()
+    public function users_can_leave_a_reply()
     {
         $this->login();
 
@@ -47,5 +47,41 @@ class ReplyTest extends TestCase
 
         $this->post(route('threads.replies.store', $thread), $reply)
             ->assertSessionHasErrors('body');
+    }
+
+    /** @test */
+    public function unauthenticated_users_can_not_delete_reply()
+    {
+        $this->withoutExceptionHandling();
+
+        $this->expectException('Illuminate\Auth\AuthenticationException');
+
+        $this->delete('replies/1', []);
+    }
+
+
+    /** @test */
+    public function unauthorized_users_can_not_delete_reply()
+    {
+        $this->login();
+
+        $reply = Reply::factory()->create();
+
+        $this->delete(route('replies.delete', $reply->id))
+            ->assertStatus(403);
+    }
+
+
+    /** @test */
+    public function users_can_delete_reply()
+    {
+        $this->login();
+
+        $reply = Reply::factory()->create(['user_id' => auth()->id()]);
+
+        $this->delete(route('replies.delete', $reply->id))
+            ->assertStatus(204);
+
+        $this->assertDatabaseMissing('replies', ['id' => $reply->id]);
     }
 }

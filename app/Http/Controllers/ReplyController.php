@@ -8,9 +8,9 @@ use Illuminate\Http\Request;
 
 class ReplyController extends Controller
 {
-    public function update(Request $request, Reply $reply)
+    public function __construct()
     {
-        $reply->update(['body' => $request->get('body')]);
+        $this->middleware('auth');
     }
 
     public function store(Request $request, Thread $thread)
@@ -25,5 +25,19 @@ class ReplyController extends Controller
         ]);
 
         return back()->with('flash', 'Your reply has been left.');
+    }
+
+    public function update(Request $request, Reply $reply)
+    {
+        $reply->update(['body' => $request->get('body')]);
+    }
+
+    public function destroy(Reply $reply)
+    {
+        $this->authorize('update', $reply);
+
+        $reply->delete();
+
+        return response()->noContent();
     }
 }

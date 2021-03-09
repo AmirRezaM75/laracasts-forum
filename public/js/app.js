@@ -1922,6 +1922,11 @@ __webpack_require__.r(__webpack_exports__);
         'click-to-close': false,
         name: "edit-reply"
       });
+    },
+    destroy: function destroy() {
+      axios["delete"]('/replies/' + this.reply.id).then(function () {
+        window.location.reload();
+      });
     }
   },
   created: function created() {

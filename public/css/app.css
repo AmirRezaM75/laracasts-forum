@@ -8734,7 +8734,6 @@ body.skill .skill-thumbnail-card.is-techniques.is-current {
 }
 
 .sticky {
-    position: -webkit-sticky;
     position: sticky
 }
 
@@ -10193,7 +10192,6 @@ body.skill .skill-thumbnail-card.is-techniques.is-current {
     }
 
     .lg\:sticky {
-        position: -webkit-sticky;
         position: sticky
     }
 
