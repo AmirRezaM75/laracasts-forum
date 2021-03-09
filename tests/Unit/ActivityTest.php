@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Unit;
 
 use App\Models\Activity;
 use App\Models\Reply;
@@ -55,5 +55,51 @@ class ActivityTest extends TestCase
 
         $this->assertTrue($feed->keys()->contains(Carbon::now()->format('Y-m-d')));
         $this->assertTrue($feed->keys()->contains(Carbon::now()->subWeek()->format('Y-m-d')));
+    }
+
+    /** @test */
+    public function it_records_activity_if_reply_is_favorited()
+    {
+        $this->login();
+
+        $reply = Reply::factory()->create(['user_id' => auth()->id()]);
+
+        $reply->favorite();
+
+        $this->assertDatabaseHas('activities', [
+            'user_id' => auth()->id(),
+            'subject_id' => $reply->favorites->first()->id,
+            'subject_type' => 'App\Models\Favorite',
+            'type' => 'created_favorite'
+        ]);
+
+    }
+
+    /** @test */
+    public function it_removes_activity_if_reply_is_unfavorited()
+    {
+        $this->login();
+
+        $reply = Reply::factory()->create(['user_id' => auth()->id()]);
+
+        $reply->favorite();
+
+        $reply->unfavorite();
+
+        $this->assertDatabaseMissing('activities', ['type' => 'created_favorite']);
+    }
+
+    /** @test */
+    public function it_removes_favorite_activity_if_reply_is_deleted()
+    {
+        $this->login();
+
+        $reply = Reply::factory()->create(['user_id' => auth()->id()]);
+
+        $reply->favorite();
+
+        $reply->delete();
+
+        $this->assertDatabaseMissing('activities', ['type' => 'created_favorite']);
     }
 }
