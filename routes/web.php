@@ -23,8 +23,8 @@ Route::resource('threads', ThreadController::class)->except(['create', 'edit', '
 Route::get('threads/{category?}', [ThreadController::class, 'index'])->name('threads.index');
 Route::get('threads/{category}/{thread}', [ThreadController::class, 'show'])->name('threads.show');
 
-Route::post('replies/{reply}/favorites', [FavoriteController::class, 'store'])
-    ->middleware('auth');
+Route::post('replies/{reply}/favorites', [FavoriteController::class, 'store']);
+Route::delete('replies/{reply}/favorites', [FavoriteController::class, 'destroy']);
 
 Route::post('threads/{thread}/replies', [ReplyController::class, 'store'])->name('threads.replies.store');
 Route::patch('replies/{reply}', [ReplyController::class, 'update'])->name('replies.update');;

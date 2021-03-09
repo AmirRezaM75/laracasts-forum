@@ -33,6 +33,20 @@ class FavoriteTest extends TestCase
     }
 
     /** @test */
+    public function users_can_unfavorite_reply()
+    {
+        $this->login();
+
+        $reply = Reply::factory()->create();
+
+        $reply->favorite();
+
+        $this->delete('/replies/' . $reply->id . '/favorites');
+
+        $this->assertCount(0, $reply->favorites);
+    }
+
+    /** @test */
     public function user_must_only_favorite_reply_once()
     {
         $this->withoutExceptionHandling();

@@ -1,8 +1,10 @@
 <script>
     import ReplyModal from "./ReplyModal";
+    import Favorite from "./Favorite";
 
     export default {
         props: ['model'],
+        components: { Favorite },
         data() {
             return {
                 reply: null
@@ -39,3 +41,4 @@
         }
     }
 </script>
+<!--TODO: process scss styles -->
