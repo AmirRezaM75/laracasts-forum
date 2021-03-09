@@ -15,9 +15,7 @@ class ReplyController extends Controller
 
     public function store(Request $request, Thread $thread)
     {
-        $this->validate($request, [
-            'body' => 'required'
-        ]);
+        $this->validate($request, ['body' => 'required']);
 
         $thread->addReply([
             'body' => $request->get('body'),
@@ -29,6 +27,10 @@ class ReplyController extends Controller
 
     public function update(Request $request, Reply $reply)
     {
+        $this->authorize('update', $reply);
+
+        $this->validate($request, ['body' => 'required']);
+
         $reply->update(['body' => $request->get('body')]);
     }
 

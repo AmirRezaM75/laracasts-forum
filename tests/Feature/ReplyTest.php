@@ -50,6 +50,42 @@ class ReplyTest extends TestCase
     }
 
     /** @test */
+    public function unauthenticated_users_can_not_update_reply()
+    {
+        $this->withoutExceptionHandling();
+
+        $this->expectException('Illuminate\Auth\AuthenticationException');
+
+        $this->patch('replies/1', []);
+    }
+
+
+    /** @test */
+    public function unauthorized_users_can_not_update_reply()
+    {
+        $this->login();
+
+        $reply = Reply::factory()->create();
+
+        $this->patch(route('replies.update', $reply->id))
+            ->assertStatus(403);
+    }
+
+    /** @test */
+    public function users_can_update_reply()
+    {
+        $this->login();
+
+        $reply = Reply::factory()->create(['user_id' => auth()->id()]);
+
+        $body = 'update body';
+
+        $this->patch(route('replies.update', $reply->id), [ 'body' => $body]);
+
+        $this->assertEquals($body, $reply->fresh()->body);
+    }
+
+    /** @test */
     public function unauthenticated_users_can_not_delete_reply()
     {
         $this->withoutExceptionHandling();
