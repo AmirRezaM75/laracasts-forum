@@ -53,7 +53,7 @@
                     <div class="mobile:flex mobile:w-full mobile:justify-center">
                         <button @click="close" class="btn mr-4 md:py-25">Cancel</button>
                         <button
-                            @click="update"
+                            @click="submit"
                             title="Cmd + Enter"
                             class="md:py-25 mobile:flex-1 btn btn-blue"
                             v-text=" mode === 'create' ? 'Post' : 'Update' "
@@ -79,20 +79,29 @@ export default {
     computed: {
         mode() {
             return this.reply ? 'edit' : 'create'
+        },
+        endpoint() {
+            return this.mode === 'create'
+                ? '/threads/' + window.location.pathname.match(/\/threads\/\w+\/(\w+)/)[1] + '/replies'
+                : '/replies/' + this.reply.id
         }
     },
     created() {
-        this.form.body = this.reply.body
+        if (this.mode === 'edit')
+            this.form.body = this.reply.body
     },
     methods: {
         close() {
             let element = document.querySelector(".vm--modal");
             element.style.transition = "top .4s";
             element.style.top = "100vh";
-            setTimeout(e => this.$modal.hide('edit-reply'), 500)
+            setTimeout(e => this.$modal.hide(this.mode + '-reply'), 500)
+        },
+        submit() {
+          this.mode === 'edit' ? this.update() : this.store()
         },
         update() {
-            axios.patch('/replies/' + this.reply.id, {
+            axios.patch(this.endpoint, {
                 'body': this.form.body
             }).then(response => {
                 flash('Your reply has been updated.')
@@ -100,6 +109,15 @@ export default {
                 window.events.$emit('reply-updated-' + this.reply.id, { body: this.form.body })
             })
         },
+        store() {
+            axios.post(this.endpoint, {
+                'body': this.form.body
+            }).then(({data}) => {
+                flash('Your reply has been created.')
+                this.close();
+                window.events.$emit('reply-created', data)
+            })
+        }
     },
 }
 </script>

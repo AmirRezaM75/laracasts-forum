@@ -106,16 +106,7 @@
             edit() {
                 this.$modal.show(ReplyModal,
                     { reply: this.reply },
-                    {
-                        height: "auto",
-                        width: "800",
-                        adaptive: true,
-                        'pivot-y': 1,
-                        transition: "modal-slide-up",
-                        shiftY: 1,
-                        'click-to-close': false,
-                        name: "edit-reply"
-                    }
+                    { name: "edit-reply" }
                 );
             },
             destroy() {

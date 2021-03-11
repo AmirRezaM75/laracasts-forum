@@ -17,7 +17,17 @@ window.flash = function(message) {
     window.events.$emit('flash', message)
 }
 
-Vue.use(VueJSModal);
+Vue.use(VueJSModal, {
+    dynamicDefaults: {
+        shiftY: 1,
+        'pivot-y': 1,
+        width: "800",
+        height: "auto",
+        adaptive: true,
+        'click-to-close': false,
+        transition: "modal-slide-up"
+    }
+});
 
 Vue.mixin(Auth);
 

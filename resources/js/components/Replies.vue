@@ -34,6 +34,7 @@
 
 <script>
 import Reply from "./Reply";
+import ReplyModal from "./ReplyModal";
 
 export default {
     name: "Replies",
@@ -46,7 +47,7 @@ export default {
     components: { Reply },
     methods: {
         create() {
-            // TODO: popup reply modal
+            this.$modal.show(ReplyModal,{}, { name: "create-reply" });
         },
         remove(index) {
             this.replies.splice(index, 1)
@@ -55,7 +56,12 @@ export default {
 
             flash('Reply was removed')
         }
-
+    },
+    created() {
+        window.events.$on('reply-created', reply => {
+            this.$emit('added')
+            this.replies.push(reply)
+        })
     }
 }
 </script>

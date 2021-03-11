@@ -1980,6 +1980,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _Reply__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Reply */ "./resources/js/components/Reply.vue");
+/* harmony import */ var _ReplyModal__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ReplyModal */ "./resources/js/components/ReplyModal.vue");
 //
 //
 //
@@ -2015,6 +2016,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Replies",
   props: ['collection'],
@@ -2027,13 +2029,25 @@ __webpack_require__.r(__webpack_exports__);
     Reply: _Reply__WEBPACK_IMPORTED_MODULE_0__.default
   },
   methods: {
-    create: function create() {// TODO: popup reply modal
+    create: function create() {
+      this.$modal.show(_ReplyModal__WEBPACK_IMPORTED_MODULE_1__.default, {}, {
+        name: "create-reply"
+      });
     },
     remove: function remove(index) {
       this.replies.splice(index, 1);
       this.$emit('removed');
       flash('Reply was removed');
     }
+  },
+  created: function created() {
+    var _this = this;
+
+    window.events.$on('reply-created', function (reply) {
+      _this.$emit('added');
+
+      _this.replies.push(reply);
+    });
   }
 });
 
@@ -2161,13 +2175,6 @@ __webpack_require__.r(__webpack_exports__);
       this.$modal.show(_ReplyModal__WEBPACK_IMPORTED_MODULE_0__.default, {
         reply: this.reply
       }, {
-        height: "auto",
-        width: "800",
-        adaptive: true,
-        'pivot-y': 1,
-        transition: "modal-slide-up",
-        shiftY: 1,
-        'click-to-close': false,
         name: "edit-reply"
       });
     },
@@ -2297,10 +2304,13 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     mode: function mode() {
       return this.reply ? 'edit' : 'create';
+    },
+    endpoint: function endpoint() {
+      return this.mode === 'create' ? '/threads/' + window.location.pathname.match(/\/threads\/\w+\/(\w+)/)[1] + '/replies' : '/replies/' + this.reply.id;
     }
   },
   created: function created() {
-    this.form.body = this.reply.body;
+    if (this.mode === 'edit') this.form.body = this.reply.body;
   },
   methods: {
     close: function close() {
@@ -2310,13 +2320,16 @@ __webpack_require__.r(__webpack_exports__);
       element.style.transition = "top .4s";
       element.style.top = "100vh";
       setTimeout(function (e) {
-        return _this.$modal.hide('edit-reply');
+        return _this.$modal.hide(_this.mode + '-reply');
       }, 500);
+    },
+    submit: function submit() {
+      this.mode === 'edit' ? this.update() : this.store();
     },
     update: function update() {
       var _this2 = this;
 
-      axios.patch('/replies/' + this.reply.id, {
+      axios.patch(this.endpoint, {
         'body': this.form.body
       }).then(function (response) {
         flash('Your reply has been updated.');
@@ -2326,6 +2339,20 @@ __webpack_require__.r(__webpack_exports__);
         window.events.$emit('reply-updated-' + _this2.reply.id, {
           body: _this2.form.body
         });
+      });
+    },
+    store: function store() {
+      var _this3 = this;
+
+      axios.post(this.endpoint, {
+        'body': this.form.body
+      }).then(function (_ref) {
+        var data = _ref.data;
+        flash('Your reply has been created.');
+
+        _this3.close();
+
+        window.events.$emit('reply-created', data);
       });
     }
   }
@@ -2387,7 +2414,17 @@ window.flash = function (message) {
   window.events.$emit('flash', message);
 };
 
-vue__WEBPACK_IMPORTED_MODULE_2__.default.use((vue_js_modal__WEBPACK_IMPORTED_MODULE_0___default()));
+vue__WEBPACK_IMPORTED_MODULE_2__.default.use((vue_js_modal__WEBPACK_IMPORTED_MODULE_0___default()), {
+  dynamicDefaults: {
+    shiftY: 1,
+    'pivot-y': 1,
+    width: "800",
+    height: "auto",
+    adaptive: true,
+    'click-to-close': false,
+    transition: "modal-slide-up"
+  }
+});
 vue__WEBPACK_IMPORTED_MODULE_2__.default.mixin(_mixins_Auth__WEBPACK_IMPORTED_MODULE_1__.default);
 new vue__WEBPACK_IMPORTED_MODULE_2__.default({
   el: '#app'
@@ -21299,7 +21336,7 @@ var render = function() {
                         _vm.mode === "create" ? "Post" : "Update"
                       )
                     },
-                    on: { click: _vm.update }
+                    on: { click: _vm.submit }
                   })
                 ]
               )
