@@ -3,8 +3,9 @@
         <div class="relative">
             <div>
                 <reply
-                    v-for="(reply, index) in $store.state.replies"
-                    :key="index"
+                    v-for="(reply, index) in replies"
+                    :key="reply.id"
+                    :index="index"
                     :model="reply"
                 ></reply>
                 <div class="my-4">
@@ -34,27 +35,20 @@
 <script>
 import Reply from "./Reply";
 import ReplyModal from "./ReplyModal";
+import { mapState } from 'vuex'
 
 export default {
     name: "Replies",
     props: ['collection'],
-    data() {
-        return {
-            replies: null
-        }
-    },
     components: { Reply },
+    computed: mapState(['replies']),
     methods: {
         create() {
             this.$modal.show(ReplyModal,{}, { name: "create-reply" });
         }
     },
     created() {
-        this.$store.state.replies = this.collection
-        /*window.events.$on('reply-created', reply => {
-            this.$emit('added')
-            this.replies.push(reply)
-        })*/
+        this.$store.commit('SET_REPLIES', this.collection)
     }
 }
 </script>

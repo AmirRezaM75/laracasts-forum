@@ -121,7 +121,7 @@ export default {
             }).then(({data}) => {
                 flash('Your reply has been created.')
                 this.close();
-                this.$store.state.replies.push(data)
+                this.$store.commit('ADD_REPLY', data)
             })
         }
     },

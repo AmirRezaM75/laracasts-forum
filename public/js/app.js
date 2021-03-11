@@ -1981,6 +1981,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _Reply__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Reply */ "./resources/js/components/Reply.vue");
 /* harmony import */ var _ReplyModal__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ReplyModal */ "./resources/js/components/ReplyModal.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 //
 //
 //
@@ -2014,19 +2015,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Replies",
   props: ['collection'],
-  data: function data() {
-    return {
-      replies: null
-    };
-  },
   components: {
     Reply: _Reply__WEBPACK_IMPORTED_MODULE_0__.default
   },
+  computed: (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapState)(['replies']),
   methods: {
     create: function create() {
       this.$modal.show(_ReplyModal__WEBPACK_IMPORTED_MODULE_1__.default, {}, {
@@ -2035,11 +2034,7 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   created: function created() {
-    this.$store.state.replies = this.collection;
-    /*window.events.$on('reply-created', reply => {
-        this.$emit('added')
-        this.replies.push(reply)
-    })*/
+    this.$store.commit('SET_REPLIES', this.collection);
   }
 });
 
@@ -2152,7 +2147,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['model'],
+  props: ['model', 'index'],
   components: {
     Favorite: _Favorite__WEBPACK_IMPORTED_MODULE_1__.default
   },
@@ -2174,7 +2169,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios["delete"]('/replies/' + this.reply.id).then(function () {
-        _this.$store.state.replies.splice(_this.$vnode.key, 1);
+        _this.$store.commit('DELETE_REPLY', _this.index);
       });
       flash('Reply was removed');
     },
@@ -2346,7 +2341,7 @@ __webpack_require__.r(__webpack_exports__);
 
         _this3.close();
 
-        _this3.$store.state.replies.push(data);
+        _this3.$store.commit('ADD_REPLY', data);
       });
     }
   }
@@ -2480,10 +2475,19 @@ vue__WEBPACK_IMPORTED_MODULE_0__.default.use(vuex__WEBPACK_IMPORTED_MODULE_1__.d
     }
   },
   mutations: {
+    SET_REPLIES: function SET_REPLIES(state, replies) {
+      state.replies = replies;
+    },
+    ADD_REPLY: function ADD_REPLY(state, reply) {
+      state.replies.push(reply);
+    },
     UPDATE_REPLY: function UPDATE_REPLY(state, _ref) {
       var reply = _ref.reply,
           value = _ref.value;
       reply['body'] = value;
+    },
+    DELETE_REPLY: function DELETE_REPLY(state, index) {
+      state.replies.splice(index, 1);
     }
   }
 }));
@@ -20889,8 +20893,11 @@ var render = function() {
       _c(
         "div",
         [
-          _vm._l(_vm.$store.state.replies, function(reply, index) {
-            return _c("reply", { key: index, attrs: { model: reply } })
+          _vm._l(_vm.replies, function(reply, index) {
+            return _c("reply", {
+              key: reply.id,
+              attrs: { index: index, model: reply }
+            })
           }),
           _vm._v(" "),
           _c("div", { staticClass: "my-4" })

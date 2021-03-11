@@ -94,7 +94,7 @@
     import Favorite from "./Favorite";
 
     export default {
-        props: ['model'],
+        props: ['model', 'index'],
         components: { Favorite },
         data() {
             return {
@@ -112,7 +112,7 @@
             destroy() {
                 axios.delete('/replies/' + this.reply.id)
                     .then( () => {
-                        this.$store.state.replies.splice(this.$vnode.key, 1)
+                        this.$store.commit('DELETE_REPLY', this.index)
                     })
 
                 flash('Reply was removed')
