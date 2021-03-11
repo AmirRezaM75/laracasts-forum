@@ -17,12 +17,12 @@ class ReplyController extends Controller
     {
         $this->validate($request, ['body' => 'required']);
 
-        $thread->addReply([
+        $reply = $thread->addReply([
             'body' => $request->get('body'),
             'user_id' => auth()->id()
         ]);
 
-        return back()->with('flash', 'Your reply has been left.');
+        return response()->json(['reply' => $reply->load('user')]);
     }
 
     public function update(Request $request, Reply $reply)
