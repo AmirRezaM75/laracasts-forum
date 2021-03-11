@@ -104,9 +104,15 @@ export default {
             axios.patch(this.endpoint, {
                 'body': this.form.body
             }).then(response => {
+
+                this.$store.commit('UPDATE_REPLY', {
+                    reply: this.reply,
+                    value: this.form.body
+                })
+
+                this.close()
+
                 flash('Your reply has been updated.')
-                this.close();
-                window.events.$emit('reply-updated-' + this.reply.id, { body: this.form.body })
             })
         },
         store() {
@@ -115,7 +121,7 @@ export default {
             }).then(({data}) => {
                 flash('Your reply has been created.')
                 this.close();
-                window.events.$emit('reply-created', data)
+                this.$store.state.replies.push(data)
             })
         }
     },

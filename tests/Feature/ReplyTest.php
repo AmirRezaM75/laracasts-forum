@@ -31,7 +31,7 @@ class ReplyTest extends TestCase
         $thread = Thread::factory()->create();
 
         $this->post(route('threads.replies.store', $thread), $reply)
-            ->assertJsonPath('reply.user.id', auth()->id());
+            ->assertJsonPath('user.id', auth()->id());
 
         $this->get($thread->path())
             ->assertSee($reply['body']);

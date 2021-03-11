@@ -3,10 +3,9 @@
         <div class="relative">
             <div>
                 <reply
-                    v-for="(reply, index) in replies"
-                    :key="reply.id"
+                    v-for="(reply, index) in $store.state.replies"
+                    :key="index"
                     :model="reply"
-                    @destroyed="remove(index)"
                 ></reply>
                 <div class="my-4">
                     <!--TODO: pagination -->
@@ -41,27 +40,21 @@ export default {
     props: ['collection'],
     data() {
         return {
-            replies: this.collection
+            replies: null
         }
     },
     components: { Reply },
     methods: {
         create() {
             this.$modal.show(ReplyModal,{}, { name: "create-reply" });
-        },
-        remove(index) {
-            this.replies.splice(index, 1)
-
-            this.$emit('removed')
-
-            flash('Reply was removed')
         }
     },
     created() {
-        window.events.$on('reply-created', reply => {
+        this.$store.state.replies = this.collection
+        /*window.events.$on('reply-created', reply => {
             this.$emit('added')
             this.replies.push(reply)
-        })
+        })*/
     }
 }
 </script>

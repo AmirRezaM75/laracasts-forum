@@ -112,8 +112,10 @@
             destroy() {
                 axios.delete('/replies/' + this.reply.id)
                     .then( () => {
-                        this.$emit('destroyed')
+                        this.$store.state.replies.splice(this.$vnode.key, 1)
                     })
+
+                flash('Reply was removed')
             },
             toggleDropdown() {
                 this.dropdownStatus = ! this.dropdownStatus

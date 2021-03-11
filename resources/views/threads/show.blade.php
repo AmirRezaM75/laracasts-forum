@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
-    <thread :initial-replies-count="{{ $thread->replies_count }}" inline-template>
+    <thread inline-template>
         <div class="flex flex-col flex-col-reverse md:flex-row mx-auto" style="max-width: 1070px;">
             <div class="hidden lg:block lg:sticky lg:self-start flex-none mr-9" style="min-width: 200px; top: 40px;">
                 <div class="lg:sticky lg:text-center">
@@ -182,8 +182,6 @@
                         </div>
                         <replies
                             :collection="{{ $thread->replies }}"
-                            @removed="repliesCount--"
-                            @added="repliesCount++"
                         ></replies>
                         {{--<div class="participate-button fixed z-40" style="">
                             <a class="bg-blue hover:bg-blue-dark rounded-full w-16 h-16 text-center flex items-center justify-center shadow-lg">
