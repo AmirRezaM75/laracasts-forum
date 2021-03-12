@@ -21,9 +21,10 @@
             All Threads
         </a>
     </li>
+    @auth
     <li>
         <a
-            href="/discuss?me"
+            href="{{ url('/threads?by=' . auth()->user()->name) }}"
             class="flex items-center mb-2 text-grey-dark text-sm mb-1 hover:text-blue hover:border-blue-light hover:bg-blue-lighter py-2 px-6 border border-solid border-black-transparent-3 rounded-xl"
             style="height: 41px;"
         >
@@ -36,6 +37,7 @@
             My Questions
         </a>
     </li>
+    @endauth
     <li>
         <a
             href="/discuss?filter_by=contributed_to"
@@ -99,7 +101,7 @@
     </li>
     <li>
         <a
-            href="/discuss?popular=1"
+            href="{{ url("/threads?popular=1") }}"
             class="flex items-center mb-2 text-grey-dark text-sm mb-1 hover:text-blue hover:border-blue-light hover:bg-blue-lighter py-2 px-6 border border-solid border-black-transparent-3 rounded-xl"
             style="height: 41px;"
         >
@@ -144,7 +146,7 @@
     </li>
     <li>
         <a
-            href="/discuss?fresh=1"
+            href="{{ url('/threads?unanswered=1') }}"
             class="flex items-center mb-2 text-grey-dark text-sm mb-1 hover:text-blue hover:border-blue-light hover:bg-blue-lighter py-2 px-6 border border-solid border-black-transparent-3 rounded-xl"
             style="height: 41px;"
         >

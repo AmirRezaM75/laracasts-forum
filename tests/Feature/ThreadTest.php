@@ -39,15 +39,6 @@ class ThreadTest extends TestCase
     }
 
     /** @test */
-    public function users_can_see_associated_replies()
-    {
-        $reply = Reply::factory()->create(['thread_id' => $this->thread->id]);
-
-        $this->get($this->thread->path())
-            ->assertSee($reply->body);
-    }
-
-    /** @test */
     public function guests_can_not_create_thread()
     {
         $this->withoutExceptionHandling();
@@ -180,6 +171,18 @@ class ThreadTest extends TestCase
         $response = $this->getJson('threads?popular=1')->json();
 
         $this->assertEquals([3, 2, 0], array_column($response, 'replies_count'));
+    }
+
+    /** @test */
+    public function filter_unanswered_threads()
+    {
+        Thread::factory()
+            ->has(Reply::factory()->count(2))
+            ->create();
+
+        $response = $this->getJson('/threads?unanswered=1')->json();
+
+        $this->assertCount(1, $response);
     }
 
     protected function publishThread($overrides)
