@@ -4,7 +4,7 @@
     export default {
         computed: {
             repliesCount() {
-                return this.$store.getters.repliesCount;
+                return this.$store.state.count
             }
         },
         name: "Thread",

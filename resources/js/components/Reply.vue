@@ -45,6 +45,7 @@
                 </div>
                 <div class="forum-comment-edit-links flex justify-end lg:justify-start relative mt-4 -mb-1 md:leading-none justify-start" style="height: 34px;">
 
+                    <!-- TODO: unauthenticated users should see favorites count but it should be disabled-->
                     <favorite v-if="$auth" :reply="reply"></favorite>
                     <div class="flex show-on-hover">
                         <a

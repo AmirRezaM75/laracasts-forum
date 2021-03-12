@@ -9,7 +9,7 @@
                     :model="reply"
                 ></reply>
                 <div class="my-4">
-                    <!--TODO: pagination -->
+                    <paginator :data="pagination" @changed="fetch"></paginator>
                 </div>
             </div>
         </div>
@@ -39,16 +39,38 @@ import { mapState } from 'vuex'
 
 export default {
     name: "Replies",
-    props: ['collection'],
     components: { Reply },
-    computed: mapState(['replies']),
+    data() {
+        return {
+            pagination: null
+        }
+    },
+    computed: {
+        ...mapState(['replies']),
+    },
     methods: {
         create() {
             this.$modal.show(ReplyModal,{}, { name: "create-reply" });
+        },
+        fetch(page) {
+            axios.get(this.endpoint(page)).then(response => {
+                this.$store.commit('SET_REPLIES', response.data.data)
+                this.$store.commit('SET_REPLIES_COUNT', response.data.total)
+                this.pagination = response.data
+                window.scrollTo(0, 0) // TODO: scroll to first reply smoothly
+            })
+        },
+        endpoint(page) {
+            if (! page) {
+                let query = window.location.search.match(/page=(\d+)/)
+                page = query ? query[1] : 1
+            }
+
+            return '/threads/' + window.location.pathname.match(/\/threads\/\w+\/(\w+)/)[1] + '/replies?page=' + page
         }
     },
-    created() {
-        this.$store.commit('SET_REPLIES', this.collection)
+    mounted() {
+        this.fetch()
     }
 }
 </script>

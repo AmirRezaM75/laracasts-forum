@@ -43,12 +43,9 @@ class ThreadController extends Controller
         return redirect($thread->path())->with('flash', 'Your thread has been published.');
     }
 
-    public function show(Category $category, Thread $thread)
+    public function show($categoryId, Thread $thread)
     {
-        return view('threads.show', [
-            'thread' => $thread,
-            'replies' => $thread->replies()->paginate(10)
-        ]);
+        return view('threads.show', compact('thread'));
     }
 
     public function update(Request $request, Thread $thread)

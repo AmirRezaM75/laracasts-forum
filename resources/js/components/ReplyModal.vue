@@ -120,7 +120,7 @@ export default {
                 'body': this.form.body
             }).then(({data}) => {
                 flash('Your reply has been created.')
-                this.close();
+                this.close()
                 this.$store.commit('ADD_REPLY', data)
             })
         }
