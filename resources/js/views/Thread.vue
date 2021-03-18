@@ -1,5 +1,6 @@
 <script>
     import Replies from "../components/Replies";
+    import SubscriptionButton from "../components/SubscriptionButton";
 
     export default {
         computed: {
@@ -8,6 +9,6 @@
             }
         },
         name: "Thread",
-        components: { Replies }
+        components: { Replies, SubscriptionButton }
     }
 </script>

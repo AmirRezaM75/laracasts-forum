@@ -9,15 +9,11 @@
                        style="box-shadow: rgb(215, 232, 253) 0 4px 10px 1px;">
                         Reply
                     </a>
-                    <form class="text-white text-center">
-                        <button
-                            type="submit"
-                            title="Want an email each time this conversation receives a new reply?"
-                            class="btn btn-outlined bg-transparent border-grey-dark text-grey-dark w-full mb-8 max-w-2xs"
-                        >
-                            Follow
-                        </button>
-                    </form>
+
+                    @auth
+                    <subscription-button :active="{{ json_encode($thread->isSubscribedTo) }}"></subscription-button>
+                    @endauth
+
                     @include('partials.sidebar')
                 </div>
             </div>

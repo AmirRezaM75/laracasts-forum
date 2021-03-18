@@ -185,6 +185,38 @@ class ThreadTest extends TestCase
         $this->assertCount(1, $response);
     }
 
+    /** @test */
+    public function guests_can_not_subscribe_to_thread()
+    {
+        $this->withoutExceptionHandling();
+
+        $this->expectException('Illuminate\Auth\AuthenticationException');
+
+        $this->post('/threads/1/subscriptions');
+    }
+
+    /** @test */
+    public function users_can_subscribe_to_thread()
+    {
+        $this->login();
+
+        $this->post('/threads/' . $this->thread->id . '/subscriptions');
+
+        $this->assertCount(1, $this->thread->subscriptions);
+    }
+
+    /** @test */
+    public function users_can_unsubscribe_from_thread()
+    {
+        $this->login();
+
+        $this->thread->subscribe();
+
+        $this->delete('/threads/' . $this->thread->id . '/subscriptions');
+
+        $this->assertCount(0, $this->thread->subscriptions);
+    }
+
     protected function publishThread($overrides)
     {
         $this->login();

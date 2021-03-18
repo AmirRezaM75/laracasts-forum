@@ -1,10 +1,11 @@
 <?php
 
-use App\Http\Controllers\ {
+use App\Http\Controllers\{
+    SubscriptionController,
     FavoriteController,
     ProfileController,
     ThreadController,
-    ReplyController,
+    ReplyController
 };
 
 use Illuminate\Support\Facades\Route;
@@ -18,6 +19,9 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
+
+Route::post('threads/{thread}/subscriptions', [SubscriptionController::class, 'store']);
+Route::delete('threads/{thread}/subscriptions', [SubscriptionController::class, 'destroy']);
 
 Route::get('threads/{thread}/replies', [ReplyController::class, 'index'])->name('threads.replies.index');
 Route::post('threads/{thread}/replies', [ReplyController::class, 'store'])->name('threads.replies.store');

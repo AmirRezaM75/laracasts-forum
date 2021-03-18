@@ -56,4 +56,38 @@ class ThreadTest extends TestCase
             $this->thread->path()
         );
     }
+
+    /** @test */
+    public function users_can_subscribe_to_thread()
+    {
+        $this->login();
+
+        $this->thread->subscribe();
+
+        $this->assertEquals(1, $this->thread->subscriptions->count());
+    }
+
+    /** @test */
+    public function users_can_unsubscribe_from_thread()
+    {
+        $this->login();
+
+        $this->thread->subscribe();
+
+        $this->thread->unsubscribe();
+
+        $this->assertEquals(0, $this->thread->subscriptions->count());
+    }
+
+    /** @test */
+    public function it_appends_user_subscription_status()
+    {
+        $this->login();
+
+        $this->assertFalse($this->thread->isSubscribedTo);
+
+        $this->thread->subscribe();
+
+        $this->assertTrue($this->thread->isSubscribedTo);
+    }
 }
