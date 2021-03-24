@@ -202,7 +202,7 @@ class ThreadTest extends TestCase
 
         $this->post('/threads/' . $this->thread->id . '/subscriptions');
 
-        $this->assertCount(1, $this->thread->subscriptions);
+        $this->assertCount(1, $this->thread->subscribers);
     }
 
     /** @test */
@@ -214,7 +214,7 @@ class ThreadTest extends TestCase
 
         $this->delete('/threads/' . $this->thread->id . '/subscriptions');
 
-        $this->assertCount(0, $this->thread->subscriptions);
+        $this->assertCount(0, $this->thread->subscribers);
     }
 
     protected function publishThread($overrides)

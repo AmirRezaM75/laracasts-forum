@@ -64,7 +64,7 @@ class ThreadTest extends TestCase
 
         $this->thread->subscribe();
 
-        $this->assertEquals(1, $this->thread->subscriptions->count());
+        $this->assertEquals(1, $this->thread->subscribers->count());
     }
 
     /** @test */
@@ -76,7 +76,7 @@ class ThreadTest extends TestCase
 
         $this->thread->unsubscribe();
 
-        $this->assertEquals(0, $this->thread->subscriptions->count());
+        $this->assertEquals(0, $this->thread->subscribers->count());
     }
 
     /** @test */

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\{
+    NotificationController,
     SubscriptionController,
     FavoriteController,
     ProfileController,
@@ -35,6 +36,9 @@ Route::get('threads/{category}/{thread}', [ThreadController::class, 'show'])->na
 Route::post('replies/{reply}/favorites', [FavoriteController::class, 'store']);
 Route::delete('replies/{reply}/favorites', [FavoriteController::class, 'destroy']);
 
+
+Route::get('users/notifications', [NotificationController::class, 'index']);
+Route::delete('users/notifications/{notification}', [NotificationController::class, 'destroy']);
 
 Route::get('users/{user}', [ProfileController::class, 'show']);
 

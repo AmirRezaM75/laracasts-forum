@@ -11,6 +11,7 @@ window.events = new Vue()
 
 window.flash = (message) => { window.events.$emit('flash', message) }
 
+Vue.component('notification', require('./components/Notification').default)
 Vue.component('paginator', require('./components/Paginator').default)
 Vue.component('flash', require('./components/Flash').default)
 Vue.component('thread', require('./views/Thread').default)

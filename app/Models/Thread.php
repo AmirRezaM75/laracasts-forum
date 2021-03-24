@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Filters\ThreadFilters;
+use App\Notifications\ThreadSubscription;
 use App\Traits\HasActivity;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -42,7 +43,7 @@ class Thread extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function subscriptions()
+    public function subscribers()
     {
         return $this->belongsToMany(User::class, 'subscriptions');
     }
@@ -54,17 +55,24 @@ class Thread extends Model
 
     public function addReply($reply)
     {
-        return $this->replies()->create($reply);
+        $reply =  $this->replies()->create($reply);
+
+        $this->subscribers
+            ->where('id', '!==', $reply->user_id)
+            ->each
+            ->notify(new ThreadSubscription($this, $reply));
+
+        return $reply;
     }
 
     public function subscribe()
     {
-        return $this->subscriptions()->attach(auth()->id());
+        return $this->subscribers()->attach(auth()->id());
     }
 
     public function unsubscribe()
     {
-        return $this->subscriptions()->detach(auth()->id());
+        return $this->subscribers()->detach(auth()->id());
     }
 
     public function scopeFilter(Builder $query, ThreadFilters $filters)
@@ -74,6 +82,6 @@ class Thread extends Model
 
     public function getIsSubscribedToAttribute()
     {
-        return $this->subscriptions()->wherePivot('user_id', auth()->id())->exists();
+        return $this->subscribers()->wherePivot('user_id', auth()->id())->exists();
     }
 }

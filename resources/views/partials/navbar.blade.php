@@ -20,7 +20,10 @@
             </a>
         </div>
         <div class="md:hidden flex items-center">
-            <button title="Tip: press / or s anywhere to instantly activate me." class="leading-none mr-4 inline-flex" id="mobile-search">
+            <button
+                title="Tip: press / or s anywhere to instantly activate me."
+                class="leading-none inline-flex"
+            >
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" viewBox="0 0 15 15" class="text-white">
                     <g fill="none" fill-rule="evenodd">
                         <path d="M-2-2h20v20H-2z"></path>
@@ -31,31 +34,24 @@
                     </g>
                 </svg>
             </button>
-            <div class="mr-4">
-                @auth
-                    <a class="block leading-none">
-                        <img
-                            src="{{ auth()->user()->avatar }}"
-                            alt="mehdi_ahd23"
-                            width="27.5"
-                            class="is-circle bg-white relative"
-                        />
-                    </a>
-                @endauth
-            </div>
-            <div>
-                <div class="v-portal" style="display: none;"></div>
-                <a class="block leading-none">
-                    <div class="hamburger-nav"><span></span> <span></span> <span></span> <span></span></div>
+            @auth
+                <a class="block leading-none ml-4">
+                    <img
+                        src="{{ auth()->user()->avatar }}"
+                        alt="mehdi_ahd23"
+                        width="27.5"
+                        class="is-circle bg-white relative"
+                    />
                 </a>
-            </div>
+            @endauth
         </div>
         <div class="hidden md:block relative flex-1">
             <div class="flex items-center justify-end leading-none">
+                <notification></notification>
+
                 <button
                     title="Tip: press / or s anywhere to instantly activate me."
                     class="leading-none inline-flex mr-1 leading-none bg-transparent-10 hover:bg-transparent-25 p-3 rounded-xl"
-                    id="search-trigger"
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" viewBox="0 0 15 15" class="text-white">
                         <g fill="none" fill-rule="evenodd">
@@ -67,6 +63,7 @@
                         </g>
                     </svg>
                 </button>
+
                 <div>
                     <ul class="flex items-center cursor-pointer ml-4 relative">
                         @auth
