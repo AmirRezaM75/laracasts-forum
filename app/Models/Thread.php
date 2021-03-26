@@ -17,9 +17,11 @@ class Thread extends Model
 
     protected $with = ['user', 'category'];
 
+    //TODO: Append isSubscribedTo attribute?!
+
     public static function booted()
     {
-        static::addGlobalScope('repliesCount', function($builder) {
+        static::addGlobalScope('REPLIES_COUNT', function($builder) {
             $builder->withCount('replies');
         });
 
@@ -53,7 +55,7 @@ class Thread extends Model
         return route('threads.show', [$this->category->slug, $this->id]);
     }
 
-    public function addReply($reply)
+    public function createReply($reply)
     {
         $reply =  $this->replies()->create($reply);
 

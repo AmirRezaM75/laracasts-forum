@@ -11,6 +11,7 @@ class CreateSubscriptionsTable extends Migration
         Schema::create('subscriptions', function (Blueprint $table) {
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('thread_id')->constrained()->onDelete('cascade');
+            $table->unique(['user_id', 'thread_id']);
         });
     }
 

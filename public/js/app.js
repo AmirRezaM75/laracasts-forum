@@ -2781,7 +2781,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.tooltip[data-v-6a4ce154] {\n    position: absolute;\n    top: 3.25rem;\n    right: 0;\n    line-height: 1.5;\n    color: #27303d;\n    width: 20rem;\n    background: #fff;\n    border-radius: 5px;\n    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);\n}\n.tooltip[data-v-6a4ce154]::before {\n    content: \"\";\n    position: absolute;\n    top: -0.4rem;\n    right: 1.2rem;\n    border-left: 1rem solid transparent;\n    border-right: 1rem solid transparent;\n    border-bottom: .75rem solid #fff;\n}\n.tooltip-heading[data-v-6a4ce154] {\n    display: flex;\n    align-items: flex-start;\n    padding: 0.5rem 1rem;\n    border-bottom: 0.01rem solid #eee;\n    justify-content: space-between;\n}\n.notification-list[data-v-6a4ce154] {\n    list-style-type: none;\n    margin: 0 0 0.5rem;\n}\n.notification-list > a[data-v-6a4ce154] {\n    padding: 0.5rem 1rem;\n    display: inline-block;\n}\n.notification-list > a[data-v-6a4ce154]:hover {\n    background-color: rgba(0,0,0,.03);\n}\n.notification-item[data-v-6a4ce154] {\n    display: flex;\n    align-items: center;\n    padding: 0.65rem 0;\n}\n.notification-image[data-v-6a4ce154] {\n    margin-right: 1rem;\n}\n.notification-image img[data-v-6a4ce154] {\n    vertical-align: middle;\n    width: 4rem;\n    border-radius: 50%;\n    max-width: 100%;\n}\n.fadeStart-enter-active[data-v-6a4ce154] {\n    -webkit-animation: fadeStart-data-v-6a4ce154 0.2s both ease-in-out;\n    animation: fadeStart-data-v-6a4ce154 0.2s both ease-in-out;\n}\n.fadeStart-leave-active[data-v-6a4ce154] {\n    -webkit-animation: fadeEnd-data-v-6a4ce154 0.2s both ease-in-out;\n    animation: fadeEnd-data-v-6a4ce154 0.2s both ease-in-out;\n}\n@-webkit-keyframes fadeStart-data-v-6a4ce154 {\n0% {\n        opacity: 0;\n        transform: translate3d(0, 5px, 0);\n}\nto {\n        opacity: 1;\n        transform: translateZ(0);\n        display: block;\n}\n}\n@keyframes fadeStart-data-v-6a4ce154 {\n0% {\n        opacity: 0;\n        transform: translate3d(0, 5px, 0);\n}\nto {\n        opacity: 1;\n        transform: translateZ(0);\n        display: block;\n}\n}\n@-webkit-keyframes fadeEnd-data-v-6a4ce154 {\n0% {\n        opacity: 1;\n        transform: translateZ(0);\n}\nto {\n        opacity: 0;\n        transform: translate3d(0, 5px, 0);\n}\n}\n@keyframes fadeEnd-data-v-6a4ce154 {\n0% {\n        opacity: 1;\n        transform: translateZ(0);\n}\nto {\n        opacity: 0;\n        transform: translate3d(0, 5px, 0);\n}\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.tooltip[data-v-6a4ce154] {\n    position: absolute;\n    top: 3.25rem;\n    right: 0;\n    line-height: 1.5;\n    color: #27303d;\n    width: 20rem;\n    background: #fff;\n    border-radius: 5px;\n    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);\n}\n.tooltip[data-v-6a4ce154]::before {\n    content: \"\";\n    position: absolute;\n    top: -0.4rem;\n    right: 1.2rem;\n    border-left: 1rem solid transparent;\n    border-right: 1rem solid transparent;\n    border-bottom: .75rem solid #fff;\n}\n.tooltip-heading[data-v-6a4ce154] {\n    display: flex;\n    align-items: flex-start;\n    padding: 0.5rem 1rem;\n    border-bottom: 0.01rem solid #eee;\n    justify-content: space-between;\n}\n.notification-list > a[data-v-6a4ce154] {\n    padding: 0.5rem 1rem;\n    display: inline-block;\n}\n.notification-list > a[data-v-6a4ce154]:hover {\n    background-color: rgba(0,0,0,.03);\n}\n.notification-item[data-v-6a4ce154] {\n    display: flex;\n    align-items: center;\n    padding: 0.65rem 0;\n}\n.notification-image[data-v-6a4ce154] {\n    margin-right: 1rem;\n}\n.notification-image img[data-v-6a4ce154] {\n    vertical-align: middle;\n    width: 4rem;\n    border-radius: 50%;\n    max-width: 100%;\n}\n.fadeStart-enter-active[data-v-6a4ce154] {\n    -webkit-animation: fadeStart-data-v-6a4ce154 0.2s both ease-in-out;\n    animation: fadeStart-data-v-6a4ce154 0.2s both ease-in-out;\n}\n.fadeStart-leave-active[data-v-6a4ce154] {\n    -webkit-animation: fadeEnd-data-v-6a4ce154 0.2s both ease-in-out;\n    animation: fadeEnd-data-v-6a4ce154 0.2s both ease-in-out;\n}\n@-webkit-keyframes fadeStart-data-v-6a4ce154 {\n0% {\n        opacity: 0;\n        transform: translate3d(0, 5px, 0);\n}\nto {\n        opacity: 1;\n        transform: translateZ(0);\n        display: block;\n}\n}\n@keyframes fadeStart-data-v-6a4ce154 {\n0% {\n        opacity: 0;\n        transform: translate3d(0, 5px, 0);\n}\nto {\n        opacity: 1;\n        transform: translateZ(0);\n        display: block;\n}\n}\n@-webkit-keyframes fadeEnd-data-v-6a4ce154 {\n0% {\n        opacity: 1;\n        transform: translateZ(0);\n}\nto {\n        opacity: 0;\n        transform: translate3d(0, 5px, 0);\n}\n}\n@keyframes fadeEnd-data-v-6a4ce154 {\n0% {\n        opacity: 1;\n        transform: translateZ(0);\n}\nto {\n        opacity: 0;\n        transform: translate3d(0, 5px, 0);\n}\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -4279,9 +4279,10 @@ var render = function() {
               {
                 staticClass: "text-white",
                 attrs: {
+                  viewBox: "0 0 16 16",
                   width: "16",
-                  xmlns: "http://www.w3.org/2000/svg",
-                  viewBox: "0 0 611.999 611.999"
+                  height: "16",
+                  "aria-hidden": "true"
                 }
               },
               [
@@ -4289,15 +4290,16 @@ var render = function() {
                   staticClass: "fill-current",
                   attrs: {
                     d:
-                      "M570.107 500.254c-65.037-29.371-67.511-155.441-67.559-158.622v-84.578c0-81.402-49.742-151.399-120.427-181.203C381.969 34 347.883 0 306.001 0c-41.883 0-75.968 34.002-76.121 75.849-70.682 29.804-120.425 99.801-120.425 181.203v84.578c-.046 3.181-2.522 129.251-67.561 158.622a17.257 17.257 0 007.103 32.986h164.88c3.38 18.594 12.172 35.892 25.619 49.903 17.86 18.608 41.479 28.856 66.502 28.856 25.025 0 48.644-10.248 66.502-28.856 13.449-14.012 22.241-31.311 25.619-49.903h164.88a17.26 17.26 0 0016.872-13.626 17.25 17.25 0 00-9.764-19.358zm-85.673-60.395c6.837 20.728 16.518 41.544 30.246 58.866H97.32c13.726-17.32 23.407-38.135 30.244-58.866h356.87zM306.001 34.515c18.945 0 34.963 12.73 39.975 30.082-12.912-2.678-26.282-4.09-39.975-4.09s-27.063 1.411-39.975 4.09c5.013-17.351 21.031-30.082 39.975-30.082zM143.97 341.736v-84.685c0-89.343 72.686-162.029 162.031-162.029s162.031 72.686 162.031 162.029v84.826c.023 2.596.427 29.879 7.303 63.465H136.663c6.88-33.618 7.286-60.949 7.307-63.606zm162.031 235.749c-26.341 0-49.33-18.992-56.709-44.246h113.416c-7.379 25.254-30.364 44.246-56.707 44.246z"
+                      "M8 16a2 2 0 001.985-1.75c.017-.137-.097-.25-.235-.25h-3.5c-.138 0-.252.113-.235.25A2 2 0 008 16z"
                   }
                 }),
                 _vm._v(" "),
                 _c("path", {
                   staticClass: "fill-current",
                   attrs: {
+                    "fill-rule": "evenodd",
                     d:
-                      "M306.001 119.235c-74.25 0-134.657 60.405-134.657 134.654 0 9.531 7.727 17.258 17.258 17.258 9.531 0 17.258-7.727 17.258-17.258 0-55.217 44.923-100.139 100.142-100.139 9.531 0 17.258-7.727 17.258-17.258-.001-9.532-7.728-17.257-17.259-17.257z"
+                      "M8 1.5A3.5 3.5 0 004.5 5v2.947c0 .346-.102.683-.294.97l-1.703 2.556a.018.018 0 00-.003.01l.001.006c0 .002.002.004.004.006a.017.017 0 00.006.004l.007.001h10.964l.007-.001a.016.016 0 00.006-.004.016.016 0 00.004-.006l.001-.007a.017.017 0 00-.003-.01l-1.703-2.554a1.75 1.75 0 01-.294-.97V5A3.5 3.5 0 008 1.5zM3 5a5 5 0 0110 0v2.947c0 .05.015.098.042.139l1.703 2.555A1.518 1.518 0 0113.482 13H2.518a1.518 1.518 0 01-1.263-2.36l1.703-2.554A.25.25 0 003 7.947V5z"
                   }
                 })
               ]

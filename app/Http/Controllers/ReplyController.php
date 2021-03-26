@@ -22,7 +22,7 @@ class ReplyController extends Controller
     {
         $this->validate($request, ['body' => 'required']);
 
-        $reply = $thread->addReply([
+        $reply = $thread->createReply([
             'body' => $request->get('body'),
             'user_id' => auth()->id()
         ]);

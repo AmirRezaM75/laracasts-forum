@@ -20,18 +20,11 @@ class NotificationTest extends TestCase
 
         $thread->subscribe();
 
-        $thread->addReply([
-            'user_id' => auth()->id(),
-            'body' => 'message'
-        ]);
+        $thread->createReply(['user_id' => auth()->id(), 'body' => 'message']);
 
         $this->assertCount(0, auth()->user()->notifications);
 
-
-        $reply = $thread->addReply([
-            'user_id' => User::factory()->create()->id,
-            'body' => 'message'
-        ]);
+        $reply = $thread->createReply(['user_id' => User::factory()->create()->id, 'body' => 'message']);
 
         $notifications = auth()->user()->fresh()->notifications;
 
