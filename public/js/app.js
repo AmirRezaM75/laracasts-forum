@@ -1939,21 +1939,26 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       text: '',
+      level: 'primary',
       show: false
     };
   },
   created: function created() {
     var _this = this;
 
-    if (this.message) this.flash(this.message);
-    window.events.$on('flash', function (message) {
-      return _this.flash(message);
+    if (this.message) this.flash({
+      message: this.message,
+      level: 'info'
+    });
+    window.events.$on('flash', function (data) {
+      return _this.flash(data);
     });
   },
   methods: {
-    flash: function flash(message) {
+    flash: function flash(data) {
       this.show = true;
-      this.text = message;
+      this.text = data.message;
+      this.level = data.level;
       this.hide();
     },
     hide: function hide() {
@@ -2480,7 +2485,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "ReplyModal",
   props: ['reply'],
@@ -2527,10 +2531,11 @@ __webpack_require__.r(__webpack_exports__);
           value: _this2.form.body
         });
 
-        _this2.close();
-
         flash('Your reply has been updated.');
+      })["catch"](function (error) {
+        _this2.handler(error);
       });
+      this.close();
     },
     store: function store() {
       var _this3 = this;
@@ -2541,9 +2546,18 @@ __webpack_require__.r(__webpack_exports__);
         var data = _ref.data;
         flash('Your reply has been created.');
 
-        _this3.close();
-
         _this3.$store.commit('ADD_REPLY', data);
+      })["catch"](function (error) {
+        _this3.handler(error);
+      });
+      this.close();
+    },
+    handler: function handler(error) {
+      // TODO: any better single word method name?
+      // TODO: Support for showing multiple flash messages
+      var errors = error.response.data.errors;
+      Object.keys(errors).forEach(function (key) {
+        flash(errors[key][0], 'danger');
       });
     }
   }
@@ -2667,7 +2681,11 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.events = new vue__WEBPACK_IMPORTED_MODULE_3__.default();
 
 window.flash = function (message) {
-  window.events.$emit('flash', message);
+  var level = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'primary';
+  window.events.$emit('flash', {
+    message: message,
+    level: level
+  });
 };
 
 vue__WEBPACK_IMPORTED_MODULE_3__.default.component('notification', __webpack_require__(/*! ./components/Notification */ "./resources/js/components/Notification.vue").default);
@@ -4194,20 +4212,25 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "notification is-primary", class: { "for-user": _vm.show } },
-    [
-      _c(
-        "a",
+  return _vm.show
+    ? _c(
+        "div",
         {
-          staticClass: "notification-body inherits-color",
-          attrs: { href: "#", target: "_blank", rel: "noreferrer noopener" }
+          staticClass: "notification",
+          class: [{ "for-user": _vm.show }, "is-" + _vm.level]
         },
-        [_vm._v(_vm._s(_vm.text))]
+        [
+          _c(
+            "a",
+            {
+              staticClass: "notification-body inherits-color",
+              attrs: { href: "#", target: "_blank", rel: "noreferrer noopener" }
+            },
+            [_vm._v(_vm._s(_vm.text))]
+          )
+        ]
       )
-    ]
-  )
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -4871,8 +4894,7 @@ var render = function() {
                     height: "16px",
                     viewBox: "0 0 16 16",
                     width: "16px",
-                    xmlns: "http://www.w3.org/2000/svg",
-                    "xmlns:xlink": "http://www.w3.org/1999/xlink"
+                    xmlns: "http://www.w3.org/2000/svg"
                   }
                 },
                 [

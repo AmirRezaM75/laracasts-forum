@@ -9,7 +9,7 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
 
 window.events = new Vue()
 
-window.flash = (message) => { window.events.$emit('flash', message) }
+window.flash = (message, level = 'primary') => { window.events.$emit('flash', { message, level }) }
 
 Vue.component('notification', require('./components/Notification').default)
 Vue.component('paginator', require('./components/Paginator').default)

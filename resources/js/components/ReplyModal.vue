@@ -5,7 +5,6 @@
                 <div class="control flex items-center">
                     <svg height="16px" viewBox="0 0 16 16" width="16px"
                          xmlns="http://www.w3.org/2000/svg"
-                         xmlns:xlink="http://www.w3.org/1999/xlink"
                          class="fill-current text-grey-dark mr-2">
                         <g fill="none" fill-rule="evenodd" id="Icons with numbers" stroke="none" stroke-width="1">
                             <g id="Group" transform="translate(0.000000, -336.000000)" class="fill-current">
@@ -110,18 +109,31 @@ export default {
                     value: this.form.body
                 })
 
-                this.close()
-
                 flash('Your reply has been updated.')
+            }).catch(error => {
+                this.handler(error)
             })
+
+            this.close()
         },
         store() {
             axios.post(this.endpoint, {
                 'body': this.form.body
             }).then(({data}) => {
                 flash('Your reply has been created.')
-                this.close()
                 this.$store.commit('ADD_REPLY', data)
+            }).catch(error => {
+                this.handler(error)
+            })
+
+            this.close()
+        },
+        handler(error) {
+            // TODO: any better single word method name?
+            // TODO: Support for showing multiple flash messages
+            let errors = error.response.data.errors
+            Object.keys(errors).forEach(function (key) {
+                flash(errors[key][0], 'danger')
             })
         }
     },

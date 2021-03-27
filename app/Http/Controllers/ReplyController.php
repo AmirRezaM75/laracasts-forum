@@ -28,7 +28,7 @@ class ReplyController extends Controller
             'user_id' => auth()->id()
         ]);
 
-        return response()->json($reply->load('user'));
+        return $reply->load('user');
     }
 
     public function update(Request $request, Reply $reply)

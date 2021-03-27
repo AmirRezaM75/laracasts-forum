@@ -1,5 +1,5 @@
 <template>
-    <div class="notification is-primary" :class="{ 'for-user': show }">
+    <div v-if="show" class="notification" :class="[{ 'for-user': show }, 'is-' + level]">
         <a href="#"
            class="notification-body inherits-color"
            target="_blank"
@@ -13,19 +13,24 @@
         data() {
             return {
                 text: '',
+                level: 'primary',
                 show: false
             }
         },
         created() {
             if (this.message)
-                this.flash(this.message);
+                this.flash({
+                    message: this.message,
+                    level: 'info'
+                });
 
-            window.events.$on('flash', message => this.flash(message))
+            window.events.$on('flash', data => this.flash(data))
         },
         methods: {
-            flash(message) {
+            flash(data) {
                 this.show = true
-                this.text = message
+                this.text = data.message
+                this.level = data.level
                 this.hide()
             },
             hide() {
