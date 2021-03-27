@@ -64,6 +64,8 @@ class Thread extends Model
             ->each
             ->notify(new ThreadSubscription($this, $reply));
 
+        $this->touch();
+
         return $reply;
     }
 
@@ -75,6 +77,17 @@ class Thread extends Model
     public function unsubscribe()
     {
         return $this->subscribers()->detach(auth()->id());
+    }
+
+    public function hasUpdates()
+    {
+        if (auth()->guest()) return false;
+
+        $key = auth()->user()->visitedThreadCacheKey($this->id);
+
+        if (! cache($key)) return false;
+
+        return $this->updated_at->gt(cache($key));
     }
 
     public function scopeFilter(Builder $query, ThreadFilters $filters)

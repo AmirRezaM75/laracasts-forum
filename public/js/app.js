@@ -2047,6 +2047,7 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var _this = this;
 
+    if (!this.$auth) return;
     axios.get('/users/notifications').then(function (response) {
       _this.notifications = response.data;
     });

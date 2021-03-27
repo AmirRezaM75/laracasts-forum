@@ -8,6 +8,7 @@ use App\Models\Thread;
 use App\Models\User;
 use App\Notifications\ThreadSubscription;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
@@ -105,5 +106,23 @@ class ThreadTest extends TestCase
         $this->thread->subscribe();
 
         $this->assertTrue($this->thread->isSubscribedTo);
+    }
+
+    /** @test */
+    public function thread_is_updated_since_user_read_it()
+    {
+        $this->assertFalse($this->thread->hasUpdates());
+
+        $this->login();
+
+        $this->assertFalse($this->thread->hasUpdates());
+
+        auth()->user()->read($this->thread);
+
+        Carbon::setTestNow(Carbon::now()->addMinute());
+
+        $this->thread->createReply(Reply::factory()->raw());
+
+        $this->assertTrue($this->thread->hasUpdates());
     }
 }

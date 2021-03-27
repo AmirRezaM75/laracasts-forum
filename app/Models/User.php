@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Carbon;
 
 class User extends Authenticatable
 {
@@ -29,5 +30,18 @@ class User extends Authenticatable
     public function getAvatarAttribute()
     {
         return asset('images/avatars/default-avatar-1.png');
+    }
+
+    public function read($thread)
+    {
+        cache()->forever(
+            $this->visitedThreadCacheKey($thread->id),
+            Carbon::now()
+        );
+    }
+
+    public function visitedThreadCacheKey($threadId)
+    {
+        return sprintf("user.%s.visited.%s", $this, $threadId);
     }
 }

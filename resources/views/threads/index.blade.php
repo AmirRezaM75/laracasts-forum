@@ -70,25 +70,22 @@
                     </div>
                     <div class="conversation-list">
                         @foreach($threads as $thread)
-                            <div
-                                data-conversation-item=""
-                                class="conversation-list-item bg-black-transparent-1 border border-solid border-black-transparent-3 flex cursor-pointer flex-col md:flex-row md:hover:bg-grey-panel mb-4 md:mb-3 transition-all px-6 py-4 rounded-xl"
-                            >
+                            <div class="conversation-list-item bg-black-transparent-1 border border-solid border-black-transparent-3 flex cursor-pointer flex-col md:flex-row md:hover:bg-grey-panel mb-4 md:mb-3 transition-all px-6 py-4 rounded-xl">
                                 <div class="conversation-list-avatar self-start w-full md:w-auto md:mr-5 flex items-center md:block mb-4 md:mb-0">
                                     <div class="flex items-center">
-                                        <a href="/@CheshireC4t" class="relative inline-flex items-start mb-2 mr-3 md:mr-0" style="width: 56px; height: 56px; padding: 2px;">
+                                        <a href="#" class="relative inline-flex items-start mb-2 mr-3 md:mr-0" style="width: 56px; height: 56px; padding: 2px;">
                                             <img
-                                                data-src="//www.gravatar.com/avatar/edfd4334ac9c0b683d60127979949fe9?s=100&amp;d=https%3A%2F%2Fs3.amazonaws.com%2Flaracasts%2Fimages%2Fforum%2Favatars%2Fdefault-avatar-30.png"
                                                 loading="lazy"
                                                 alt="CheshireC4t"
                                                 width="56"
                                                 height="56"
                                                 class="bg-white relative lazyloaded"
                                                 style="width: 100%; border-radius: 9px;"
-                                                src="../dist/images/default-avatar-25.png"
+                                                src="{{ $thread->user->avatar }}"
                                             />
                                         </a>
-                                        <strong class="uppercase md:hidden">CheshireC4t</strong>
+
+                                        <strong class="uppercase md:hidden">{{ $thread->user->name }}</strong>
                                     </div>
                                     <div class="flex items-center justify-center md:hidden ml-auto mr-3 md:mr-4 bg-grey-panel rounded-xl py-2">
                                         <div class="md:bg-grey-panel md:py-2 px-3 md:rounded-full flex items-center">
@@ -115,8 +112,7 @@
                                             <h4 class="mb-4 lg:mb-0 md:pr-6 text-base lg:clamp one-line" style="word-break: break-word;">
                                                 <a
                                                     href="{{ $thread->path() }}"
-                                                    class="conversation-list-link text-lg text-black font-semibold hover:text-black link"
-                                                    title="Pressing TAB perm deletes text"
+                                                    class="conversation-list-link text-lg text-black hover:text-black link font-semibold"
                                                 >
                                                     {{ $thread->title }}
                                                 </a>
@@ -162,11 +158,26 @@
                                             {{ $thread->body }}
                                         </div>
                                         <div class="text-grey-dark text-xs leading-none">
-                                            <a href="https://laracasts.com/@CheshireC4t" class="font-bold link hover:text-blue uppercase">
-                                                CheshireC4t
+                                            <a href="#" class="font-bold link hover:text-blue uppercase">
+                                                {{ $thread->user->name }}
                                             </a>
                                             posted
-                                            <a href="/discuss/channels/site-improvements/pressing-tab-perm-deletes-text" class="inherits-color link"><time class="font-bold">17 minutes ago</time></a>
+                                            <a href="" class="inherits-color link"><time class="font-bold">{{ $thread->created_at->diffForHumans() }}</time></a>
+                                            @if($thread->hasUpdates())
+                                                <div class="border-solid border border-red text-red px-2 h-4 text-3xs rounded-full ml-2 inline-flex items-center leading-off">
+                                                    Updated
+                                                </div>
+                                            @endif
+                                            {{--TODO: Solved Questions
+                                            <div class="border-solid border border-blue text-blue px-2 h-4 text-3xs rounded-full ml-2 inline-flex items-center">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="8" viewBox="0 0 21 16" class="hidden md:block mr-1"><g fill="#FFF" fill-rule="evenodd">
+                                                        <path fill="none" d="M-3-5h27v27H-3z"></path>
+                                                        <path d="M7.439 12.152l-5.037-5.36c-.447-.477-1.119-.477-1.566 0a1.204 1.204 0 0 0 0 1.667l6.603 7.03L20.086 2.025a1.204 1.204 0 0 0 0-1.668c-.447-.476-1.12-.476-1.567 0L7.44 12.152z" class="fill-current"></path>
+                                                    </g>
+                                                </svg>
+                                                Solved
+                                            </div>
+                                            --}}
                                         </div>
                                     </div>
                                 </div>
