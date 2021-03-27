@@ -6,7 +6,9 @@ use App\Models\Category;
 use App\Models\Reply;
 use App\Models\Thread;
 use App\Models\User;
+use App\Notifications\ThreadSubscription;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
 class ThreadTest extends TestCase
@@ -40,6 +42,20 @@ class ThreadTest extends TestCase
         $this->thread->createReply(Reply::factory()->raw());
 
         $this->assertCount(1, $this->thread->replies);
+    }
+
+    /** @test */
+    public function thread_notifies_subscribers_when_receives_new_reply()
+    {
+        Notification::fake();
+
+        $this->login();
+
+        $this->thread->subscribe();
+
+        $this->thread->createReply(Reply::factory()->raw());
+
+        Notification::assertSentTo(auth()->user(), ThreadSubscription::class);
     }
 
     /** @test */
