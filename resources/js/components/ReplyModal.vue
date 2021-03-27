@@ -131,10 +131,15 @@ export default {
         handler(error) {
             // TODO: any better single word method name?
             // TODO: Support for showing multiple flash messages
-            let errors = error.response.data.errors
-            Object.keys(errors).forEach(function (key) {
-                flash(errors[key][0], 'danger')
-            })
+            let data = error.response.data
+            if (data.hasOwnProperty('errors')) {
+                Object.keys(data['errors']).forEach(function (key) {
+                    flash(data['errors'][key][0], 'danger')
+                })
+            } else {
+                flash(data.message, 'danger')
+            }
+
         }
     },
 }

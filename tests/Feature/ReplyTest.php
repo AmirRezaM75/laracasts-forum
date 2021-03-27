@@ -5,6 +5,8 @@ namespace Tests\Feature;
 use App\Models\Reply;
 use App\Models\Thread;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\Response;
+use Illuminate\Support\Carbon;
 use Tests\TestCase;
 
 class ReplyTest extends TestCase
@@ -34,6 +36,28 @@ class ReplyTest extends TestCase
             ->assertJsonPath('user.id', auth()->id());
 
         $this->assertCount(1, $thread->replies);
+    }
+
+    /** @test */
+    public function users_cant_reply_more_than_once_per_minute()
+    {
+        $this->login();
+
+        $reply = Reply::factory()->raw();
+
+        $thread = Thread::factory()->create();
+
+        $this->post(route('threads.replies.store', $thread), $reply)
+            ->assertStatus(Response::HTTP_CREATED);
+
+        $this->post(route('threads.replies.store', $thread), $reply)
+            ->assertStatus(403);
+            //TODO: send custom code ->assertStatus(Response::HTTP_TOO_MANY_REQUESTS);
+
+        Carbon::setTestNow(Carbon::now()->addMinutes(10));
+
+        $this->post(route('threads.replies.store', $thread), $reply)
+            ->assertStatus(Response::HTTP_CREATED);
     }
 
     /** @test */

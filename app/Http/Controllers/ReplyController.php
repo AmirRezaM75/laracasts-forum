@@ -21,6 +21,8 @@ class ReplyController extends Controller
 
     public function store(Request $request, Thread $thread)
     {
+        $this->authorize('create', new Reply);
+
         $this->validate($request, ['body' => ['required', new Spam]]);
 
         $reply = $thread->createReply([
