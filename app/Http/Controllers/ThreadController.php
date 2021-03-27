@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Filters\ThreadFilters;
 use App\Models\Category;
 use App\Models\Thread;
+use App\Rules\Spam;
 use Illuminate\Http\Request;
 
 class ThreadController extends Controller
@@ -29,7 +30,7 @@ class ThreadController extends Controller
     {
         $this->validate($request, [
             'title' => 'required',
-            'body' => 'required',
+            'body' => ['required', new Spam],
             'category_id' => 'required|exists:categories,id'
         ]);
 

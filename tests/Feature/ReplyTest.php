@@ -50,6 +50,19 @@ class ReplyTest extends TestCase
     }
 
     /** @test */
+    public function reply_requires_spam_free_body()
+    {
+        $this->login();
+
+        $reply = Reply::factory()->raw(['body' => "Idiots' question"]);
+
+        $thread = Thread::factory()->create();
+
+        $this->post(route('threads.replies.store', $thread), $reply)
+            ->assertSessionHasErrors('body');
+    }
+
+    /** @test */
     public function unauthenticated_users_can_not_update_reply()
     {
         $this->withoutExceptionHandling();
@@ -58,7 +71,6 @@ class ReplyTest extends TestCase
 
         $this->patch('replies/1', []);
     }
-
 
     /** @test */
     public function unauthorized_users_can_not_update_reply()
@@ -80,9 +92,31 @@ class ReplyTest extends TestCase
 
         $body = 'update body';
 
-        $this->patch(route('replies.update', $reply->id), [ 'body' => $body]);
+        $this->patch(route('replies.update', $reply->id), ['body' => $body]);
 
         $this->assertEquals($body, $reply->fresh()->body);
+    }
+
+    /** @test */
+    public function reply_requires_body_on_update()
+    {
+        $this->login();
+
+        $reply = Reply::factory()->create(['user_id' => auth()->id()]);
+
+        $this->patch(route('replies.update', $reply->id), ['body' => ''])
+            ->assertSessionHasErrors('body');
+    }
+
+    /** @test */
+    public function reply_requires_spam_free_body_on_update()
+    {
+        $this->login();
+
+        $reply = Reply::factory()->create(['user_id' => auth()->id()]);
+
+        $this->patch(route('replies.update', $reply->id), ['body' => 'Shit!'])
+            ->assertSessionHasErrors('body');
     }
 
     /** @test */
@@ -95,7 +129,6 @@ class ReplyTest extends TestCase
         $this->delete('replies/1', []);
     }
 
-
     /** @test */
     public function unauthorized_users_can_not_delete_reply()
     {
@@ -106,7 +139,6 @@ class ReplyTest extends TestCase
         $this->delete(route('replies.delete', $reply->id))
             ->assertStatus(403);
     }
-
 
     /** @test */
     public function users_can_delete_reply()

@@ -123,6 +123,13 @@ class ThreadTest extends TestCase
     }
 
     /** @test */
+    public function thread_requires_spam_free_body()
+    {
+        $this->publishThread(['body' => "This community is SHIT"])
+            ->assertSessionHasErrors('body');
+    }
+
+    /** @test */
     public function thread_requires_category()
     {
         $this->publishThread(['category_id' => null])

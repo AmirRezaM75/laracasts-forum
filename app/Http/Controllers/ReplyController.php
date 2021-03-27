@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Reply;
 use App\Models\Thread;
+use App\Rules\Spam;
 use Illuminate\Http\Request;
 
 class ReplyController extends Controller
@@ -20,7 +21,7 @@ class ReplyController extends Controller
 
     public function store(Request $request, Thread $thread)
     {
-        $this->validate($request, ['body' => 'required']);
+        $this->validate($request, ['body' => ['required', new Spam]]);
 
         $reply = $thread->createReply([
             'body' => $request->get('body'),
@@ -34,7 +35,7 @@ class ReplyController extends Controller
     {
         $this->authorize('update', $reply);
 
-        $this->validate($request, ['body' => 'required']);
+        $this->validate($request, ['body' => ['required', new Spam]]);
 
         $reply->update(['body' => $request->get('body')]);
     }
