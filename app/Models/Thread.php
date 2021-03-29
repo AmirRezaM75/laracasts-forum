@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Events\Replied;
 use App\Filters\ThreadFilters;
-use App\Notifications\ThreadSubscription;
 use App\Traits\HasActivity;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -59,11 +58,6 @@ class Thread extends Model
     public function createReply($reply)
     {
         $reply = $this->replies()->create($reply);
-
-        $this->subscribers
-            ->where('id', '!==', $reply->user_id)
-            ->each
-            ->notify(new ThreadSubscription($this, $reply));
 
         event(new Replied($reply));
 
