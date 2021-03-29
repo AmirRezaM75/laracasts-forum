@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Events\Replied;
 use App\Filters\ThreadFilters;
 use App\Notifications\ThreadSubscription;
 use App\Traits\HasActivity;
@@ -57,12 +58,14 @@ class Thread extends Model
 
     public function createReply($reply)
     {
-        $reply =  $this->replies()->create($reply);
+        $reply = $this->replies()->create($reply);
 
         $this->subscribers
             ->where('id', '!==', $reply->user_id)
             ->each
             ->notify(new ThreadSubscription($this, $reply));
+
+        event(new Replied($reply));
 
         $this->touch();
 

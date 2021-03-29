@@ -4,9 +4,12 @@ namespace Tests\Feature;
 
 use App\Models\Reply;
 use App\Models\Thread;
+use App\Models\User;
+use App\Notifications\UserMention;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Response;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
 class ReplyTest extends TestCase
@@ -175,5 +178,23 @@ class ReplyTest extends TestCase
             ->assertStatus(204);
 
         $this->assertDatabaseMissing('replies', ['id' => $reply->id]);
+    }
+
+    /** @test */
+    public function mentioned_users_in_reply_are_notified()
+    {
+        Notification::fake();
+
+        $this->login();
+
+        $user = User::factory()->create(['name' => 'spatie']);
+
+        $thread = Thread::factory()->create();
+
+        $reply = Reply::factory()->raw(['body' => 'Hey, @spatie']);
+
+        $this->post(route('threads.replies.store', $thread), $reply);
+
+        Notification::assertSentTo($user, UserMention::class);
     }
 }

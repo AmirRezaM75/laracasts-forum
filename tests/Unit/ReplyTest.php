@@ -31,4 +31,14 @@ class ReplyTest extends TestCase
 
         $this->assertFalse($reply->wasRecentlyCreated());
     }
+
+    /** @test */
+    public function reply_knows_about_mentioned_users()
+    {
+        $reply = Reply::factory()->make([
+            'body' => 'Hello, @jeffreyway and @spatie'
+        ]);
+
+        $this->assertEquals(['jeffreyway', 'spatie'], $reply->mentionedUsers());
+    }
 }
