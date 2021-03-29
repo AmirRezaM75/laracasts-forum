@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Filters\ThreadFilters;
+use App\Http\Requests\ThreadRequest;
 use App\Models\Category;
 use App\Models\Thread;
-use App\Rules\Spam;
 use Illuminate\Http\Request;
 
 class ThreadController extends Controller
@@ -26,14 +26,8 @@ class ThreadController extends Controller
         return view('threads.index', compact('threads'));
     }
 
-    public function store(Request $request)
+    public function store(ThreadRequest $request)
     {
-        $this->validate($request, [
-            'title' => 'required',
-            'body' => ['required', new Spam],
-            'category_id' => 'required|exists:categories,id'
-        ]);
-
         $thread = Thread::create([
             'user_id' => auth()->id(),
             'category_id' => $request->get('category_id'),

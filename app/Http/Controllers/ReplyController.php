@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ReplyRequest;
 use App\Models\Reply;
 use App\Models\Thread;
-use App\Rules\Spam;
-use Illuminate\Http\Request;
 
 class ReplyController extends Controller
 {
@@ -19,26 +18,16 @@ class ReplyController extends Controller
         return $thread->replies()->paginate(15);
     }
 
-    public function store(Request $request, Thread $thread)
+    public function store(ReplyRequest $request, Thread $thread)
     {
-        $this->authorize('create', new Reply);
-
-        $this->validate($request, ['body' => ['required', new Spam]]);
-
-        $reply = $thread->createReply([
+        return $thread->createReply([
             'body' => $request->get('body'),
             'user_id' => auth()->id()
-        ]);
-
-        return $reply->load('user');
+        ])->load('user');
     }
 
-    public function update(Request $request, Reply $reply)
+    public function update(ReplyRequest $request, Reply $reply)
     {
-        $this->authorize('update', $reply);
-
-        $this->validate($request, ['body' => ['required', new Spam]]);
-
         $reply->update(['body' => $request->get('body')]);
     }
 

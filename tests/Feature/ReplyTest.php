@@ -51,8 +51,8 @@ class ReplyTest extends TestCase
             ->assertStatus(Response::HTTP_CREATED);
 
         $this->post(route('threads.replies.store', $thread), $reply)
-            ->assertStatus(403);
-            //TODO: send custom code ->assertStatus(Response::HTTP_TOO_MANY_REQUESTS);
+            ->assertStatus(Response::HTTP_FORBIDDEN);
+//             ->assertStatus(Response::HTTP_TOO_MANY_REQUESTS); // TODO: send custom code
 
         Carbon::setTestNow(Carbon::now()->addMinutes(10));
 
