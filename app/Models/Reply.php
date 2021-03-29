@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Traits\HasActivity;
 use App\Traits\HasFavorite;
+use App\Utilities\Regex;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -28,6 +29,11 @@ class Reply extends Model
         return $this->belongsTo(Thread::class);
     }
 
+    public function setBodyAttribute($body)
+    {
+        $this->attributes['body'] = preg_replace(Regex::USER_MENTION, "<a href='#'>$0</a>", $body);
+    }
+
     public function path()
     {
         return $this->thread->path() . '#reply-' . $this->id;
@@ -40,7 +46,7 @@ class Reply extends Model
 
     public function mentionedUsers()
     {
-        preg_match_all('/@([^\s.]+)/', $this->body, $matches);
+        preg_match_all(Regex::USER_MENTION, $this->body, $matches);
 
         return $matches[1];
     }

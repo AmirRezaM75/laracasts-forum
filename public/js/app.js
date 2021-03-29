@@ -4700,7 +4700,7 @@ var render = function() {
           _c(
             "div",
             { staticClass: "content user-content text-black md:text-sm" },
-            [_c("p", { domProps: { textContent: _vm._s(_vm.reply.body) } })]
+            [_c("p", { domProps: { innerHTML: _vm._s(_vm.reply.body) } })]
           ),
           _vm._v(" "),
           _c(
@@ -4889,132 +4889,145 @@ var render = function() {
         "div",
         { staticClass: "pointer-events-auto flex py-8 px-10 md:px-8 md:py-6" },
         [
-          _c("div", { staticClass: "flex-1" }, [
-            _c("div", { staticClass: "control flex items-center" }, [
-              _c(
-                "svg",
-                {
-                  staticClass: "fill-current text-grey-dark mr-2",
-                  attrs: {
-                    height: "16px",
-                    viewBox: "0 0 16 16",
-                    width: "16px",
-                    xmlns: "http://www.w3.org/2000/svg"
-                  }
-                },
-                [
-                  _c(
-                    "g",
-                    {
-                      attrs: {
-                        fill: "none",
-                        "fill-rule": "evenodd",
-                        id: "Icons with numbers",
-                        stroke: "none",
-                        "stroke-width": "1"
-                      }
-                    },
-                    [
-                      _c(
-                        "g",
-                        {
-                          staticClass: "fill-current",
-                          attrs: {
-                            id: "Group",
-                            transform: "translate(0.000000, -336.000000)"
-                          }
-                        },
-                        [
-                          _c("path", {
-                            attrs: {
-                              d:
-                                "M0,344 L6,339 L6,342 C10.5,342 14,343 16,348 C13,345.5 10,345 6,346 L6,349 L0,344 L0,344 Z M0,344"
-                            }
-                          })
-                        ]
-                      )
-                    ]
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _c("p", { staticClass: "font-bold" }, [
-                _vm._v(
-                  "\n                    " +
-                    _vm._s(_vm.mode === "edit" ? "Edit Reply" : "Reply to") +
-                    "\n                    "
-                ),
-                _vm.mode === "create"
-                  ? _c("strong", { staticClass: "text-blue uppercase" })
-                  : _vm._e()
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "control" }, [
-              _c("textarea", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.form.body,
-                    expression: "form.body"
-                  }
-                ],
-                staticClass:
-                  "textarea mb-1 border-l-0 border-r-0 px-0 py-4 text-sm focus:border-grey-light",
-                staticStyle: {
-                  "min-height": "150px",
-                  "max-height": "45vh",
-                  overflow: "hidden",
-                  "overflow-wrap": "break-word",
-                  resize: "none",
-                  height: "150px"
-                },
-                attrs: { required: "", name: "body" },
-                domProps: { value: _vm.form.body },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(_vm.form, "body", $event.target.value)
-                  }
+          _c(
+            "form",
+            {
+              staticClass: "flex-1",
+              on: {
+                submit: function($event) {
+                  $event.preventDefault()
+                  return _vm.submit($event)
                 }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "flex items-center justify-between" }, [
-              _vm._m(0),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass: "mobile:flex mobile:w-full mobile:justify-center"
-                },
-                [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn mr-4 md:py-25",
-                      on: { click: _vm.close }
-                    },
-                    [_vm._v("Cancel")]
+              }
+            },
+            [
+              _c("div", { staticClass: "control flex items-center" }, [
+                _c(
+                  "svg",
+                  {
+                    staticClass: "fill-current text-grey-dark mr-2",
+                    attrs: {
+                      height: "16px",
+                      viewBox: "0 0 16 16",
+                      width: "16px",
+                      xmlns: "http://www.w3.org/2000/svg"
+                    }
+                  },
+                  [
+                    _c(
+                      "g",
+                      {
+                        attrs: {
+                          fill: "none",
+                          "fill-rule": "evenodd",
+                          id: "Icons with numbers",
+                          stroke: "none",
+                          "stroke-width": "1"
+                        }
+                      },
+                      [
+                        _c(
+                          "g",
+                          {
+                            staticClass: "fill-current",
+                            attrs: {
+                              id: "Group",
+                              transform: "translate(0.000000, -336.000000)"
+                            }
+                          },
+                          [
+                            _c("path", {
+                              attrs: {
+                                d:
+                                  "M0,344 L6,339 L6,342 C10.5,342 14,343 16,348 C13,345.5 10,345 6,346 L6,349 L0,344 L0,344 Z M0,344"
+                              }
+                            })
+                          ]
+                        )
+                      ]
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c("p", { staticClass: "font-bold" }, [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(_vm.mode === "edit" ? "Edit Reply" : "Reply to") +
+                      "\n                    "
                   ),
-                  _vm._v(" "),
-                  _c("button", {
-                    staticClass: "md:py-25 mobile:flex-1 btn btn-blue",
-                    attrs: { title: "Cmd + Enter" },
-                    domProps: {
-                      textContent: _vm._s(
-                        _vm.mode === "create" ? "Post" : "Update"
-                      )
-                    },
-                    on: { click: _vm.submit }
-                  })
-                ]
-              )
-            ])
-          ])
+                  _vm.mode === "create"
+                    ? _c("strong", { staticClass: "text-blue uppercase" })
+                    : _vm._e()
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "control" }, [
+                _c("textarea", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.form.body,
+                      expression: "form.body"
+                    }
+                  ],
+                  staticClass:
+                    "textarea mb-1 border-l-0 border-r-0 px-0 py-4 text-sm focus:border-grey-light",
+                  staticStyle: {
+                    "min-height": "150px",
+                    "max-height": "45vh",
+                    overflow: "hidden",
+                    "overflow-wrap": "break-word",
+                    resize: "none",
+                    height: "150px"
+                  },
+                  attrs: { required: "", name: "body" },
+                  domProps: { value: _vm.form.body },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.form, "body", $event.target.value)
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "flex items-center justify-between" }, [
+                _vm._m(0),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "mobile:flex mobile:w-full mobile:justify-center"
+                  },
+                  [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn mr-4 md:py-25",
+                        attrs: { type: "button" },
+                        on: { click: _vm.close }
+                      },
+                      [_vm._v("Cancel")]
+                    ),
+                    _vm._v(" "),
+                    _c("button", {
+                      staticClass: "md:py-25 mobile:flex-1 btn btn-blue",
+                      attrs: { type: "submit", title: "Cmd + Enter" },
+                      domProps: {
+                        textContent: _vm._s(
+                          _vm.mode === "create" ? "Post" : "Update"
+                        )
+                      }
+                    })
+                  ]
+                )
+              ])
+            ]
+          )
         ]
       )
     ]

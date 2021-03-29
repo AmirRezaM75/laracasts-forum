@@ -41,7 +41,7 @@
                     </div>
                 </header>
                 <div class="content user-content text-black md:text-sm">
-                    <p v-text="reply.body"></p>
+                    <p v-html="reply.body"></p>
                 </div>
                 <div class="forum-comment-edit-links flex justify-end lg:justify-start relative mt-4 -mb-1 md:leading-none justify-start" style="height: 34px;">
 

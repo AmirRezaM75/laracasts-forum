@@ -35,10 +35,29 @@ class ReplyTest extends TestCase
     /** @test */
     public function reply_knows_about_mentioned_users()
     {
+        $reply = Reply::factory()->make(['body' => 'Hello @jeffrey, and @spatie.']);
+
+        $this->assertEquals(['jeffrey', 'spatie'], $reply->mentionedUsers());
+    }
+
+    /* TODO:
+    public function it_wraps_mentioned_usernames_within_anchor_tags()
+    {
         $reply = Reply::factory()->make([
-            'body' => 'Hello, @jeffreyway and @spatie'
+            'body' => "Hello, <a href='#'>@jeffrey</a> and @spatie."
         ]);
 
-        $this->assertEquals(['jeffreyway', 'spatie'], $reply->mentionedUsers());
+        $this->assertEquals(
+            "Hello, <a href='#'>@jeffrey</a> and <a href='#'>@spatie</a>."
+            , $reply->body);
+    }
+    */
+
+    /** @test */
+    public function it_wraps_mentioned_usernames_within_anchor_tags()
+    {
+        $reply = Reply::factory()->make(['body' => 'Hello @spatie.']);
+
+        $this->assertEquals("Hello <a href='#'>@spatie</a>.", $reply->body);
     }
 }

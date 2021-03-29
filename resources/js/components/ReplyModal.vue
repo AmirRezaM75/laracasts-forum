@@ -1,7 +1,7 @@
 <template>
     <div class="v--modal-box v--modal conversation-modal">
         <div class="pointer-events-auto flex py-8 px-10 md:px-8 md:py-6">
-            <div class="flex-1">
+            <form @submit.prevent="submit" class="flex-1">
                 <div class="control flex items-center">
                     <svg height="16px" viewBox="0 0 16 16" width="16px"
                          xmlns="http://www.w3.org/2000/svg"
@@ -50,16 +50,16 @@
                         </div>
                     </div>
                     <div class="mobile:flex mobile:w-full mobile:justify-center">
-                        <button @click="close" class="btn mr-4 md:py-25">Cancel</button>
+                        <button @click="close" class="btn mr-4 md:py-25" type="button">Cancel</button>
                         <button
-                            @click="submit"
+                            type="submit"
                             title="Cmd + Enter"
                             class="md:py-25 mobile:flex-1 btn btn-blue"
                             v-text=" mode === 'create' ? 'Post' : 'Update' "
                         ></button>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </template>
