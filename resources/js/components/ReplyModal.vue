@@ -8,8 +8,7 @@
                          class="fill-current text-grey-dark mr-2">
                         <g fill="none" fill-rule="evenodd" id="Icons with numbers" stroke="none" stroke-width="1">
                             <g id="Group" transform="translate(0.000000, -336.000000)" class="fill-current">
-                                <path
-                                    d="M0,344 L6,339 L6,342 C10.5,342 14,343 16,348 C13,345.5 10,345 6,346 L6,349 L0,344 L0,344 Z M0,344"></path>
+                                <path d="M0,344 L6,339 L6,342 C10.5,342 14,343 16,348 C13,345.5 10,345 6,346 L6,349 L0,344 L0,344 Z M0,344"></path>
                             </g>
                         </g>
                     </svg>
@@ -19,7 +18,13 @@
                     </p>
                 </div>
                 <div class="control">
+                    <div v-if="markdown.status"
+                         v-html="markdown.content"
+                         class="control user-content content border-t border-b border-solid border-grey-light lg:px-10 py-4 text-sm text-black overflow-y-auto"
+                         style="min-height: 244px; max-height: 45vh;">
+                    </div>
                     <textarea
+                        v-else
                         required
                         name="body"
                         v-model="form.body"
@@ -30,11 +35,18 @@
                 <div class="flex items-center justify-between">
                     <div>
                         <div class="mobile:hidden flex items-center text-xs mb-2">
-                            <label for="show_profile" class="switch mr-2">
-                                <input id="show_profile" name="show_profile" type="checkbox" disabled="disabled"/>
-                                <div class="slider round cursor-not-allowed"></div>
+                            <label for="markdown-preview" class="switch mr-2">
+                                <input id="markdown-preview"
+                                       type="checkbox"
+                                       :disabled="form.body.length === 0"
+                                       @change="toggleMarkdown"
+                                />
+                                <div class="slider round" :class="form.body ? 'cursor-pointer' : 'cursor-not-allowed'"></div>
                             </label>
-                            <span class="mr-3 font-semibold text-2xs text-grey-30">Markdown Preview OFF</span>
+                            <span class="mr-3 font-semibold text-2xs"
+                                  :class="markdown.status ? 'text-grey-dark' : 'text-grey-30'"
+                                  v-text="markdown.status ? 'Markdown Preview ON' : 'Markdown Preview OFF'"
+                            ></span>
                         </div>
                         <div class="flex">
                             <div class="flex-1 help">
@@ -65,6 +77,10 @@
 </template>
 
 <script>
+import marked from 'marked';
+import DOMPurify from 'dompurify';
+import hljs from 'highlight.js';
+
 export default {
     name: "ReplyModal",
     props: ['reply'],
@@ -72,6 +88,10 @@ export default {
         return {
             form: {
                 body: ''
+            },
+            markdown: {
+                status: false,
+                content: ''
             }
         }
     },
@@ -88,6 +108,13 @@ export default {
     created() {
         if (this.mode === 'edit')
             this.form.body = this.reply.body
+
+        marked.setOptions({
+            langPrefix: 'hljs lang-',
+            highlight: function(code) {
+                return hljs.highlightAuto(code).value;
+            }
+        });
     },
     methods: {
         close() {
@@ -139,87 +166,18 @@ export default {
             } else {
                 flash(data.message, 'danger')
             }
+        },
+        toggleMarkdown() {
+            this.markdown.status = ! this.markdown.status
 
+            if (this.markdown.status)
+                this.markdown.content =
+                    DOMPurify.sanitize(
+                        marked(this.form.body),
+                        { USE_PROFILES: {html: true} }
+                    )
         }
     },
 }
 </script>
 
-<style scoped>
-.v--modal-block-scroll {
-    overflow: hidden;
-    width: 100vw;
-}
-.v--modal-overlay {
-    position: fixed;
-    box-sizing: border-box;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.2);
-    z-index: 999;
-    opacity: 1;
-}
-.v--modal-overlay.scrollable {
-    height: 100%;
-    min-height: 100vh;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-}
-.v--modal-overlay .v--modal-background-click {
-    width: 100%;
-    min-height: 100%;
-    height: auto;
-}
-.v--modal-overlay .v--modal-box {
-    position: relative;
-    overflow: hidden;
-    box-sizing: border-box;
-}
-.v--modal-overlay.scrollable .v--modal-box {
-    margin-bottom: 2px;
-}
-.v--modal {
-    background-color: white;
-    text-align: left;
-    border-radius: 3px;
-    box-shadow: 0 20px 60px -2px rgba(27, 33, 58, 0.4);
-    padding: 0;
-}
-.v--modal.v--modal-fullscreen {
-    width: 100vw;
-    height: 100vh;
-    margin: 0;
-    left: 0;
-    top: 0;
-}
-.v--modal-top-right {
-    display: block;
-    position: absolute;
-    right: 0;
-    top: 0;
-}
-.overlay-fade-enter-active,
-.overlay-fade-leave-active {
-    transition: all 0.2s;
-}
-.overlay-fade-enter,
-.overlay-fade-leave-active {
-    opacity: 0;
-}
-.nice-modal-fade-enter-active,
-.nice-modal-fade-leave-active {
-    transition: all 0.4s;
-}
-.nice-modal-fade-enter,
-.nice-modal-fade-leave-active {
-    opacity: 0;
-    transform: translateY(-20px);
-}
-
-.v--modal-overlay[data-modal="reply-modal"] {
-    background: transparent !important;
-    pointer-events: none;
-}
-</style>

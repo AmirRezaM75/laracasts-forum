@@ -23,6 +23,9 @@
         "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
+        "dompurify": "^2.2.7",
+        "highlight.js": "^10.7.1",
+        "marked": "^2.0.1",
         "vue-js-modal": "^2.0.0-rc.6",
         "vuex": "^3.6.2"
     }
