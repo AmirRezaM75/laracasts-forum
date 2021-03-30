@@ -1,0 +1,93 @@
+.hljs {
+    display: block;
+    overflow-x: auto;
+    padding: .5em;
+    background: #182334;
+    color: #fff
+}
+
+.hljs-name,
+.hljs-strong {
+    font-weight: 700
+}
+
+.hljs-code,
+.hljs-emphasis {
+    font-style: italic
+}
+
+.hljs-tag {
+    color: #8b60ed
+}
+
+.hljs-variable,
+.hljs-template-variable,
+.hljs-selector-id,
+.hljs-selector-class {
+    color: #ade5fc
+}
+
+.hljs-string,
+.hljs-bullet {
+    color: #6edcc4
+}
+
+.hljs-type,
+.hljs-section,
+.hljs-attribute,
+.hljs-quote,
+.hljs-built_in,
+.hljs-builtin-name {
+    color: #8b60ed
+}
+
+.hljs-title {
+    color: #fff
+}
+
+.hljs-number,
+.hljs-symbol,
+.hljs-bullet {
+    color: #ec454f
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-literal {
+    color: #328af1
+}
+
+.hljs-comment,
+.hljs-deletion,
+.hljs-code {
+    color: rgba(255,255,255,.25)
+}
+
+.hljs-regexp,
+.hljs-link {
+    color: #c6b4f0
+}
+
+.hljs-meta {
+    color: #ec454f
+}
+
+.hljs-deletion {
+    background-color: #fc9b9b;
+    color: #333
+}
+
+.hljs-addition {
+    background-color: #a2fca2;
+    color: #3R33
+}
+
+.hljs a {
+    color: inherit
+}
+
+.hljs a:focus,
+.hljs a:hover {
+    color: inherit;
+    text-decoration: underline
+}

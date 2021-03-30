@@ -12,7 +12,7 @@ html {
 
 body {
     margin: 0;
-    font-family: system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji
 }
 
 hr {
@@ -25,12 +25,12 @@ abbr[title] {
     text-decoration: underline dotted
 }
 
-b,strong {
+b, strong {
     font-weight: bolder
 }
 
-code,kbd,pre,samp {
-    font-family: ui-monospace,SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+code, kbd, pre, samp {
+    font-family: ui-monospace, SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
     font-size: 1em
 }
 
@@ -38,7 +38,7 @@ small {
     font-size: 80%
 }
 
-sub,sup {
+sub, sup {
     vertical-align: baseline
 }
 
@@ -47,18 +47,18 @@ table {
     border-color: inherit
 }
 
-button,input,optgroup,select,textarea {
+button, input, optgroup, select, textarea {
     font-family: inherit;
     font-size: 100%;
     line-height: 1.15;
     margin: 0
 }
 
-button,select {
+button, select {
     text-transform: none
 }
 
-[type=button],[type=reset],[type=submit],button {
+[type=button], [type=reset], [type=submit], button {
     -webkit-appearance: button
 }
 
@@ -79,7 +79,7 @@ summary {
     display: list-item
 }
 
-blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre {
+blockquote, dd, dl, figure, h1, h2, h3, h4, h5, h6, hr, p, pre {
     margin: 0
 }
 
@@ -93,17 +93,17 @@ button:focus {
     outline: 5px auto -webkit-focus-ring-color
 }
 
-fieldset,ol,ul {
+fieldset, ol, ul {
     margin: 0;
     padding: 0
 }
 
-ol,ul {
+ol, ul {
     list-style: none
 }
 
 html {
-    font-family: system-ui,BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+    font-family: system-ui, BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
     line-height: 1.5
 }
 
@@ -112,7 +112,7 @@ body {
     line-height: inherit
 }
 
-*,:after,:before {
+*, :after, :before {
     box-sizing: border-box;
     border: 0 solid #ededed
 }
@@ -129,14 +129,6 @@ textarea {
     resize: vertical
 }
 
-input::-moz-placeholder,textarea::-moz-placeholder {
-    color: #a1a1aa
-}
-
-input:-ms-input-placeholder,textarea:-ms-input-placeholder {
-    color: #a1a1aa
-}
-
 input::-moz-placeholder, textarea::-moz-placeholder {
     color: #a1a1aa
 }
@@ -145,15 +137,15 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
     color: #a1a1aa
 }
 
-input::placeholder,textarea::placeholder {
+input::placeholder, textarea::placeholder {
     color: #a1a1aa
 }
 
-[role=button],button {
+[role=button], button {
     cursor: pointer
 }
 
-h1,h2,h3,h4,h5,h6 {
+h1, h2, h3, h4, h5, h6 {
     font-size: inherit;
     font-weight: inherit
 }
@@ -163,27 +155,27 @@ a {
     text-decoration: inherit
 }
 
-button,input,optgroup,select,textarea {
+button, input, optgroup, select, textarea {
     padding: 0;
     line-height: inherit;
     color: inherit
 }
 
-code,kbd,pre,samp {
-    font-family: Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace
+code, kbd, pre, samp {
+    font-family: Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace
 }
 
-audio,canvas,embed,iframe,img,object,svg,video {
+audio, canvas, embed, iframe, img, object, svg, video {
     display: block;
     vertical-align: middle
 }
 
-img,video {
+img, video {
     max-width: 100%;
     height: auto
 }
 
-abbr,address,article,aside,audio,b,blockquote,body,body div,caption,cite,code,dd,del,details,dfn,dl,dt,em,fieldset,figure,footer,form,h1,h2,h3,h4,h5,h6,header,html,i,iframe,img,ins,kbd,label,legend,li,mark,menu,nav,object,ol,p,pre,q,samp,section,small,span,strong,sub,summary,sup,table,tbody,td,tfoot,th,thead,time,tr,ul,var,video {
+abbr, address, article, aside, audio, b, blockquote, body, body div, caption, cite, code, dd, del, details, dfn, dl, dt, em, fieldset, figure, footer, form, h1, h2, h3, h4, h5, h6, header, html, i, iframe, img, ins, kbd, label, legend, li, mark, menu, nav, object, ol, p, pre, q, samp, section, small, span, strong, sub, summary, sup, table, tbody, td, tfoot, th, thead, time, tr, ul, var, video {
     margin: 0;
     padding: 0;
     border: 0;
@@ -193,7 +185,7 @@ abbr,address,article,aside,audio,b,blockquote,body,body div,caption,cite,code,dd
     background: 0 0
 }
 
-article,aside,details,figure,footer,header,nav,section,summary {
+article, aside, details, figure, footer, header, nav, section, summary {
     display: block
 }
 
@@ -201,11 +193,11 @@ html {
     box-sizing: border-box
 }
 
-*,:after,:before {
+*, :after, :before {
     box-sizing: inherit
 }
 
-embed,img,object {
+embed, img, object {
     max-width: 100%
 }
 
@@ -213,11 +205,11 @@ ul {
     list-style: none
 }
 
-blockquote,q {
+blockquote, q {
     quotes: none
 }
 
-blockquote:after,blockquote:before,q:after,q:before {
+blockquote:after, blockquote:before, q:after, q:before {
     content: "";
     content: none
 }
@@ -234,7 +226,7 @@ del {
     text-decoration: line-through
 }
 
-abbr[title],dfn[title] {
+abbr[title], dfn[title] {
     border-bottom: 1px dotted #000;
     cursor: help
 }
@@ -263,7 +255,7 @@ hr {
     padding: 0
 }
 
-input,select {
+input, select {
     vertical-align: middle
 }
 
@@ -281,7 +273,7 @@ input[type=checkbox] {
     vertical-align: bottom
 }
 
-input,select,textarea {
+input, select, textarea {
     font: 99% sans-serif
 }
 
@@ -294,11 +286,11 @@ small {
     font-size: 85%
 }
 
-td,td img {
+td, td img {
     vertical-align: top
 }
 
-sub,sup {
+sub, sup {
     font-size: 75%;
     line-height: 0;
     position: relative
@@ -312,19 +304,19 @@ sub {
     bottom: -.25em
 }
 
-code,kbd,pre,samp {
-    font-family: monospace,sans-serif
+code, kbd, pre, samp {
+    font-family: monospace, sans-serif
 }
 
-button,input[type=button],input[type=file],input[type=submit],label {
+button, input[type=button], input[type=file], input[type=submit], label {
     cursor: pointer
 }
 
-button,input,select,textarea {
+button, input, select, textarea {
     margin: 0
 }
 
-button,input[type=button] {
+button, input[type=button] {
     width: auto;
     overflow: visible
 }
@@ -360,18 +352,18 @@ html {
     text-rendering: optimizeLegibility
 }
 
-article,aside,figure,footer,header,hgroup,section {
+article, aside, figure, footer, header, hgroup, section {
     display: block
 }
 
-body,button,input,select,textarea {
-    font-family: Open Sans,Helvetica,Arial,sans-serif
+body, button, input, select, textarea {
+    font-family: Open Sans, Helvetica, Arial, sans-serif
 }
 
-code,pre {
+code, pre {
     -moz-osx-font-smoothing: auto;
     -webkit-font-smoothing: auto;
-    font-family: Source Code Pro,Monaco,Inconsolata,monospace;
+    font-family: Source Code Pro, Monaco, Inconsolata, monospace;
     line-height: 1.25
 }
 
@@ -406,7 +398,7 @@ img {
     max-width: 100%
 }
 
-input[type=checkbox],input[type=radio] {
+input[type=checkbox], input[type=radio] {
     vertical-align: baseline
 }
 
@@ -428,7 +420,7 @@ pre {
     word-wrap: normal
 }
 
-pre,pre code {
+pre, pre code {
     background-color: #f5f7fa;
     color: #4d545d
 }
@@ -443,13 +435,107 @@ table {
     width: 100%
 }
 
-table td,table th {
+table td, table th {
     text-align: left;
     vertical-align: top
 }
 
 table th {
     color: #22292f
+}
+
+.hljs {
+    display: block;
+    overflow-x: auto;
+    padding: .5em;
+    background: #182334;
+    color: #fff
+}
+
+.hljs-name,
+.hljs-strong {
+    font-weight: 700
+}
+
+.hljs-code,
+.hljs-emphasis {
+    font-style: italic
+}
+
+.hljs-tag {
+    color: #8b60ed
+}
+
+.hljs-variable,
+.hljs-template-variable,
+.hljs-selector-id,
+.hljs-selector-class {
+    color: #ade5fc
+}
+
+.hljs-string,
+.hljs-bullet {
+    color: #6edcc4
+}
+
+.hljs-type,
+.hljs-section,
+.hljs-attribute,
+.hljs-quote,
+.hljs-built_in,
+.hljs-builtin-name {
+    color: #8b60ed
+}
+
+.hljs-title {
+    color: #fff
+}
+
+.hljs-number,
+.hljs-symbol,
+.hljs-bullet {
+    color: #ec454f
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-literal {
+    color: #328af1
+}
+
+.hljs-comment,
+.hljs-deletion,
+.hljs-code {
+    color: rgba(255,255,255,.25)
+}
+
+.hljs-regexp,
+.hljs-link {
+    color: #c6b4f0
+}
+
+.hljs-meta {
+    color: #ec454f
+}
+
+.hljs-deletion {
+    background-color: #fc9b9b;
+    color: #333
+}
+
+.hljs-addition {
+    background-color: #a2fca2;
+    color: #3R33
+}
+
+.hljs a {
+    color: inherit
+}
+
+.hljs a:focus,
+.hljs a:hover {
+    color: inherit;
+    text-decoration: underline
 }
 
 .box {
@@ -2560,33 +2646,33 @@ body.series .generic-content a {
     margin-right: 10px
 }
 
-#root .has-icon {
+#app .has-icon {
     display: flex;
     align-items: center
 }
 
-#root .has-icon>.icon {
+#app .has-icon>.icon {
     padding-right: 10px
 }
 
-#root .has-icon>.icon:hover {
+#app .has-icon>.icon:hover {
     fill: #ef6733
 }
 
-#root .has-icon>.icon.is-grey {
+#app .has-icon>.icon.is-grey {
     fill: #aeb1b5;
     filter: invert(.7)
 }
 
-#root .has-icon>.icon.is-success {
+#app .has-icon>.icon.is-success {
     fill: #ef6733
 }
 
-#root .has-icon>.icon.is-toggle {
+#app .has-icon>.icon.is-toggle {
     fill: #aeb1b5
 }
 
-#root .has-icon>.icon.is-toggle.is-active,#root .has-icon>.icon.is-toggle:hover {
+#app .has-icon>.icon.is-toggle.is-active,#app .has-icon>.icon.is-toggle:hover {
     fill: #ef6733
 }
 
@@ -2686,7 +2772,7 @@ body.series .generic-content a {
     text-decoration: underline
 }
 
-#root button:focus,#root input:focus,#root select:focus,#root textarea:focus {
+#app button:focus,#app input:focus,#app select:focus,#app textarea:focus {
     outline: none
 }
 
@@ -5387,12 +5473,12 @@ body:not(.home) .flickity-prev-next-button {
     }
 }
 
-#root .series-banner-meta {
+#app .series-banner-meta {
     padding-top: 0;
     padding-bottom: 0
 }
 
-#root .series-banner-meta .level-item {
+#app .series-banner-meta .level-item {
     padding: 15px 0;
     display: flex;
     align-items: center;
@@ -5821,51 +5907,59 @@ body.skill .skill-thumbnail-card.is-techniques.is-current {
     background: 0 0
 }
 
-#root .user-content {
+.user-content {
     line-height: 1.6;
     letter-spacing: 0;
     word-break: break-word
 }
 
-#root .user-content blockquote {
+.user-content blockquote {
     --bg-opacity:1;background-color: rgba(246,246,246,var(--bg-opacity));
     --border-opacity:1;border-color: rgba(204,204,204,var(--border-opacity));
     border-style: solid;
     border-left-width: 20px
 }
 
-#root .user-content a {
+.user-content a {
     border: none
 }
 
-#root .user-content h1,#root .user-content h2 {
+.user-content h1,
+.user-content h2 {
     font-weight: 700;
     font-size: 1.25rem
 }
 
-#root .user-content h3,#root .user-content h4 {
+.user-content h3,
+.user-content h4 {
     font-weight: 700;
     font-size: 1.125rem
 }
 
-#root .user-content *+pre {
+.user-content *+pre {
     margin-top: 1em
 }
 
-#root .forum-comment.is-reply .user-content {
+#app .forum-comment.is-reply .user-content {
     margin-bottom: 0
 }
 
-#root .blog-content pre,#root .user-content pre,.code-fragment-wrap pre {
+#app .blog-content pre,
+.user-content pre,
+.code-fragment-wrap pre {
     word-wrap: normal;
     white-space: pre-wrap
 }
 
-#root .blog-content pre:not(:last-child),#root .user-content pre:not(:last-child),.code-fragment-wrap pre:not(:last-child) {
+#app .blog-content pre:not(:last-child),
+.user-content pre:not(:last-child),
+.code-fragment-wrap pre:not(:last-child) {
     margin-bottom: 1em
 }
 
-#root .blog-content pre>code,#root .user-content pre>code,.code-fragment-wrap pre>code {
+#app .blog-content pre>code,
+.user-content pre>code,
+.code-fragment-wrap pre>code {
     padding: 20px;
     font-size: 10px;
     border-radius: 4px;
@@ -5875,7 +5969,9 @@ body.skill .skill-thumbnail-card.is-techniques.is-current {
 }
 
 @media(min-width: 1200px) {
-    #root .blog-content pre>code,#root .user-content pre>code,.code-fragment-wrap pre>code {
+    #app .blog-content pre>code,
+    .user-content pre>code,
+    .code-fragment-wrap pre>code {
         font-size:12px
     }
 }
@@ -11362,4 +11458,6 @@ body.skill .skill-thumbnail-card.is-techniques.is-current {
         transform: scale(1);
     }
 }
+
+
 
