@@ -12,7 +12,7 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
-    protected $fillable = ['name', 'email', 'password'];
+    protected $fillable = ['name', 'email', 'password', 'avatar'];
 
     protected $hidden = ['email', 'password', 'remember_token'];
 
@@ -32,9 +32,9 @@ class User extends Authenticatable
         return $this->hasOne(Reply::class)->latest();
     }
 
-    public function getAvatarAttribute()
+    public function getAvatarAttribute($avatar)
     {
-        return asset('images/avatars/default-avatar-1.png');
+        return asset($avatar ? "avatars/{$avatar}"  : 'images/avatars/default-avatar-1.png');
     }
 
     public function read($thread)

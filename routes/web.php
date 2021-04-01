@@ -5,6 +5,7 @@ use App\Http\Controllers\{
     SubscriptionController,
     FavoriteController,
     ProfileController,
+    AvatarController,
     ThreadController,
     ReplyController
 };
@@ -41,5 +42,7 @@ Route::get('users/notifications', [NotificationController::class, 'index']);
 Route::delete('users/notifications/{notification}', [NotificationController::class, 'destroy']);
 
 Route::get('users/{user}', [ProfileController::class, 'show']);
+
+Route::post('users/{user}/avatar', [AvatarController::class, 'store']);
 
 require __DIR__.'/auth.php';
