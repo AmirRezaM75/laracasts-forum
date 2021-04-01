@@ -3,6 +3,7 @@
 use App\Http\Controllers\{
     NotificationController,
     SubscriptionController,
+    MarkdownController,
     FavoriteController,
     ProfileController,
     AvatarController,
@@ -21,6 +22,7 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
+Route::post('markdown', [MarkdownController::class, 'parse']);
 
 Route::post('threads/{thread}/subscriptions', [SubscriptionController::class, 'store']);
 Route::delete('threads/{thread}/subscriptions', [SubscriptionController::class, 'destroy']);

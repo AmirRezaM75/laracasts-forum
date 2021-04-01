@@ -121,7 +121,7 @@ class ReplyTest extends TestCase
 
         $this->patch(route('replies.update', $reply->id), ['body' => $body]);
 
-        $this->assertEquals($body, $reply->fresh()->body);
+        $this->assertEquals("<p>{$body}</p>", $reply->fresh()->body);
     }
 
     /** @test */

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Traits\HasActivity;
 use App\Traits\HasFavorite;
+use App\Utilities\Markdown;
 use App\Utilities\Regex;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -31,7 +32,11 @@ class Reply extends Model
 
     public function setBodyAttribute($body)
     {
-        $this->attributes['body'] = preg_replace(Regex::USER_MENTION, "<a href='#'>$0</a>", $body);
+        $this->attributes['body'] =
+            preg_replace(
+                Regex::USER_MENTION,
+                "<a href='#'>$0</a>", Markdown::parse($body)
+            );
     }
 
     public function path()

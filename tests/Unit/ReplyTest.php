@@ -58,6 +58,14 @@ class ReplyTest extends TestCase
     {
         $reply = Reply::factory()->make(['body' => 'Hello @spatie.']);
 
-        $this->assertEquals("Hello <a href='#'>@spatie</a>.", $reply->body);
+        $this->assertEquals("<p>Hello <a href='#'>@spatie</a>.</p>", $reply->body);
+    }
+
+    /** @test */
+    public function it_parses_markdown_to_html()
+    {
+        $reply = Reply::factory()->make(['body' => 'Hello _Laravel_']);
+
+        $this->assertEquals("<p>Hello <em>Laravel</em></p>", $reply->body);
     }
 }
