@@ -12,7 +12,7 @@ class MarkdownController extends Controller
         $this->middleware('auth');
     }
 
-    public function parse(Request $request)
+    public function __invoke(Request $request)
     {
         return response()->json(Markdown::parse($request->get('markdown')));
     }

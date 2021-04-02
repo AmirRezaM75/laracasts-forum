@@ -18,8 +18,8 @@
                     </p>
                 </div>
                 <div class="control">
-                    <div v-if="markdown.status"
-                         v-html="markdown.content"
+                    <div v-if="preview.status"
+                         v-html="preview.content"
                          class="control user-content content border-t border-b border-solid border-grey-light lg:px-10 py-4 text-sm text-black overflow-y-auto"
                          style="min-height: 244px; max-height: 45vh;">
                     </div>
@@ -44,8 +44,8 @@
                                 <div class="slider round" :class="form.body ? 'cursor-pointer' : 'cursor-not-allowed'"></div>
                             </label>
                             <span class="mr-3 font-semibold text-2xs"
-                                  :class="markdown.status ? 'text-grey-dark' : 'text-grey-30'"
-                                  v-text="markdown.status ? 'Markdown Preview ON' : 'Markdown Preview OFF'"
+                                  :class="preview.status ? 'text-grey-dark' : 'text-grey-30'"
+                                  v-text="'Markdown Preview ' + (preview.status ? 'ON' : 'OFF')"
                             ></span>
                         </div>
                         <div class="flex">
@@ -88,7 +88,7 @@ export default {
             form: {
                 body: ''
             },
-            markdown: {
+            preview: {
                 status: false,
                 content: ''
             }
@@ -150,6 +150,7 @@ export default {
         handler(error) {
             // TODO: any better single word method name?
             // TODO: Support for showing multiple flash messages
+            // TODO: Extract to dedicated mixin?
             let data = error.response.data
             if (data.hasOwnProperty('errors')) {
                 Object.keys(data['errors']).forEach(function (key) {
@@ -159,29 +160,31 @@ export default {
                 flash(data.message, 'danger')
             }
         },
-        async convertToMarkdown() {
-            await axios.post('/markdown', {
+        markdown() {
+            axios.post('/markdown', {
                 markdown: this.form.body
             })
             .then(({data}) => {
-                this.markdown.content =
+                this.preview.content =
                     DOMPurify.sanitize(
                         data,
                         { USE_PROFILES: { html: true } }
                     )
+
+                this.$nextTick(() => this.highlight())
             })
         },
+        highlight() {
+            this.$el.querySelectorAll('.user-content pre code')
+                .forEach(function (dom) {
+                    return hljs.highlightElement(dom)
+                })
+        },
         changePreview() {
-            this.markdown.status = ! this.markdown.status
+            this.preview.status = ! this.preview.status
 
-            if (this.markdown.status)
-                this.convertToMarkdown()
-                    .then( () => {
-                        this.$el.querySelectorAll('.user-content pre code')
-                            .forEach(function (dom) {
-                                return hljs.highlightElement(dom)
-                            })
-                    })
+            if (this.preview.status)
+                this.markdown()
         }
     },
 }
