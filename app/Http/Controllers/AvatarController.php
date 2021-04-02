@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class AvatarController extends Controller
 {
@@ -17,8 +18,17 @@ class AvatarController extends Controller
 
         $path = $request->file('avatar')->store('avatars', 'public');
 
+        $this->destroy();
+        
         auth()->user()->update([
             'avatar' => str_replace('avatars/', '', $path)
         ]);
+    }
+
+    public function destroy()
+    {
+        if (! is_null($avatar = auth()->user()->getRawOriginal('avatar'))) {
+            Storage::disk('public')->delete('avatars/' . $avatar);
+        }
     }
 }

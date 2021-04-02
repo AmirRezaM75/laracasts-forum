@@ -34,7 +34,7 @@ class User extends Authenticatable
 
     public function getAvatarAttribute($avatar)
     {
-        return asset($avatar ? "avatars/{$avatar}"  : 'images/avatars/default-avatar-1.png');
+        return asset($avatar ? "storage/avatars/{$avatar}"  : 'images/avatars/default-avatar-1.png');
     }
 
     public function read($thread)

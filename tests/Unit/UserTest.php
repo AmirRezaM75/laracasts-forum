@@ -30,6 +30,6 @@ class UserTest extends TestCase
 
         $user->avatar = 'example.jpg';
 
-        $this->assertEquals(asset('avatars/example.jpg'), $user->avatar);
+        $this->assertEquals(asset('storage/avatars/example.jpg'), $user->avatar);
     }
 }

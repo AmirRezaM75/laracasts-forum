@@ -14,6 +14,7 @@ window.flash = (message, level = 'primary') => { window.events.$emit('flash', { 
 Vue.component('notification', require('./components/Notification').default)
 Vue.component('paginator', require('./components/Paginator').default)
 Vue.component('flash', require('./components/Flash').default)
+Vue.component('avatar-form', require('./components/AvatarForm').default)
 Vue.component('thread', require('./views/Thread').default)
 
 Vue.use(VueJSModal, {
