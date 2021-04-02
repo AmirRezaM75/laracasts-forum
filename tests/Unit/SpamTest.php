@@ -28,5 +28,6 @@ class SpamTest extends TestCase
     function it_checks_for_any_key_being_held_down()
     {
         $this->assertTrue($this->spam->detect('Hello world aaaaaaaaa'));
+        $this->assertFalse($this->spam->detect('       <p>Ignore Indentation</p>'));
     }
 }

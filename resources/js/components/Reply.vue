@@ -91,8 +91,9 @@
 </template>
 
 <script>
-    import ReplyModal from "./ReplyModal";
-    import Favorite from "./Favorite";
+    import ReplyModal from "./ReplyModal"
+    import Favorite from "./Favorite"
+    import hljs from 'highlight.js'
 
     export default {
         props: ['model', 'index'],
@@ -118,6 +119,12 @@
 
                 flash('Reply was removed')
             },
+            highlight() {
+                this.$el.querySelectorAll('.user-content pre code')
+                    .forEach(function (dom) {
+                        return hljs.highlightElement(dom)
+                    })
+            },
             toggleDropdown() {
                 this.dropdownStatus = ! this.dropdownStatus
             }
@@ -135,6 +142,9 @@
             window.events.$on('reply-updated-' + this.reply.id, e => {
                 this.reply.body = e.body;
             })
+        },
+        mounted() {
+            this.highlight();
         }
     }
 </script>

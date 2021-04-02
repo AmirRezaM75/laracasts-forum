@@ -39,7 +39,7 @@
                                 <input id="markdown-preview"
                                        type="checkbox"
                                        :disabled="form.body.length === 0"
-                                       @change="toggleMarkdown"
+                                       @change="changePreview"
                                 />
                                 <div class="slider round" :class="form.body ? 'cursor-pointer' : 'cursor-not-allowed'"></div>
                             </label>
@@ -77,7 +77,6 @@
 </template>
 
 <script>
-import marked from 'marked';
 import DOMPurify from 'dompurify';
 import hljs from 'highlight.js';
 
@@ -108,13 +107,6 @@ export default {
     created() {
         if (this.mode === 'edit')
             this.form.body = this.reply.body
-
-        marked.setOptions({
-            langPrefix: 'hljs lang-',
-            highlight: function(code) {
-                return hljs.highlightAuto(code).value;
-            }
-        });
     },
     methods: {
         close() {
@@ -167,15 +159,29 @@ export default {
                 flash(data.message, 'danger')
             }
         },
-        toggleMarkdown() {
+        async convertToMarkdown() {
+            await axios.post('/markdown', {
+                markdown: this.form.body
+            })
+            .then(({data}) => {
+                this.markdown.content =
+                    DOMPurify.sanitize(
+                        data,
+                        { USE_PROFILES: { html: true } }
+                    )
+            })
+        },
+        changePreview() {
             this.markdown.status = ! this.markdown.status
 
             if (this.markdown.status)
-                this.markdown.content =
-                    DOMPurify.sanitize(
-                        marked(this.form.body),
-                        { USE_PROFILES: {html: true} }
-                    )
+                this.convertToMarkdown()
+                    .then( () => {
+                        this.$el.querySelectorAll('.user-content pre code')
+                            .forEach(function (dom) {
+                                return hljs.highlightElement(dom)
+                            })
+                    })
         }
     },
 }
