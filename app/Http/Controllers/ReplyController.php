@@ -29,6 +29,8 @@ class ReplyController extends Controller
     public function update(ReplyRequest $request, Reply $reply)
     {
         $reply->update(['body' => $request->get('body')]);
+
+        return response()->json(['body' => $reply->body]);
     }
 
     public function destroy(Reply $reply)

@@ -138,11 +138,6 @@
                 return this.authorize(user => user.id === this.reply.user_id)
             }
         },
-        created() {
-            window.events.$on('reply-updated-' + this.reply.id, e => {
-                this.reply.body = e.body;
-            })
-        },
         mounted() {
             this.highlight();
         }

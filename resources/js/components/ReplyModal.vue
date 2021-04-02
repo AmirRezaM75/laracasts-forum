@@ -77,8 +77,9 @@
 </template>
 
 <script>
-import DOMPurify from 'dompurify';
-import hljs from 'highlight.js';
+import DOMPurify from 'dompurify'
+import hljs from 'highlight.js'
+import TurndownService from 'turndown'
 
 export default {
     name: "ReplyModal",
@@ -105,8 +106,13 @@ export default {
         }
     },
     created() {
-        if (this.mode === 'edit')
-            this.form.body = this.reply.body
+        if (this.mode === 'edit') {
+            let turndownService = new TurndownService({
+                headingStyle: 'atx',
+                codeBlockStyle: 'fenced'
+            });
+            this.form.body = turndownService.turndown(this.reply.body)
+        }
     },
     methods: {
         close() {
@@ -122,11 +128,11 @@ export default {
             axios.patch(this.endpoint, {
                 'body': this.form.body
             }).then(response => {
-
                 this.$store.commit('UPDATE_REPLY', {
                     reply: this.reply,
-                    value: this.form.body
+                    value: response.data.body
                 })
+                // TODO: how to apply hljs after that?
 
                 flash('Your reply has been updated.')
             }).catch(error => {

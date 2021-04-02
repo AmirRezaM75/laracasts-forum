@@ -25,6 +25,7 @@
     "dependencies": {
         "dompurify": "^2.2.7",
         "highlight.js": "^10.7.1",
+        "turndown": "^7.0.0",
         "vue-js-modal": "^2.0.0-rc.6",
         "vuex": "^3.6.2"
     }
