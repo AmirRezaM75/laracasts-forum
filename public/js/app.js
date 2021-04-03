@@ -1859,6 +1859,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "AvatarForm",
+  props: ['user'],
+  computed: {
+    authorized: function authorized() {
+      var _this = this;
+
+      return this.authorize(function (auth) {
+        return auth.id === _this.user.id;
+      });
+    }
+  },
   methods: {
     submit: function submit(event) {
       if (!event.target.files.length) return;
@@ -54048,25 +54058,27 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "flex items-center mt-4" }, [
-    _c("form", { attrs: { enctype: "multipart/form-data" } }, [
-      _c(
-        "label",
-        {
-          staticClass:
-            "btn btn-outlined bg-transparent text-white border-transparent-25 px-5 py-25 mr-4 text-3xs",
-          attrs: { for: "avatar" }
-        },
-        [_vm._v("\n            Edit Avatar\n        ")]
-      ),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "hidden",
-        attrs: { type: "file", id: "avatar" },
-        on: { change: _vm.submit }
-      })
-    ])
-  ])
+  return _vm.authorized
+    ? _c("div", { staticClass: "flex items-center mt-4" }, [
+        _c("form", { attrs: { enctype: "multipart/form-data" } }, [
+          _c(
+            "label",
+            {
+              staticClass:
+                "btn btn-outlined bg-transparent text-white border-transparent-25 px-5 py-25 mr-4 text-3xs",
+              attrs: { for: "avatar" }
+            },
+            [_vm._v("\n            Edit Avatar\n        ")]
+          ),
+          _vm._v(" "),
+          _c("input", {
+            staticClass: "hidden",
+            attrs: { type: "file", id: "avatar" },
+            on: { change: _vm.submit }
+          })
+        ])
+      ])
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true

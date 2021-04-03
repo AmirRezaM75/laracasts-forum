@@ -36,7 +36,7 @@
                                     <p class="tracking-normal text-2xs mobile:text-sm">
                                         Member Since {{ $user->created_at->diffForHumans() }}
                                     </p>
-                                    <avatar-form></avatar-form>
+                                    <avatar-form :user="{{ $user }}"></avatar-form>
                                 </div>
                             </div>
                         </div>

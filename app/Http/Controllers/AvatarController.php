@@ -19,10 +19,12 @@ class AvatarController extends Controller
         $path = $request->file('avatar')->store('avatars', 'public');
 
         $this->destroy();
-        
+
         auth()->user()->update([
             'avatar' => str_replace('avatars/', '', $path)
         ]);
+
+        return response()->noContent();
     }
 
     public function destroy()
