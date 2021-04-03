@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 class ThreadFilters extends Filters
 {
-    protected $filters = ['by', 'popular', 'unanswered'];
+    public static $filters = ['by', 'popular', 'unanswered'];
 
     /**
      * @param string $username

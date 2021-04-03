@@ -69,6 +69,6 @@ class ThreadController extends Controller
             $threads->where('category_id', $category->id);
         }
 
-        return $threads->get();
+        return $threads->paginate(15);
     }
 }
