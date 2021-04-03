@@ -72,7 +72,7 @@
                         @include('threads._list')
                     </div>
                     <div class="mt-6">
-                        {{ $threads->appends(\App\Filters\ThreadFilters::$filters)->links() }}
+                        {{ $threads->appends(Request::only(\App\Filters\ThreadFilters::$filters))->links() }}
                     </div>
                     <div class="participate-button fixed z-40" style="display: none;">
                         <a class="bg-blue hover:bg-blue-dark rounded-full w-16 h-16 text-center flex items-center justify-center shadow-lg">
