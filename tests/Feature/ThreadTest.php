@@ -193,7 +193,7 @@ class ThreadTest extends TestCase
         $this->assertCount(1, $response['data']);
     }
 
-    /** TODO: FIELD is not available in SQLITE */
+    /** TODO: FIELD is not available in SQLITE, Mock Redis */
     public function filter_threads_by_visits()
     {
         $this->thread->visited(2);

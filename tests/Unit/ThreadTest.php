@@ -7,6 +7,7 @@ use App\Models\Reply;
 use App\Models\Thread;
 use App\Models\User;
 use App\Notifications\ThreadSubscription;
+use App\Utilities\Trending;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Notification;
@@ -128,13 +129,14 @@ class ThreadTest extends TestCase
     }
 
     /** @test */
-    //TODO: Mock Redis
     public function thread_knows_about_number_of_visits()
     {
-        Redis::del('trending');
+        Trending::flush();
 
-        $this->thread->visited(10);
+        $this->assertEquals(0, $this->thread->visits);
 
-        $this->assertEquals(10, $this->thread->visits);
+        Trending::push($this->thread->id);
+
+        $this->assertEquals(1, $this->thread->visits);
     }
 }

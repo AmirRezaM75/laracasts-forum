@@ -6,6 +6,7 @@ use App\Filters\ThreadFilters;
 use App\Http\Requests\ThreadRequest;
 use App\Models\Category;
 use App\Models\Thread;
+use App\Utilities\Trending;
 use Illuminate\Http\Request;
 
 class ThreadController extends Controller
@@ -43,7 +44,7 @@ class ThreadController extends Controller
         if (auth()->check())
             auth()->user()->read($thread);
 
-        $thread->visited();
+        Trending::push($thread->id);
 
         return view('threads.show', compact('thread'));
     }

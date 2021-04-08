@@ -4,6 +4,7 @@ namespace App\Filters;
 
 
 use App\Models\User;
+use App\Utilities\Trending;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Redis;
 
@@ -38,7 +39,7 @@ class ThreadFilters extends Filters
     {
         $this->builder->getQuery()->orders = [];
 
-        $ids = Redis::zrevrange('trending', 0, -1);
+        $ids = Trending::get();
 
         return $this->builder->whereIn('id', $ids)
             ->orderByRaw("FIELD(id," . implode(',', $ids) . ")");

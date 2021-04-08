@@ -42,7 +42,7 @@
                                             ></path>
                                         </g>
                                     </svg>
-                                    <span class="text-xs text-grey-dark font-semibold">212</span>
+                                    <span class="text-xs text-grey-dark font-semibold">{{ $thread->visits }}</span>
                                 </div>
                                 <div class="flex items-center bg-black-transparent-1 mr-2 border border-solid border-black-transparent-3 rounded-xl px-2 py-1">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="13" height="12" viewBox="0 0 15 14" class="mr-1">

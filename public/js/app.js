@@ -1870,7 +1870,7 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
-    submit: function submit(event) {
+    change: function change(event) {
       if (!event.target.files.length) return;
       var file = event.target.files[0];
       var reader = new FileReader();
@@ -54073,8 +54073,8 @@ var render = function() {
           _vm._v(" "),
           _c("input", {
             staticClass: "hidden",
-            attrs: { type: "file", id: "avatar" },
-            on: { change: _vm.submit }
+            attrs: { type: "file", id: "avatar", accept: "image/*" },
+            on: { change: _vm.change }
           })
         ])
       ])

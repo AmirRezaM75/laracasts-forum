@@ -5,7 +5,7 @@
                    class="btn btn-outlined bg-transparent text-white border-transparent-25 px-5 py-25 mr-4 text-3xs">
                 Edit Avatar
             </label>
-            <input type="file" id="avatar" class="hidden" @change="submit">
+            <input type="file" id="avatar" class="hidden" accept="image/*" @change="change">
         </form>
     </div>
 </template>
@@ -20,7 +20,7 @@ export default {
         }
     },
     methods: {
-        submit(event) {
+        change(event) {
             if (! event.target.files.length) return;
 
             let file = event.target.files[0]

@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Events\Replied;
 use App\Filters\ThreadFilters;
 use App\Traits\HasActivity;
+use App\Utilities\Trending;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -77,11 +78,6 @@ class Thread extends Model
         return $this->subscribers()->detach(auth()->id());
     }
 
-    public function visited($number = 1)
-    {
-        Redis::zincrby("trending", $number, $this->id);
-    }
-
     public function hasUpdates()
     {
         if (auth()->guest()) return false;
@@ -105,6 +101,6 @@ class Thread extends Model
 
     public function getVisitsAttribute()
     {
-        return Redis::zscore('trending', $this->id) ?? 0;
+        return Trending::score($this->id);
     }
 }
