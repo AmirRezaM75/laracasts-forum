@@ -43,6 +43,8 @@ class ThreadController extends Controller
         if (auth()->check())
             auth()->user()->read($thread);
 
+        $thread->visited();
+
         return view('threads.show', compact('thread'));
     }
 

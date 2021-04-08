@@ -79,7 +79,7 @@
                                     </g>
                                 </svg>
                             </div>
-                            <span class="text-xs text-grey-dark font-semibold text-left leading-none">4</span>
+                            <span class="text-xs text-grey-dark font-semibold text-left leading-none">{{ $thread->visits }}</span>
                         </div>
                     </div>
                 </div>

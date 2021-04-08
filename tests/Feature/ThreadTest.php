@@ -193,6 +193,20 @@ class ThreadTest extends TestCase
         $this->assertCount(1, $response['data']);
     }
 
+    /** TODO: FIELD is not available in SQLITE */
+    public function filter_threads_by_visits()
+    {
+        $this->thread->visited(2);
+
+        Thread::factory()->create()->visited(3);
+
+        Thread::factory()->create()->visited(1);
+
+        $response = $this->getJson('threads?trending=1')->json();
+
+        $this->assertEquals([2, 1, 3], array_column($response['data'], 'id'));
+    }
+
     /** @test */
     public function guests_can_not_subscribe_to_thread()
     {

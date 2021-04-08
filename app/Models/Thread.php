@@ -8,6 +8,7 @@ use App\Traits\HasActivity;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Redis;
 
 class Thread extends Model
 {
@@ -76,6 +77,11 @@ class Thread extends Model
         return $this->subscribers()->detach(auth()->id());
     }
 
+    public function visited($number = 1)
+    {
+        Redis::zincrby("trending", $number, $this->id);
+    }
+
     public function hasUpdates()
     {
         if (auth()->guest()) return false;
@@ -95,5 +101,10 @@ class Thread extends Model
     public function getIsSubscribedToAttribute()
     {
         return $this->subscribers()->wherePivot('user_id', auth()->id())->exists();
+    }
+
+    public function getVisitsAttribute()
+    {
+        return Redis::zscore('trending', $this->id) ?? 0;
     }
 }

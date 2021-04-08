@@ -5,10 +5,11 @@ namespace App\Filters;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Redis;
 
 class ThreadFilters extends Filters
 {
-    public static $filters = ['by', 'popular', 'unanswered'];
+    public static $filters = ['by', 'popular', 'unanswered', 'trending'];
 
     /**
      * @param string $username
@@ -25,13 +26,21 @@ class ThreadFilters extends Filters
     {
         // $this->builder->toSql()
 
-        // $this->builder->getQuery()->orders = [];
-
         return $this->builder->orderBy('replies_count', 'desc');
     }
 
     protected function unanswered()
     {
         return $this->builder->whereHas('replies', null, '=', 0);
+    }
+
+    protected function trending()
+    {
+        $this->builder->getQuery()->orders = [];
+
+        $ids = Redis::zrevrange('trending', 0, -1);
+
+        return $this->builder->whereIn('id', $ids)
+            ->orderByRaw("FIELD(id," . implode(',', $ids) . ")");
     }
 }

@@ -10,6 +10,7 @@ use App\Notifications\ThreadSubscription;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Redis;
 use Tests\TestCase;
 
 class ThreadTest extends TestCase
@@ -124,5 +125,16 @@ class ThreadTest extends TestCase
         $this->thread->createReply(Reply::factory()->raw());
 
         $this->assertTrue($this->thread->hasUpdates());
+    }
+
+    /** @test */
+    //TODO: Mock Redis
+    public function thread_knows_about_number_of_visits()
+    {
+        Redis::del('trending');
+
+        $this->thread->visited(10);
+
+        $this->assertEquals(10, $this->thread->visits);
     }
 }
