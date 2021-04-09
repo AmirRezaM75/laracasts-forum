@@ -1,59 +1,87 @@
-<x-guest-layout>
-    <x-auth-card>
-        <x-slot name="logo">
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-            </a>
-        </x-slot>
+@extends('layouts.master')
 
-        <!-- Validation Errors -->
-        <x-auth-validation-errors class="mb-4" :errors="$errors" />
-
-        <form method="POST" action="{{ route('register') }}">
-            @csrf
-
-            <!-- Name -->
-            <div>
-                <x-label for="name" :value="__('Name')" />
-
-                <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus />
-            </div>
-
-            <!-- Email Address -->
-            <div class="mt-4">
-                <x-label for="email" :value="__('Email')" />
-
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
-            </div>
-
-            <!-- Password -->
-            <div class="mt-4">
-                <x-label for="password" :value="__('Password')" />
-
-                <x-input id="password" class="block mt-1 w-full"
-                                type="password"
-                                name="password"
-                                required autocomplete="new-password" />
-            </div>
-
-            <!-- Confirm Password -->
-            <div class="mt-4">
-                <x-label for="password_confirmation" :value="__('Confirm Password')" />
-
-                <x-input id="password_confirmation" class="block mt-1 w-full"
-                                type="password"
-                                name="password_confirmation" required />
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
-                <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">
-                    {{ __('Already registered?') }}
-                </a>
-
-                <x-button class="ml-4">
-                    {{ __('Register') }}
-                </x-button>
-            </div>
-        </form>
-    </x-auth-card>
-</x-guest-layout>
+@section('content')
+    <div class="container mx-auto w-full">
+        <header class="flex text-center items-center justify-center">
+            <h1 class="text-3xl font-light tracking-tight text-black">Sign Up!</h1>
+        </header>
+        <div class="md:w-2/3 lg:w-1/3 md:mx-auto mt-8">
+            <form role="form" method="POST" action="{{ route('register') }}">
+                @csrf
+                <div class="control max-w-sm mx-auto">
+                    <label for="username" class="block font-bold text-2xs text-grey-dark">Username</label>
+                    <div class="flex items-center relative borderd border-solid border-b border-grey-light">
+                        <input
+                            type="text"
+                            id="username"
+                            name="username"
+                            autocomplete="username"
+                            placeholder="Enter Username"
+                            required="required"
+                            value="{{ old('name') }}"
+                            class="text-black input is-minimal text-sm"
+                            style="border: none;"
+                            autofocus
+                        >
+                        <div class="w-4 h-4 rounded-full p-1 mx-auto flex justify-center items-center ml-4 bg-grey">
+                            <svg width="10" height="8" viewBox="0 0 10 8">
+                                <path fill="#FFF" fill-rule="evenodd" stroke="#FFF" stroke-width=".728"
+                                      d="M3.533 5.646l-2.199-2.19c-.195-.194-.488-.194-.684 0-.195.195-.195.487 0 .682l2.883 2.87L9.055 1.51c.195-.194.195-.487 0-.681-.196-.195-.49-.195-.685 0L3.533 5.646z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                <div class="control max-w-sm mx-auto">
+                    <label for="email" class="block font-bold text-2xs text-grey-dark">Email</label>
+                    <div class="flex items-center relative borderd border-solid border-b border-grey-light">
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            autocomplete="email"
+                            placeholder="Enter Email"
+                            required
+                            value="{{ old('email') }}"
+                            class="text-black input is-minimal text-sm"
+                            style="border: none;"
+                        >
+                        <div class="w-4 h-4 rounded-full p-1 mx-auto flex justify-center items-center ml-4 bg-grey">
+                            <svg width="10" height="8" viewBox="0 0 10 8">
+                                <path fill="#FFF" fill-rule="evenodd" stroke="#FFF" stroke-width=".728"
+                                      d="M3.533 5.646l-2.199-2.19c-.195-.194-.488-.194-.684 0-.195.195-.195.487 0 .682l2.883 2.87L9.055 1.51c.195-.194.195-.487 0-.681-.196-.195-.49-.195-.685 0L3.533 5.646z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                <div class="control max-w-sm mx-auto">
+                    <label for="password" class="block font-bold text-2xs text-grey-dark">Password</label>
+                    <div class="flex items-center relative borderd border-solid border-b border-grey-light">
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            autocomplete="new-password"
+                            placeholder="Enter Password"
+                            required
+                            class="text-black input is-minimal text-sm"
+                            style="border: none;"
+                        >
+                        <button type="button" title="Toggle private mode" class="ml-4 text-2xs font-bold text-grey">
+                            Show
+                        </button>
+                        <div class="w-4 h-4 rounded-full p-1 mx-auto flex justify-center items-center ml-4 bg-grey">
+                            <svg width="10" height="8" viewBox="0 0 10 8">
+                                <path fill="#FFF" fill-rule="evenodd" stroke="#FFF" stroke-width=".728"
+                                      d="M3.533 5.646l-2.199-2.19c-.195-.194-.488-.194-.684 0-.195.195-.195.487 0 .682l2.883 2.87L9.055 1.51c.195-.194.195-.487 0-.681-.196-.195-.49-.195-.685 0L3.533 5.646z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                <div class="control text-center mt-10">
+                    <button type="submit" class="btn btn-blue w-full md:max-w-2/3 mx-auto">Create Account</button>
+                    <a href="{{ route('login') }}" class="block mt-4 text-grey-darkest text-sm hover:underline">Already Have an Account?</a>
+                </div>
+            </form>
+        </div>
+    </div>
+@endsection
