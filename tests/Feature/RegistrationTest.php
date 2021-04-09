@@ -2,31 +2,51 @@
 
 namespace Tests\Feature;
 
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
+use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
 class RegistrationTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_registration_screen_can_be_rendered()
+    /** @test */
+    public function registration_screen_can_be_rendered()
     {
-        $response = $this->get('/register');
-
-        $response->assertStatus(200);
+        $this->get('/register')->assertStatus(200);
     }
 
-    public function test_new_users_can_register()
+    /** @test */
+    public function guests_can_register()
     {
-        $response = $this->post('/register', [
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-            'password' => 'password',
-            'password_confirmation' => 'password',
-        ]);
+        Notification::fake();
+
+        $this->post('/register', User::factory()->raw(['password' => 'password']))
+            ->assertRedirect(RouteServiceProvider::HOME);
 
         $this->assertAuthenticated();
-        $response->assertRedirect(RouteServiceProvider::HOME);
+
+        Notification::assertSentTo(auth()->user(), VerifyEmail::class);
+    }
+
+    /** @test */
+    public function username_must_be_unique()
+    {
+        User::factory()->create(['username' => 'spatie']);
+
+        $this->post('/register', User::factory()->raw(['username' => 'spatie']))
+            ->assertSessionHasErrors('username');
+    }
+
+
+    public function username_must_only_contains_characters_and_numbers()
+    {
+        # We do further checking on RegexTest.php
+        $this->post('/register', User::factory()->raw(['username' => '@spatie']))
+            ->assertSessionHasErrors('username');
     }
 }

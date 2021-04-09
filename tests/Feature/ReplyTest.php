@@ -187,7 +187,7 @@ class ReplyTest extends TestCase
 
         $this->login();
 
-        $user = User::factory()->create(['name' => 'spatie']);
+        $user = User::factory()->create(['username' => 'spatie']);
 
         $thread = Thread::factory()->create();
 

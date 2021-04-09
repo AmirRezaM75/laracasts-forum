@@ -23,6 +23,12 @@ class ThreadTest extends TestCase
     }
 
     /** @test */
+    public function redirect_home_page_to_threads_index()
+    {
+        $this->get('/')->assertRedirect('/threads');
+    }
+
+    /** @test */
     public function users_can_see_threads()
     {
         $this->get('/threads')
@@ -157,7 +163,7 @@ class ThreadTest extends TestCase
         $user = User::factory()->create();
         $thread = Thread::factory()->create(['user_id' => $user->id]);
 
-        $this->get('threads?by=' . $user->name)
+        $this->get('threads?by=' . $user->username)
             ->assertSee($thread->title)
             ->assertDontSee($this->thread->title);
     }
