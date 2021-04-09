@@ -27,7 +27,7 @@
                         >
                             <div>
                                 <p class="hidden lg:block text-grey-40 text-2xs font-semibold">
-                                    {{ $thread->user->name }} started this conversation {{ $thread->created_at->diffForHumans() }}. 3 people have replied.
+                                    {{ $thread->user->username }} started this conversation {{ $thread->created_at->diffForHumans() }}. 3 people have replied.
                                 </p>
                             </div>
                             <div class="flex items-center flex-1 justify-around lg:justify-end">
@@ -97,7 +97,7 @@
                                         </div>
                                         <div class="flex-1 leading-none text-left">
                                             <div class="flex items-center">
-                                                <a href="/@jjmu15" class="font-bold block font-lg mr-2 text-black">{{ $thread->user->name }}</a>
+                                                <a href="/@jjmu15" class="font-bold block font-lg mr-2 text-black">{{ $thread->user->username }}</a>
                                                 <a
                                                     class="transition-all border border-solid border-black-transparent-3 hover:border-black-transparent-10 bg-black-transparent-2 hover:bg-black-transparent-3 font-semibold inline-flex items-center px-3 md:text-xs mobile:text-sm mobile:p-2 mobile:flex mobile:items-center text-black-transparent-50"
                                                     title="Original Poster"

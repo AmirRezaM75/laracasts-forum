@@ -7,8 +7,10 @@ use App\Models\User;
 
 class ProfileController extends Controller
 {
-    public function show(User $user)
+    public function show($username)
     {
+        $user = User::where('username', $username)->firstOrFail();
+
         return view('profiles.show', [
             'user' => $user,
             'items' => Activity::feed($user)

@@ -15,7 +15,7 @@
                                         <img
                                             data-src="{{ $user->avatar }}"
                                             loading="lazy"
-                                            alt="{{ $user->name }} avatar"
+                                            alt="{{ $user->username }} avatar"
                                             width="150"
                                             height="150"
                                             class="bg-white relative rounded-full text-black-transparent-10 mb-4 lg:mb-0 ls-is-cached lazyloaded"
@@ -30,7 +30,7 @@
                             <div class="flex justify-between mb-8">
                                 <div class="w-full flex flex-col items-center lg:items-start bg-black-transparent-10 rounded-xl py-4 px-7 text-white">
                                     <div class="flex">
-                                        <h1 class="text-xl mobile:font-bold tracking-normal lg:mr-4 mb-1">{{ $user->name }}</h1>
+                                        <h1 class="text-xl mobile:font-bold tracking-normal lg:mr-4 mb-1">{{ $user->username }}</h1>
                                         <div class="hidden xl:flex xl:justify-center xl:items-center leading-none"></div>
                                     </div>
                                     <p class="tracking-normal text-2xs mobile:text-sm">

@@ -1,5 +1,6 @@
 <?php
 
+use App\Utilities\Regex;
 use App\Http\Controllers\{
     NotificationController,
     SubscriptionController,
@@ -37,7 +38,9 @@ Route::delete('replies/{reply}/favorites', [FavoriteController::class, 'destroy'
 Route::get('users/notifications', [NotificationController::class, 'index']);
 Route::delete('users/notifications/{notification}', [NotificationController::class, 'destroy']);
 
-Route::get('users/{user}', [ProfileController::class, 'show']);
+Route::get('@{username}', [ProfileController::class, 'show'])
+    ->where('username', trim(Regex::USERNAME, '/'))
+    ->name('profile');
 
 Route::post('users/{user}/avatar', [AvatarController::class, 'store']);
 

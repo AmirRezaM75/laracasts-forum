@@ -14,7 +14,7 @@
                     />
                 </a>
 
-                <strong class="uppercase md:hidden">{{ $thread->user->name }}</strong>
+                <strong class="uppercase md:hidden">{{ $thread->user->username }}</strong>
             </div>
             <div class="flex items-center justify-center md:hidden ml-auto mr-3 md:mr-4 bg-grey-panel rounded-xl py-2">
                 <div class="md:bg-grey-panel md:py-2 px-3 md:rounded-full flex items-center">
@@ -88,7 +88,7 @@
                 </div>
                 <div class="text-grey-dark text-xs leading-none">
                     <a href="#" class="font-bold link hover:text-blue uppercase">
-                        {{ $thread->user->name }}
+                        {{ $thread->user->username }}
                     </a>
                     posted
                     <a href="" class="inherits-color link"><time class="font-bold">{{ $thread->created_at->diffForHumans() }}</time></a>

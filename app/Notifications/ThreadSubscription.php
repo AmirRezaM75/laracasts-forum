@@ -26,7 +26,7 @@ class ThreadSubscription extends Notification
     public function toArray($notifiable)
     {
         return [
-            'message' => $this->reply->user->name . ' left a comment.',
+            'message' => $this->reply->user->username . ' left a comment.',
             'description' => $this->reply->thread->title,
             'link' => $this->reply->path()
         ];
