@@ -1,5 +1,6 @@
 <script>
     import Replies from "../components/Replies";
+    import Thread from "../components/Thread";
     import SubscriptionButton from "../components/SubscriptionButton";
 
     export default {
@@ -8,7 +9,7 @@
                 return this.$store.state.count
             }
         },
-        name: "Thread",
-        components: { Replies, SubscriptionButton }
+        name: "ThreadView",
+        components: { Replies, SubscriptionButton, Thread }
     }
 </script>

@@ -5367,36 +5367,36 @@ body.skill .skill-thumbnail-card.is-techniques.is-current {
     background: 0 0
 }
 
-.user-content {
+#app .user-content {
     line-height: 1.6;
     letter-spacing: 0;
     word-break: break-word
 }
 
-.user-content blockquote {
+#app .user-content blockquote {
     --bg-opacity:1;background-color: rgba(246,246,246,var(--bg-opacity));
     --border-opacity:1;border-color: rgba(204,204,204,var(--border-opacity));
     border-style: solid;
     border-left-width: 20px
 }
 
-.user-content a {
+#app .user-content a {
     border: none
 }
 
-.user-content h1,
-.user-content h2 {
+#app .user-content h1,
+#app .user-content h2 {
     font-weight: 700;
     font-size: 1.25rem
 }
 
-.user-content h3,
-.user-content h4 {
+#app .user-content h3,
+#app .user-content h4 {
     font-weight: 700;
     font-size: 1.125rem
 }
 
-.user-content *+pre {
+#app .user-content *+pre {
     margin-top: 1em
 }
 
@@ -5405,20 +5405,20 @@ body.skill .skill-thumbnail-card.is-techniques.is-current {
 }
 
 #app .blog-content pre,
-.user-content pre,
+#app .user-content pre,
 .code-fragment-wrap pre {
     word-wrap: normal;
     white-space: pre-wrap
 }
 
 #app .blog-content pre:not(:last-child),
-.user-content pre:not(:last-child),
+#app .user-content pre:not(:last-child),
 .code-fragment-wrap pre:not(:last-child) {
     margin-bottom: 1em
 }
 
 #app .blog-content pre>code,
-.user-content pre>code,
+#app .user-content pre>code,
 .code-fragment-wrap pre>code {
     padding: 20px;
     font-size: 10px;
@@ -5430,7 +5430,7 @@ body.skill .skill-thumbnail-card.is-techniques.is-current {
 
 @media(min-width: 1200px) {
     #app .blog-content pre>code,
-    .user-content pre>code,
+    #app .user-content pre>code,
     .code-fragment-wrap pre>code {
         font-size:12px
     }

@@ -50,7 +50,7 @@ export default {
     },
     methods: {
         create() {
-            this.$modal.show(ReplyModal,{}, { name: "create-reply" });
+            this.$modal.show(ReplyModal,{}, { name: "create-reply", classes: ['v--modal', 'conversation-modal'] });
         },
         fetch(page) {
             axios.get(this.endpoint(page)).then(response => {

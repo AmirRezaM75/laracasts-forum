@@ -1,11 +1,13 @@
 @extends('layouts.master')
 
 @section('content')
-    <threads inline-template>
+    <threads-view inline-template :categories="{{ $categories }}">
         <div class="flex flex-col flex-col-reverse md:flex-row mx-auto" style="max-width: 1070px;">
             <div class="hidden lg:block lg:sticky lg:self-start flex-none mr-9" style="min-width: 200px; top: 40px;">
                 <div class="lg:sticky lg:text-center">
-                    <a class="btn btn-blue mb-8 w-full" style="box-shadow: rgb(215, 232, 253) 0px 4px 10px 1px;">
+                    <a class="btn btn-blue mb-8 w-full"
+                       style="box-shadow: rgb(215, 232, 253) 0px 4px 10px 1px;"
+                       @click.prevent="create">
                         New Discussion
                     </a>
                     @include('partials.sidebar')
@@ -84,5 +86,5 @@
                 </div>
             </div>
         </div>
-    </threads>
+    </threads-view>
 @endsection

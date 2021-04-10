@@ -5,6 +5,8 @@ namespace App\Models;
 use App\Events\Replied;
 use App\Filters\ThreadFilters;
 use App\Traits\HasActivity;
+use App\Utilities\Markdown;
+use App\Utilities\Regex;
 use App\Utilities\Trending;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -102,5 +104,15 @@ class Thread extends Model
     public function getVisitsAttribute()
     {
         return Trending::score($this->id);
+    }
+
+    public function setBodyAttribute($body)
+    {
+        $this->attributes['body'] =
+            preg_replace(
+                Regex::USER_MENTION,
+                "<a href='#'>$0</a>",
+                Markdown::parse($body)
+            );
     }
 }

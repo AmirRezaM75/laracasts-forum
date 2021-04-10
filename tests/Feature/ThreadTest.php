@@ -60,13 +60,14 @@ class ThreadTest extends TestCase
     {
         $this->login();
 
-        $thread = Thread::factory()->raw();
+        $thread = Thread::factory()->raw(['user_id' => auth()->id()]);
 
-        $response = $this->post(route('threads.store'), $thread);
+        $this->post(route('threads.store'), $thread)
+            ->assertJsonPath('redirect', url('/threads/' . Category::find(2)->slug . '/2'));
 
-        $this->get($response->headers->get('Location'))
-            ->assertSee($thread['title'])
-            ->assertSee($thread['body']);
+        $thread['body'] = "<p>{$thread['body']}</p>";
+
+        $this->assertDatabaseHas('threads', $thread);
     }
 
     /** @test */

@@ -35,7 +35,8 @@ class Reply extends Model
         $this->attributes['body'] =
             preg_replace(
                 Regex::USER_MENTION,
-                "<a href='#'>$0</a>", Markdown::parse($body)
+                "<a href='#'>$0</a>",
+                Markdown::parse($body)
             );
     }
 
