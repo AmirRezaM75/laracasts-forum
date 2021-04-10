@@ -9,7 +9,7 @@
                         <img
                             loading="lazy"
                             class="is-circle bg-white w-8 md:w-18 lazyloaded"
-                            :alt="reply.user.name"
+                            :alt="reply.user.username"
                             :src="reply.user.avatar"
                             style="border-radius: 9px;"
                         /><!--TODO: append user avatar-->
@@ -21,7 +21,7 @@
                     <div class="md:hidden">
                         <a :href="'users/' + reply.user.id" class="block relative rounded-lg overflow-hidden mr-4">
                             <img
-                                :alt="reply.user.name"
+                                :alt="reply.user.username"
                                 :src="reply.user.avatar"
                                 class="lazyload is-circle bg-white w-8 md:w-18"
                                 style="border-radius: 9px;"
@@ -32,7 +32,7 @@
                         <div class="flex items-center">
                             <a :href="'users/' + reply.user.id"
                                class="font-bold block font-lg mr-2 text-black"
-                               v-text="reply.user.name"
+                               v-text="reply.user.username"
                             ></a>
                         </div>
                         <a href="#" class="font-semibold pt-1 md:pt-0 text-3xs text-grey-dark link">
@@ -94,7 +94,7 @@
             edit() {
                 this.$modal.show(ReplyModal,
                     { reply: this.reply },
-                    { name: "edit-reply" }
+                    { name: "edit-reply", classes: ['v--modal', 'conversation-modal'] }
                 );
             },
             destroy() {
@@ -114,15 +114,20 @@
         },
         computed: {
             creationTime() {
-                let date = new Date(this.reply.created_at)
-                return date.toLocaleDateString("en-US").split('/').reverse().join('/');
+                return new Date(this.reply.created_at)
+                    .toLocaleDateString("en-US")
+                    .split('/')
+                    .reverse()
+                    .join('/');
             },
             isOwner() {
                 return this.authorize(user => user.id === this.reply.user_id)
             }
         },
         mounted() {
-            this.highlight();
+            this.highlight()
+
+            window.events.$on('highlight', this.highlight) // TODO: Doesn't work! :)
         }
     }
 </script>

@@ -66,14 +66,17 @@
 </template>
 
 <script>
-import hljs from "highlight.js"
 import ConversationDropdown from "./ConversationDropdown"
+import ThreadModal from "./ThreadModal"
+import hljs from "highlight.js"
 
 export default {
     name: "Thread",
     components: { ConversationDropdown },
-    props: ['thread'],
     computed: {
+        thread() {
+            return this.$store.state.thread
+        },
         ownerURL() {
             return '@' + this.owner.username
         },
@@ -81,8 +84,11 @@ export default {
             return this.thread.user
         },
         creationTime() {
-            let date = new Date(this.thread.created_at)
-            return date.toLocaleDateString("en-US").split('/').reverse().join('/');
+            return new Date(this.thread.created_at)
+                .toLocaleDateString("en-US")
+                .split('/')
+                .reverse()
+                .join('/');
         },
         isOwner() {
             return this.authorize(user => user.id === this.thread.user_id)
@@ -90,7 +96,10 @@ export default {
     },
     methods: {
         edit() {
-            //
+            this.$modal.show(ThreadModal,
+                { thread: this.thread },
+                { name: "edit-thread", classes: ['v--modal', 'conversation-modal'] }
+            );
         },
         destroy() {
             // axios.delete('/threads/' + this.thread.id);
@@ -100,7 +109,7 @@ export default {
                 .forEach(function (dom) {
                     return hljs.highlightElement(dom)
                 })
-        },
+        }
     },
     mounted() {
         this.highlight();

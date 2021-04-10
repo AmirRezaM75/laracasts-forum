@@ -2471,7 +2471,8 @@ __webpack_require__.r(__webpack_exports__);
       this.$modal.show(_ReplyModal__WEBPACK_IMPORTED_MODULE_1__.default, {
         reply: this.reply
       }, {
-        name: "edit-reply"
+        name: "edit-reply",
+        classes: ['v--modal', 'conversation-modal']
       });
     },
     destroy: function destroy() {
@@ -2490,8 +2491,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     creationTime: function creationTime() {
-      var date = new Date(this.reply.created_at);
-      return date.toLocaleDateString("en-US").split('/').reverse().join('/');
+      return new Date(this.reply.created_at).toLocaleDateString("en-US").split('/').reverse().join('/');
     },
     isOwner: function isOwner() {
       var _this2 = this;
@@ -2503,6 +2503,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.highlight();
+    window.events.$on('highlight', this.highlight); // TODO: Doesn't work! :)
   }
 });
 
@@ -2657,9 +2658,9 @@ __webpack_require__.r(__webpack_exports__);
         _this2.$store.commit('UPDATE_REPLY', {
           reply: _this2.reply,
           value: response.data.body
-        }); // TODO: how to apply hljs after that?
+        });
 
-
+        window.events.$emit('highlight');
         flash('Your reply has been updated.');
       })["catch"](function (error) {
         _this2.handler(error);
@@ -2676,6 +2677,8 @@ __webpack_require__.r(__webpack_exports__);
         flash('Your reply has been created.');
 
         _this3.$store.commit('ADD_REPLY', data);
+
+        window.events.$emit('highlight');
       })["catch"](function (error) {
         _this3.handler(error);
       });
@@ -2802,9 +2805,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var highlight_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! highlight.js */ "./node_modules/highlight.js/lib/index.js");
-/* harmony import */ var highlight_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(highlight_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _ConversationDropdown__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ConversationDropdown */ "./resources/js/components/ConversationDropdown.vue");
+/* harmony import */ var _ConversationDropdown__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ConversationDropdown */ "./resources/js/components/ConversationDropdown.vue");
+/* harmony import */ var _ThreadModal__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ThreadModal */ "./resources/js/components/ThreadModal.vue");
+/* harmony import */ var highlight_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! highlight.js */ "./node_modules/highlight.js/lib/index.js");
+/* harmony import */ var highlight_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(highlight_js__WEBPACK_IMPORTED_MODULE_2__);
 //
 //
 //
@@ -2872,15 +2876,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Thread",
   components: {
-    ConversationDropdown: _ConversationDropdown__WEBPACK_IMPORTED_MODULE_1__.default
+    ConversationDropdown: _ConversationDropdown__WEBPACK_IMPORTED_MODULE_0__.default
   },
-  props: ['thread'],
   computed: {
+    thread: function thread() {
+      return this.$store.state.thread;
+    },
     ownerURL: function ownerURL() {
       return '@' + this.owner.username;
     },
@@ -2888,8 +2895,7 @@ __webpack_require__.r(__webpack_exports__);
       return this.thread.user;
     },
     creationTime: function creationTime() {
-      var date = new Date(this.thread.created_at);
-      return date.toLocaleDateString("en-US").split('/').reverse().join('/');
+      return new Date(this.thread.created_at).toLocaleDateString("en-US").split('/').reverse().join('/');
     },
     isOwner: function isOwner() {
       var _this = this;
@@ -2900,13 +2906,19 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
-    edit: function edit() {//
+    edit: function edit() {
+      this.$modal.show(_ThreadModal__WEBPACK_IMPORTED_MODULE_1__.default, {
+        thread: this.thread
+      }, {
+        name: "edit-thread",
+        classes: ['v--modal', 'conversation-modal']
+      });
     },
     destroy: function destroy() {// axios.delete('/threads/' + this.thread.id);
     },
     highlight: function highlight() {
       this.$el.querySelectorAll('.user-content pre code').forEach(function (dom) {
-        return highlight_js__WEBPACK_IMPORTED_MODULE_0___default().highlightElement(dom);
+        return highlight_js__WEBPACK_IMPORTED_MODULE_2___default().highlightElement(dom);
       });
     }
   },
@@ -3027,7 +3039,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "ThreadModal",
-  props: ['categories', 'thread'],
+  props: ['thread'],
   data: function data() {
     return {
       form: {
@@ -3048,6 +3060,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     endpoint: function endpoint() {
       return this.mode === 'create' ? '/threads' : '/threads/' + this.thread.id;
+    },
+    categories: function categories() {
+      return this.$store.state.categories;
     }
   },
   created: function created() {
@@ -3170,16 +3185,21 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "ThreadView",
+  props: ['categories', 'thread'],
+  components: {
+    Replies: _components_Replies__WEBPACK_IMPORTED_MODULE_0__.default,
+    SubscriptionButton: _components_SubscriptionButton__WEBPACK_IMPORTED_MODULE_2__.default,
+    Thread: _components_Thread__WEBPACK_IMPORTED_MODULE_1__.default
+  },
   computed: {
     repliesCount: function repliesCount() {
       return this.$store.state.count;
     }
   },
-  name: "ThreadView",
-  components: {
-    Replies: _components_Replies__WEBPACK_IMPORTED_MODULE_0__.default,
-    SubscriptionButton: _components_SubscriptionButton__WEBPACK_IMPORTED_MODULE_2__.default,
-    Thread: _components_Thread__WEBPACK_IMPORTED_MODULE_1__.default
+  mounted: function mounted() {
+    this.$store.commit('SET_THREAD', this.thread);
+    this.$store.commit('SET_CATEGORIES', this.categories);
   }
 });
 
@@ -3210,6 +3230,9 @@ __webpack_require__.r(__webpack_exports__);
         classes: ['v--modal', 'conversation-modal']
       });
     }
+  },
+  mounted: function mounted() {
+    this.$store.commit('SET_CATEGORIES', this.categories);
   }
 });
 
@@ -3314,10 +3337,18 @@ __webpack_require__.r(__webpack_exports__);
 vue__WEBPACK_IMPORTED_MODULE_0__.default.use(vuex__WEBPACK_IMPORTED_MODULE_1__.default);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new vuex__WEBPACK_IMPORTED_MODULE_1__.default.Store({
   state: {
+    thread: false,
     replies: [],
+    categories: [],
     count: 0
   },
   mutations: {
+    SET_CATEGORIES: function SET_CATEGORIES(state, categories) {
+      state.categories = categories;
+    },
+    SET_THREAD: function SET_THREAD(state, thread) {
+      state.thread = thread;
+    },
     SET_REPLIES_COUNT: function SET_REPLIES_COUNT(state, number) {
       state.count = number;
     },
@@ -55383,7 +55414,7 @@ var render = function() {
                     staticClass: "is-circle",
                     attrs: {
                       src: _vm.$auth.avatar,
-                      alt: "amirrezam75",
+                      alt: _vm.$auth.username,
                       width: "37.5"
                     }
                   })
@@ -55450,7 +55481,7 @@ var render = function() {
                   staticStyle: { "border-radius": "9px" },
                   attrs: {
                     loading: "lazy",
-                    alt: _vm.reply.user.name,
+                    alt: _vm.reply.user.username,
                     src: _vm.reply.user.avatar
                   }
                 })
@@ -55473,7 +55504,7 @@ var render = function() {
                     staticClass: "lazyload is-circle bg-white w-8 md:w-18",
                     staticStyle: { "border-radius": "9px" },
                     attrs: {
-                      alt: _vm.reply.user.name,
+                      alt: _vm.reply.user.username,
                       src: _vm.reply.user.avatar
                     }
                   })
@@ -55486,7 +55517,7 @@ var render = function() {
                 _c("a", {
                   staticClass: "font-bold block font-lg mr-2 text-black",
                   attrs: { href: "users/" + _vm.reply.user.id },
-                  domProps: { textContent: _vm._s(_vm.reply.user.name) }
+                  domProps: { textContent: _vm._s(_vm.reply.user.username) }
                 })
               ]),
               _vm._v(" "),

@@ -27,7 +27,7 @@ Route::post('threads/{thread}/replies', [ReplyController::class, 'store'])->name
 Route::patch('replies/{reply}', [ReplyController::class, 'update'])->name('replies.update');
 Route::delete('replies/{reply}', [ReplyController::class, 'destroy'])->name('replies.delete');
 
-Route::resource('threads', ThreadController::class)->except(['create', 'edit', 'show', 'index']);
+Route::resource('threads', ThreadController::class)->except(['index', 'show', 'create', 'edit',]);
 Route::get('threads/{category?}', [ThreadController::class, 'index'])->name('threads.index');
 Route::get('threads/{category}/{thread}', [ThreadController::class, 'show'])->name('threads.show');
 

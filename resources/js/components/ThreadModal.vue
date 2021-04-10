@@ -94,7 +94,7 @@ import hljs from "highlight.js";
 
 export default {
     name: "ThreadModal",
-    props: ['categories', 'thread'],
+    props: ['thread'],
     data() {
         return {
             form: {
@@ -115,6 +115,9 @@ export default {
         },
         endpoint() {
             return this.mode === 'create' ? '/threads' : '/threads/' + this.thread.id
+        },
+        categories() {
+            return this.$store.state.categories
         }
     },
     created() {

@@ -14,6 +14,9 @@
                     { name: "create-thread", classes: ['v--modal', 'conversation-modal'] }
                 );
             }
+        },
+        mounted() {
+            this.$store.commit('SET_CATEGORIES', this.categories)
         }
     }
 </script>

@@ -51,7 +51,10 @@ class ThreadController extends Controller
 
     public function update(Request $request, Thread $thread)
     {
-        //
+        $thread->update($request->only(['title', 'body', 'category_id']));
+
+        if ($thread->wasChanged('category_id'))
+            return response()->json(['redirect' => $thread->fresh()->path()]);
     }
 
     public function destroy(Request $request, Thread $thread)

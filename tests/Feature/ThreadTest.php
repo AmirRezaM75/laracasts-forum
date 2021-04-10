@@ -71,6 +71,28 @@ class ThreadTest extends TestCase
     }
 
     /** @test */
+    public function users_can_update_thread()
+    {
+        $this->login();
+
+        $thread = Thread::factory()->create(['user_id' => auth()->id()]);
+
+        $data = [
+            'title' => 'updated title',
+            'body' => 'updated body',
+            'category_id' => 1
+        ];
+
+        $this->patch(route('threads.update', $thread), $data)
+            ->assertJsonPath('redirect', url('/threads/' . Category::find(1)->slug . '/2'));
+
+        $data['body'] = "<p>{$data['body']}</p>";
+
+        $this->assertDatabaseHas('threads', $data);
+    }
+
+
+    /** @test */
     public function guests_can_not_delete_thread()
     {
         $this->withoutExceptionHandling();

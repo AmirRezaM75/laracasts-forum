@@ -4,12 +4,17 @@
     import SubscriptionButton from "../components/SubscriptionButton";
 
     export default {
+        name: "ThreadView",
+        props: ['categories', 'thread'],
+        components: { Replies, SubscriptionButton, Thread },
         computed: {
             repliesCount() {
                 return this.$store.state.count
             }
         },
-        name: "ThreadView",
-        components: { Replies, SubscriptionButton, Thread }
+        mounted() {
+            this.$store.commit('SET_THREAD', this.thread)
+            this.$store.commit('SET_CATEGORIES', this.categories)
+        }
     }
 </script>

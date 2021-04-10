@@ -19,7 +19,7 @@
             <a class="block flex items-center inherits-color p-8" @click.prevent="create">
                 <div class="mr-4">
                     <img :src="$auth.avatar"
-                         alt="amirrezam75"
+                         :alt="$auth.username"
                          width="37.5"
                          class="is-circle" />
                 </div>

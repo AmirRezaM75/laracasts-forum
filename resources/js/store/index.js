@@ -5,10 +5,18 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
+        thread: false,
         replies: [],
+        categories: [],
         count: 0
     },
     mutations: {
+        SET_CATEGORIES(state, categories) {
+            state.categories = categories
+        },
+        SET_THREAD(state, thread) {
+            state.thread = thread
+        },
         SET_REPLIES_COUNT(state, number) {
             state.count = number
         },

@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
-    <thread-view inline-template>
+    <thread-view inline-template :categories="{{ $categories }}" :thread="{{ $thread }}">
         <div class="flex flex-col flex-col-reverse md:flex-row mx-auto" style="max-width: 1070px;">
             <div class="hidden lg:block lg:sticky lg:self-start flex-none mr-9" style="min-width: 200px; top: 40px;">
                 <div class="lg:sticky lg:text-center">
@@ -62,10 +62,11 @@
                             </div>
                         </div>
 
-                        <thread :thread="{{ $thread }}"></thread>
+                        <thread></thread>
 
                         <replies></replies>
-                        {{--<div class="participate-button fixed z-40" style="">
+                        {{--
+                        <div class="participate-button fixed z-40" style="">
                             <a class="bg-blue hover:bg-blue-dark rounded-full w-16 h-16 text-center flex items-center justify-center shadow-lg">
                                 <img src="{{ asset('images/icons/reply-mobile-button.svg') }}" alt="Post Reply Button" />
                             </a>
@@ -75,7 +76,8 @@
                             class="lg:hidden rounded-full w-16 h-16 z-50 text-center flex items-center justify-center shadow-lg fixed bottom-0 mb-6 ml-6 left-0"
                         >
                             <img src="{{ asset('images/icons/mobile-back-button.svg') }}" alt="Back to Discussions Button" class="rounded-full bg-white" />
-                        </a>--}}
+                        </a>
+                        --}}
                     </div>
                 </div>
             </div>
