@@ -54,24 +54,11 @@
                 </h1>
                 <div v-html="thread.body" class="content user-content text-black md:text-sm"></div>
                 <div class="forum-comment-edit-links flex justify-end lg:justify-start relative mt-4 -mb-1 md:leading-none justify-start" style="height: 34px;">
-                    <div @click="toggleDropdown" class="dropdown relative">
-                        <div aria-haspopup="true" class="dropdown-toggle h-full">
-                            <button
-                                class="transition-all border border-solid border-black-transparent-3 hover:border-black-transparent-10 bg-black-transparent-2 hover:bg-black-transparent-3 font-semibold inline-flex items-center px-3 md:text-xs mobile:text-sm mobile:p-2 mobile:flex mobile:items-center h-full text-black-transparent-50 font-bold hover:text-blue text-sm"
-                                style="border-radius: 12px;"
-                            >
-                                <span class="relative" style="top: -3px;">...</span>
-                            </button>
-                        </div>
-                        <div
-                            :class="dropdownStatus ? '' : 'hidden' "
-                            class="dropdown-menu absolute z-10 py-2 rounded-lg shadow mt-2 left-0 is-light" style="width: 200px;">
-                            <li v-if="isOwner" class="dropdown-menu-link"><a @click.prevent="edit">Edit</a></li>
-                            <li v-if="isOwner" class="dropdown-menu-link"><a @click.prevent="destroy">Delete</a></li>
-                            <li class="dropdown-menu-link"><a>Report Spam</a></li>
-                        </div>
-                    </div>
-                    <!---->
+                    <conversation-dropdown>
+                        <li v-if="isOwner" class="dropdown-menu-link"><a @click.prevent="edit">Edit</a></li>
+                        <li v-if="isOwner" class="dropdown-menu-link"><a @click.prevent="destroy">Delete</a></li>
+                        <li class="dropdown-menu-link"><a>Report Spam</a></li>
+                    </conversation-dropdown>
                 </div>
             </div>
         </div>
@@ -79,10 +66,12 @@
 </template>
 
 <script>
-import hljs from "highlight.js";
+import hljs from "highlight.js"
+import ConversationDropdown from "./ConversationDropdown"
 
 export default {
     name: "Thread",
+    components: { ConversationDropdown },
     props: ['thread'],
     computed: {
         ownerURL() {
@@ -99,11 +88,6 @@ export default {
             return this.authorize(user => user.id === this.thread.user_id)
         }
     },
-    data() {
-        return {
-            dropdownStatus: false,
-        }
-    },
     methods: {
         edit() {
             //
@@ -117,9 +101,6 @@ export default {
                     return hljs.highlightElement(dom)
                 })
         },
-        toggleDropdown() {
-            this.dropdownStatus = ! this.dropdownStatus
-        }
     },
     mounted() {
         this.highlight();

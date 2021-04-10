@@ -65,25 +65,11 @@
                             Reply
                         </a>
                     </div>
-                    <div @click="toggleDropdown" class="dropdown relative show-on-hover lg:ml-auto">
-                        <div aria-haspopup="true" class="dropdown-toggle h-full">
-                            <button
-                                class="transition-all border border-solid border-black-transparent-3 hover:border-black-transparent-10 bg-black-transparent-2 hover:bg-black-transparent-3 font-semibold inline-flex items-center px-3 md:text-xs mobile:text-sm mobile:p-2 mobile:flex mobile:items-center h-full text-black-transparent-50 font-bold hover:text-blue text-sm"
-                                style="border-radius: 12px;"
-                            >
-                                <span class="relative" style="top: -3px;">...</span>
-                            </button>
-                        </div>
-                        <div
-                            :class="dropdownStatus ? '' : 'hidden' "
-                            class="dropdown-menu absolute z-10 py-2 rounded-lg shadow mt-2 right-0 is-light"
-                            style="width: 200px;">
-
-                            <li v-if="isOwner" class="dropdown-menu-link"><a @click.prevent="edit">Edit</a></li>
-                            <li v-if="isOwner" class="dropdown-menu-link"><a @click.prevent="destroy">Delete</a></li>
-                            <li class="dropdown-menu-link"><a>Report Spam</a></li>
-                        </div>
-                    </div>
+                    <conversation-dropdown styles="show-on-hover lg:ml-auto" align="right">
+                        <li v-if="isOwner" class="dropdown-menu-link"><a @click.prevent="edit">Edit</a></li>
+                        <li v-if="isOwner" class="dropdown-menu-link"><a @click.prevent="destroy">Delete</a></li>
+                        <li class="dropdown-menu-link"><a>Report Spam</a></li>
+                    </conversation-dropdown>
                 </div>
             </div>
         </div>
@@ -91,16 +77,16 @@
 </template>
 
 <script>
+    import ConversationDropdown from "./ConversationDropdown"
     import ReplyModal from "./ReplyModal"
     import Favorite from "./Favorite"
     import hljs from 'highlight.js'
 
     export default {
         props: ['model', 'index'],
-        components: { Favorite },
+        components: { Favorite, ConversationDropdown },
         data() {
             return {
-                dropdownStatus: false,
                 reply: this.model
             }
         },
@@ -124,9 +110,6 @@
                     .forEach(function (dom) {
                         return hljs.highlightElement(dom)
                     })
-            },
-            toggleDropdown() {
-                this.dropdownStatus = ! this.dropdownStatus
             }
         },
         computed: {
