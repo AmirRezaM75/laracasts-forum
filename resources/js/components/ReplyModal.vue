@@ -116,7 +116,7 @@ export default {
     },
     methods: {
         close() {
-            let element = document.querySelector(".vm--modal");
+            let element = document.querySelector(".v--modal-box");
             element.style.transition = "top .4s";
             element.style.top = "100vh";
             setTimeout(e => this.$modal.hide(this.mode + '-reply'), 500)

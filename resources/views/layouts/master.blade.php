@@ -29,6 +29,7 @@
                         @yield('content')
                     </div>
                 </div>
+                <modals-container></modals-container>
                 <flash message="{{ session('flash') }}"></flash>
             </div>
         </div>

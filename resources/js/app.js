@@ -16,8 +16,10 @@ Vue.component('paginator', require('./components/Paginator').default)
 Vue.component('flash', require('./components/Flash').default)
 Vue.component('avatar-form', require('./components/AvatarForm').default)
 Vue.component('thread', require('./views/Thread').default)
+Vue.component('threads', require('./views/Threads').default)
 
 Vue.use(VueJSModal, {
+    dynamic: true,
     dynamicDefaults: {
         shiftY: 1,
         'pivot-y': 1,
