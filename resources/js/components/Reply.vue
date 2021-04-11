@@ -126,8 +126,9 @@
         },
         mounted() {
             this.highlight()
-
-            window.events.$on('highlight', this.highlight) // TODO: Doesn't work! :)
+        },
+        updated() {
+            this.highlight()
         }
     }
 </script>

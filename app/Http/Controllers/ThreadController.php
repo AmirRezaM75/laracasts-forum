@@ -53,8 +53,12 @@ class ThreadController extends Controller
     {
         $thread->update($request->only(['title', 'body', 'category_id']));
 
-        if ($thread->wasChanged('category_id'))
-            return response()->json(['redirect' => $thread->fresh()->path()]);
+        return response()->json(
+            array_merge(
+                $thread->wasChanged('category_id') ? ['redirect' => $thread->fresh()->path()] : [],
+                ['thread' => $thread->only(['title', 'body'])]
+            )
+        );
     }
 
     public function destroy(Request $request, Thread $thread)

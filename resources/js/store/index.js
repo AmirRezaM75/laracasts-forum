@@ -30,6 +30,10 @@ export default new Vuex.Store({
         UPDATE_REPLY(state, {reply, value}) {
             reply['body'] = value
         },
+        UPDATE_THREAD(state, {thread, object}) {
+            thread['body'] = object['body']
+            thread['title'] = object['title']
+        },
         DELETE_REPLY(state, index) {
             state.replies.splice(index, 1)
             state.count--

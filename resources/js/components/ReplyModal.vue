@@ -130,7 +130,6 @@ export default {
                     reply: this.reply,
                     value: response.data.body
                 })
-                window.events.$emit('highlight')
 
                 flash('Your reply has been updated.')
             }).catch(error => {
@@ -145,7 +144,6 @@ export default {
             }).then(({data}) => {
                 flash('Your reply has been created.')
                 this.$store.commit('ADD_REPLY', data)
-                window.events.$emit('highlight')
             }).catch(error => {
                 this.handler(error)
             })

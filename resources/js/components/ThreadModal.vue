@@ -146,9 +146,14 @@ export default {
                 'category_id': this.form.category_id,
                 'title': this.form.title,
                 'body': this.form.body
-            }).then(response => {
-                // TODO:
-                // TODO: how to apply hljs after that?
+            }).then( ({data}) => {
+                if (data.hasOwnProperty('redirect'))
+                    window.location.href = data.redirect
+
+                this.$store.commit('UPDATE_THREAD', {
+                    thread: this.thread,
+                    object: data.thread
+                })
 
                 flash('Your thread has been updated.')
             }).catch(error => {
@@ -162,9 +167,8 @@ export default {
                 'category_id': this.form.category_id,
                 'title': this.form.title,
                 'body': this.form.body
-            }).then(({data}) => {
+            }).then( ({data}) => {
                 window.location.href = data.redirect
-                // TODO:
             }).catch(error => {
                 this.handler(error)
             })

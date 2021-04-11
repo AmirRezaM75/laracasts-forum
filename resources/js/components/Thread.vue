@@ -102,7 +102,10 @@ export default {
             );
         },
         destroy() {
-            // axios.delete('/threads/' + this.thread.id);
+            axios.delete('/threads/' + this.thread.id)
+                .then(() => {
+                    window.location.href = '/threads'
+                })
         },
         highlight() {
             this.$el.querySelectorAll('.user-content pre code')
@@ -112,7 +115,10 @@ export default {
         }
     },
     mounted() {
-        this.highlight();
+        this.highlight()
+    },
+    updated() {
+        this.highlight()
     }
 }
 </script>

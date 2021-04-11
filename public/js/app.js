@@ -2503,7 +2503,9 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.highlight();
-    window.events.$on('highlight', this.highlight); // TODO: Doesn't work! :)
+  },
+  updated: function updated() {
+    this.highlight();
   }
 });
 
@@ -2660,7 +2662,6 @@ __webpack_require__.r(__webpack_exports__);
           value: response.data.body
         });
 
-        window.events.$emit('highlight');
         flash('Your reply has been updated.');
       })["catch"](function (error) {
         _this2.handler(error);
@@ -2677,8 +2678,6 @@ __webpack_require__.r(__webpack_exports__);
         flash('Your reply has been created.');
 
         _this3.$store.commit('ADD_REPLY', data);
-
-        window.events.$emit('highlight');
       })["catch"](function (error) {
         _this3.handler(error);
       });
@@ -2914,7 +2913,10 @@ __webpack_require__.r(__webpack_exports__);
         classes: ['v--modal', 'conversation-modal']
       });
     },
-    destroy: function destroy() {// axios.delete('/threads/' + this.thread.id);
+    destroy: function destroy() {
+      axios["delete"]('/threads/' + this.thread.id).then(function () {
+        window.location.href = '/threads';
+      });
     },
     highlight: function highlight() {
       this.$el.querySelectorAll('.user-content pre code').forEach(function (dom) {
@@ -2923,6 +2925,9 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {
+    this.highlight();
+  },
+  updated: function updated() {
     this.highlight();
   }
 });
@@ -3097,9 +3102,15 @@ __webpack_require__.r(__webpack_exports__);
         'category_id': this.form.category_id,
         'title': this.form.title,
         'body': this.form.body
-      }).then(function (response) {
-        // TODO:
-        // TODO: how to apply hljs after that?
+      }).then(function (_ref) {
+        var data = _ref.data;
+        if (data.hasOwnProperty('redirect')) window.location.href = data.redirect;
+
+        _this2.$store.commit('UPDATE_THREAD', {
+          thread: _this2.thread,
+          object: data.thread
+        });
+
         flash('Your thread has been updated.');
       })["catch"](function (error) {
         _this2.handler(error);
@@ -3113,9 +3124,9 @@ __webpack_require__.r(__webpack_exports__);
         'category_id': this.form.category_id,
         'title': this.form.title,
         'body': this.form.body
-      }).then(function (_ref) {
-        var data = _ref.data;
-        window.location.href = data.redirect; // TODO:
+      }).then(function (_ref2) {
+        var data = _ref2.data;
+        window.location.href = data.redirect;
       })["catch"](function (error) {
         _this3.handler(error);
       });
@@ -3140,8 +3151,8 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.post('/markdown', {
         markdown: this.form.body
-      }).then(function (_ref2) {
-        var data = _ref2.data;
+      }).then(function (_ref3) {
+        var data = _ref3.data;
         _this4.preview.content = dompurify__WEBPACK_IMPORTED_MODULE_1___default().sanitize(data, {
           USE_PROFILES: {
             html: true
@@ -3197,7 +3208,7 @@ __webpack_require__.r(__webpack_exports__);
       return this.$store.state.count;
     }
   },
-  mounted: function mounted() {
+  created: function created() {
     this.$store.commit('SET_THREAD', this.thread);
     this.$store.commit('SET_CATEGORIES', this.categories);
   }
@@ -3363,6 +3374,12 @@ vue__WEBPACK_IMPORTED_MODULE_0__.default.use(vuex__WEBPACK_IMPORTED_MODULE_1__.d
       var reply = _ref.reply,
           value = _ref.value;
       reply['body'] = value;
+    },
+    UPDATE_THREAD: function UPDATE_THREAD(state, _ref2) {
+      var thread = _ref2.thread,
+          object = _ref2.object;
+      thread['body'] = object['body'];
+      thread['title'] = object['title'];
     },
     DELETE_REPLY: function DELETE_REPLY(state, index) {
       state.replies.splice(index, 1);

@@ -12,7 +12,7 @@
                 return this.$store.state.count
             }
         },
-        mounted() {
+        created() {
             this.$store.commit('SET_THREAD', this.thread)
             this.$store.commit('SET_CATEGORIES', this.categories)
         }
