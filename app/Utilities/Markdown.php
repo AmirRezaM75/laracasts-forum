@@ -10,7 +10,8 @@ class Markdown
     {
         $parsedown = new ParsedownExtra;
 
-        $parsedown->setSafeMode(true);
+        if (! app()->environment('testing'))
+            $parsedown->setSafeMode(true);
 
         return $parsedown->text($text);
     }

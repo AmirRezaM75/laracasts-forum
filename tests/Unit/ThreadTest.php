@@ -11,7 +11,6 @@ use App\Utilities\Trending;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Notification;
-use Illuminate\Support\Facades\Redis;
 use Tests\TestCase;
 
 class ThreadTest extends TestCase
@@ -138,5 +137,17 @@ class ThreadTest extends TestCase
         Trending::push($this->thread->id);
 
         $this->assertEquals(1, $this->thread->visits);
+    }
+
+    /** @test */
+    public function it_wraps_mentioned_usernames_within_anchor_tags()
+    {
+        $thread = Thread::factory()->make([
+            'body' => "Hello, <a href='/@jeffrey'>@jeffrey</a> and @spatie."
+        ]);
+
+        $this->assertEquals(
+            "<p>Hello, <a href='/@jeffrey'>@jeffrey</a> and <a href='/@spatie'>@spatie</a>.</p>",
+            $thread->body);
     }
 }

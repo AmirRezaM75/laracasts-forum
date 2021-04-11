@@ -40,26 +40,27 @@ class ReplyTest extends TestCase
         $this->assertEquals(['jeffrey', 'spatie'], $reply->mentionedUsers());
     }
 
-    /* TODO:
-    public function it_wraps_mentioned_usernames_within_anchor_tags()
-    {
-        $reply = Reply::factory()->make([
-            'body' => "Hello, <a href='#'>@jeffrey</a> and @spatie."
-        ]);
-
-        $this->assertEquals(
-            "Hello, <a href='#'>@jeffrey</a> and <a href='#'>@spatie</a>."
-            , $reply->body);
-    }
-    */
-
     /** @test */
     public function it_wraps_mentioned_usernames_within_anchor_tags()
     {
+        $reply = Reply::factory()->make([
+            'body' => "Hello, <a href='/@jeffrey'>@jeffrey</a> and @spatie."
+        ]);
+
+        $this->assertEquals(
+            "<p>Hello, <a href='/@jeffrey'>@jeffrey</a> and <a href='/@spatie'>@spatie</a>.</p>",
+            $reply->body
+        );
+    }
+
+
+    /** @test */
+    /*public function it_wraps_mentioned_usernames_within_anchor_tags()
+    {
         $reply = Reply::factory()->make(['body' => 'Hello @spatie.']);
 
-        $this->assertEquals("<p>Hello <a href='#'>@spatie</a>.</p>", $reply->body);
-    }
+        $this->assertEquals("<p>Hello <a href='/@spatie'>@spatie</a>.</p>", $reply->body);
+    }*/
 
     /** @test */
     public function it_parses_markdown_to_html()

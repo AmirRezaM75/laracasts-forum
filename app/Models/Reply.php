@@ -35,7 +35,7 @@ class Reply extends Model
         $this->attributes['body'] =
             preg_replace(
                 Regex::USER_MENTION,
-                "<a href='#'>$0</a>",
+                " <a href='/$1'>$1</a>",
                 Markdown::parse($body)
             );
     }
@@ -52,8 +52,8 @@ class Reply extends Model
 
     public function mentionedUsers()
     {
-        preg_match_all(Regex::USER_MENTION, $this->body, $matches);
+        preg_match_all(Regex::USER_MENTION_RAW, $this->body, $matches);
 
-        return $matches[1];
+        return array_values(array_unique($matches[1]));
     }
 }

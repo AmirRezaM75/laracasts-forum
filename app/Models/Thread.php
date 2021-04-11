@@ -111,7 +111,7 @@ class Thread extends Model
         $this->attributes['body'] =
             preg_replace(
                 Regex::USER_MENTION,
-                "<a href='#'>$0</a>",
+                " <a href='/$1'>$1</a>",
                 Markdown::parse($body)
             );
     }
