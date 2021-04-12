@@ -1,5 +1,5 @@
 <template>
-    <div v-if="authorized" class="flex items-center mt-4">
+    <div v-if="$owns(user, 'id')" class="flex items-center mt-4">
         <form enctype="multipart/form-data">
             <label for="avatar"
                    class="btn btn-outlined bg-transparent text-white border-transparent-25 px-5 py-25 mr-4 text-3xs">
@@ -14,11 +14,6 @@
 export default {
     name: "AvatarForm",
     props: ['user'],
-    computed: {
-        authorized() {
-            return this.authorize(auth => auth.id === this.user.id)
-        }
-    },
     methods: {
         change(event) {
             if (! event.target.files.length) return;

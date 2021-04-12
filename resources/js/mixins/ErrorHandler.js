@@ -3,7 +3,6 @@ export default {
         handler(error) {
             // TODO: any better single word method name?
             // TODO: Support for showing multiple flash messages
-            // TODO: Extract to dedicated mixin?
             let data = error.response.data
             if (data.hasOwnProperty('errors')) {
                 Object.keys(data['errors']).forEach(function (key) {

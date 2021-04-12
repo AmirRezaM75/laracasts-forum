@@ -55,8 +55,10 @@
                 <div v-html="thread.body" class="content user-content text-black md:text-sm"></div>
                 <div class="forum-comment-edit-links flex justify-end lg:justify-start relative mt-4 -mb-1 md:leading-none justify-start" style="height: 34px;">
                     <conversation-dropdown>
-                        <li v-if="isOwner" class="dropdown-menu-link"><a @click.prevent="edit">Edit</a></li>
-                        <li v-if="isOwner" class="dropdown-menu-link"><a @click.prevent="destroy">Delete</a></li>
+                        <template v-if="$owns(thread)">
+                            <li class="dropdown-menu-link"><a @click.prevent="edit">Edit</a></li>
+                            <li class="dropdown-menu-link"><a @click.prevent="destroy">Delete</a></li>
+                        </template>
                         <li class="dropdown-menu-link"><a>Report Spam</a></li>
                     </conversation-dropdown>
                 </div>
@@ -89,9 +91,6 @@ export default {
                 .split('/')
                 .reverse()
                 .join('/');
-        },
-        isOwner() {
-            return this.authorize(user => user.id === this.thread.user_id)
         }
     },
     methods: {

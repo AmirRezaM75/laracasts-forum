@@ -1860,15 +1860,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "AvatarForm",
   props: ['user'],
-  computed: {
-    authorized: function authorized() {
-      var _this = this;
-
-      return this.authorize(function (auth) {
-        return auth.id === _this.user.id;
-      });
-    }
-  },
   methods: {
     change: function change(event) {
       if (!event.target.files.length) return;
@@ -2467,6 +2458,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -2515,20 +2507,6 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     creationTime: function creationTime() {
       return new Date(this.reply.created_at).toLocaleDateString("en-US").split('/').reverse().join('/');
-    },
-    isOwner: function isOwner() {
-      var _this3 = this;
-
-      return this.authorize(function (user) {
-        return user.id === _this3.reply.user_id;
-      });
-    },
-    isThreadOwner: function isThreadOwner() {
-      var _this4 = this;
-
-      return this.authorize(function (user) {
-        return user.id === _this4.reply.thread.user_id;
-      });
     },
     isBest: function isBest() {
       return this.$store.state.thread['answer_id'] === this.reply.id;
@@ -2862,6 +2840,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 
@@ -2882,13 +2862,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     creationTime: function creationTime() {
       return new Date(this.thread.created_at).toLocaleDateString("en-US").split('/').reverse().join('/');
-    },
-    isOwner: function isOwner() {
-      var _this = this;
-
-      return this.authorize(function (user) {
-        return user.id === _this.thread.user_id;
-      });
     }
   },
   methods: {
@@ -3259,8 +3232,12 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
-    authorize: function authorize(handler) {
+    $authorize: function $authorize(handler) {
       return this.$auth ? handler(this.$auth) : false;
+    },
+    $owns: function $owns(model) {
+      var prop = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'user_id';
+      return model[prop] === this.$auth.id;
     }
   }
 });
@@ -3283,7 +3260,6 @@ __webpack_require__.r(__webpack_exports__);
     handler: function handler(error) {
       // TODO: any better single word method name?
       // TODO: Support for showing multiple flash messages
-      // TODO: Extract to dedicated mixin?
       var data = error.response.data;
 
       if (data.hasOwnProperty('errors')) {
@@ -54905,7 +54881,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm.authorized
+  return _vm.$owns(_vm.user, "id")
     ? _c("div", { staticClass: "flex items-center mt-4" }, [
         _c("form", { attrs: { enctype: "multipart/form-data" } }, [
           _c(
@@ -55666,12 +55642,12 @@ var render = function() {
                       ]
                     ),
                     _vm._v(
-                      "\n\n                        Reply\n                    "
+                      "\n                        Reply\n                    "
                     )
                   ]
                 ),
                 _vm._v(" "),
-                _vm.isThreadOwner
+                _vm.$owns(_vm.reply.thread)
                   ? _c(
                       "button",
                       {
@@ -55708,44 +55684,45 @@ var render = function() {
                   attrs: { styles: "show-on-hover lg:ml-auto", align: "right" }
                 },
                 [
-                  _vm.isOwner
-                    ? _c("li", { staticClass: "dropdown-menu-link" }, [
-                        _c(
-                          "a",
-                          {
-                            on: {
-                              click: function($event) {
-                                $event.preventDefault()
-                                return _vm.edit($event)
+                  _vm.$owns(_vm.reply)
+                    ? [
+                        _c("li", { staticClass: "dropdown-menu-link" }, [
+                          _c(
+                            "a",
+                            {
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                  return _vm.edit($event)
+                                }
                               }
-                            }
-                          },
-                          [_vm._v("Edit")]
-                        )
-                      ])
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _vm.isOwner
-                    ? _c("li", { staticClass: "dropdown-menu-link" }, [
-                        _c(
-                          "a",
-                          {
-                            on: {
-                              click: function($event) {
-                                $event.preventDefault()
-                                return _vm.destroy($event)
+                            },
+                            [_vm._v("Edit")]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("li", { staticClass: "dropdown-menu-link" }, [
+                          _c(
+                            "a",
+                            {
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                  return _vm.destroy($event)
+                                }
                               }
-                            }
-                          },
-                          [_vm._v("Delete")]
-                        )
-                      ])
+                            },
+                            [_vm._v("Delete")]
+                          )
+                        ])
+                      ]
                     : _vm._e(),
                   _vm._v(" "),
                   _c("li", { staticClass: "dropdown-menu-link" }, [
                     _c("a", [_vm._v("Report Spam")])
                   ])
-                ]
+                ],
+                2
               )
             ],
             1
@@ -56214,45 +56191,49 @@ var render = function() {
               staticStyle: { height: "34px" }
             },
             [
-              _c("conversation-dropdown", [
-                _vm.isOwner
-                  ? _c("li", { staticClass: "dropdown-menu-link" }, [
-                      _c(
-                        "a",
-                        {
-                          on: {
-                            click: function($event) {
-                              $event.preventDefault()
-                              return _vm.edit($event)
-                            }
-                          }
-                        },
-                        [_vm._v("Edit")]
-                      )
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm.isOwner
-                  ? _c("li", { staticClass: "dropdown-menu-link" }, [
-                      _c(
-                        "a",
-                        {
-                          on: {
-                            click: function($event) {
-                              $event.preventDefault()
-                              return _vm.destroy($event)
-                            }
-                          }
-                        },
-                        [_vm._v("Delete")]
-                      )
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                _c("li", { staticClass: "dropdown-menu-link" }, [
-                  _c("a", [_vm._v("Report Spam")])
-                ])
-              ])
+              _c(
+                "conversation-dropdown",
+                [
+                  _vm.$owns(_vm.thread)
+                    ? [
+                        _c("li", { staticClass: "dropdown-menu-link" }, [
+                          _c(
+                            "a",
+                            {
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                  return _vm.edit($event)
+                                }
+                              }
+                            },
+                            [_vm._v("Edit")]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("li", { staticClass: "dropdown-menu-link" }, [
+                          _c(
+                            "a",
+                            {
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                  return _vm.destroy($event)
+                                }
+                              }
+                            },
+                            [_vm._v("Delete")]
+                          )
+                        ])
+                      ]
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _c("li", { staticClass: "dropdown-menu-link" }, [
+                    _c("a", [_vm._v("Report Spam")])
+                  ])
+                ],
+                2
+              )
             ],
             1
           )
