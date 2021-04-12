@@ -1,5 +1,7 @@
 <template>
-    <div class="forum-comment relative rounded-xl bg-black-transparent-1 border border-solid border-black-transparent-3 mb-2 is-reply"
+    <div
+        :class="isBest ? 'bg-blue-lighter border-blue-light is-best' : 'bg-black-transparent-1 border-black-transparent-3'"
+        class="forum-comment relative rounded-xl border border-solid mb-2 is-reply"
          :id="'reply-' + reply.id">
         <div class="flex px-6 py-4 lg:p-5">
             <div class="hidden md:block mr-5 text-left">
@@ -39,6 +41,13 @@
                             <span class="text-grey-dark">Posted {{ creationTime }}</span>
                         </a>
                     </div>
+                    <div v-if="isBest" class="flex relative" style="top: -5px;">
+                        <span title="Did this reply answer your question?"
+                              class="rounded-2xl px-3 lg:px-6 font-bold uppercase inline-flex items-center text-3xs md:text-xs text-white"
+                              style="background-image: linear-gradient(70deg, rgb(33, 200, 246) 21%, rgb(99, 123, 255) 117%);">
+                            Best Answer
+                        </span>
+                    </div>
                 </header>
                 <div class="content user-content text-black md:text-sm">
                     <p v-html="reply.body"></p>
@@ -64,6 +73,13 @@
 
                             Reply
                         </a>
+                        <button
+                            v-if="isThreadOwner"
+                            @click="markAsAnswer"
+                            v-show="! isBest"
+                            class="transition-all border border-solid border-black-transparent-3 hover:border-black-transparent-10 bg-black-transparent-2 hover:bg-black-transparent-3 font-semibold inline-flex items-center px-3 md:text-xs mobile:text-sm mobile:p-2 mobile:flex mobile:items-center btn normal-case font-semibold border border-solid border-black-transparent-3 bg-black-transparent-2 rounded-lg py-2 px-3 text-black h-full md:text-xs hover:bg-blue-lighter hover:text-blue hover:border-blue-light" type="submit" data-title="Answered your question?" title="Did this reply answer your question?" style="border-radius: 12px;">
+                            Set Best Answer
+                        </button>
                     </div>
                     <conversation-dropdown styles="show-on-hover lg:ml-auto" align="right">
                         <li v-if="isOwner" class="dropdown-menu-link"><a @click.prevent="edit">Edit</a></li>
@@ -105,6 +121,12 @@
 
                 flash('Reply was removed')
             },
+            markAsAnswer() {
+                axios.post('/replies/' + this.reply.id + '/best')
+                    .then( () => {
+                        this.$store.state.thread['answer_id'] = this.reply.id
+                    })
+            },
             highlight() {
                 this.$el.querySelectorAll('.user-content pre code')
                     .forEach(function (dom) {
@@ -122,6 +144,12 @@
             },
             isOwner() {
                 return this.authorize(user => user.id === this.reply.user_id)
+            },
+            isThreadOwner() {
+                return this.authorize(user => user.id === this.reply.thread.user_id)
+            },
+            isBest() {
+                return this.$store.state.thread['answer_id'] === this.reply.id
             }
         },
         mounted() {

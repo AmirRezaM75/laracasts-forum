@@ -2451,6 +2451,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2483,6 +2499,13 @@ __webpack_require__.r(__webpack_exports__);
       });
       flash('Reply was removed');
     },
+    markAsAnswer: function markAsAnswer() {
+      var _this2 = this;
+
+      axios.post('/replies/' + this.reply.id + '/best').then(function () {
+        _this2.$store.state.thread['answer_id'] = _this2.reply.id;
+      });
+    },
     highlight: function highlight() {
       this.$el.querySelectorAll('.user-content pre code').forEach(function (dom) {
         return highlight_js__WEBPACK_IMPORTED_MODULE_3___default().highlightElement(dom);
@@ -2494,11 +2517,21 @@ __webpack_require__.r(__webpack_exports__);
       return new Date(this.reply.created_at).toLocaleDateString("en-US").split('/').reverse().join('/');
     },
     isOwner: function isOwner() {
-      var _this2 = this;
+      var _this3 = this;
 
       return this.authorize(function (user) {
-        return user.id === _this2.reply.user_id;
+        return user.id === _this3.reply.user_id;
       });
+    },
+    isThreadOwner: function isThreadOwner() {
+      var _this4 = this;
+
+      return this.authorize(function (user) {
+        return user.id === _this4.reply.thread.user_id;
+      });
+    },
+    isBest: function isBest() {
+      return this.$store.state.thread['answer_id'] === this.reply.id;
     }
   },
   mounted: function mounted() {
@@ -55474,7 +55507,10 @@ var render = function() {
     "div",
     {
       staticClass:
-        "forum-comment relative rounded-xl bg-black-transparent-1 border border-solid border-black-transparent-3 mb-2 is-reply",
+        "forum-comment relative rounded-xl border border-solid mb-2 is-reply",
+      class: _vm.isBest
+        ? "bg-blue-lighter border-blue-light is-best"
+        : "bg-black-transparent-1 border-black-transparent-3",
       attrs: { id: "reply-" + _vm.reply.id }
     },
     [
@@ -55546,7 +55582,36 @@ var render = function() {
                   ])
                 ]
               )
-            ])
+            ]),
+            _vm._v(" "),
+            _vm.isBest
+              ? _c(
+                  "div",
+                  {
+                    staticClass: "flex relative",
+                    staticStyle: { top: "-5px" }
+                  },
+                  [
+                    _c(
+                      "span",
+                      {
+                        staticClass:
+                          "rounded-2xl px-3 lg:px-6 font-bold uppercase inline-flex items-center text-3xs md:text-xs text-white",
+                        staticStyle: {
+                          "background-image":
+                            "linear-gradient(70deg, rgb(33, 200, 246) 21%, rgb(99, 123, 255) 117%)"
+                        },
+                        attrs: { title: "Did this reply answer your question?" }
+                      },
+                      [
+                        _vm._v(
+                          "\n                        Best Answer\n                    "
+                        )
+                      ]
+                    )
+                  ]
+                )
+              : _vm._e()
           ]),
           _vm._v(" "),
           _c(
@@ -55604,7 +55669,37 @@ var render = function() {
                       "\n\n                        Reply\n                    "
                     )
                   ]
-                )
+                ),
+                _vm._v(" "),
+                _vm.isThreadOwner
+                  ? _c(
+                      "button",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: !_vm.isBest,
+                            expression: "! isBest"
+                          }
+                        ],
+                        staticClass:
+                          "transition-all border border-solid border-black-transparent-3 hover:border-black-transparent-10 bg-black-transparent-2 hover:bg-black-transparent-3 font-semibold inline-flex items-center px-3 md:text-xs mobile:text-sm mobile:p-2 mobile:flex mobile:items-center btn normal-case font-semibold border border-solid border-black-transparent-3 bg-black-transparent-2 rounded-lg py-2 px-3 text-black h-full md:text-xs hover:bg-blue-lighter hover:text-blue hover:border-blue-light",
+                        staticStyle: { "border-radius": "12px" },
+                        attrs: {
+                          type: "submit",
+                          "data-title": "Answered your question?",
+                          title: "Did this reply answer your question?"
+                        },
+                        on: { click: _vm.markAsAnswer }
+                      },
+                      [
+                        _vm._v(
+                          "\n                        Set Best Answer\n                    "
+                        )
+                      ]
+                    )
+                  : _vm._e()
               ]),
               _vm._v(" "),
               _c(

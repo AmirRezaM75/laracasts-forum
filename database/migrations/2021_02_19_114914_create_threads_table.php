@@ -14,7 +14,7 @@ class CreateThreadsTable extends Migration
             $table->id();
             $table->foreignIdFor(User::class)->constrained()->onDelete('cascade');
             $table->foreignIdFor(Category::class)->constrained()->onDelete('cascade');
-            $table->foreignId('answer_id')->nullable()->constrained('replies')->onDelete('cascade');
+            $table->foreignId('answer_id')->nullable();
             $table->string('title');
             $table->text('body');
             $table->timestamps();
