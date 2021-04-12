@@ -41,4 +41,11 @@ class ReplyController extends Controller
 
         return response()->noContent();
     }
+
+    public function best(Reply $reply)
+    {
+        $this->authorize('update', $reply->thread);
+
+        $reply->thread->update(['answer_id' => $reply->id]);
+    }
 }

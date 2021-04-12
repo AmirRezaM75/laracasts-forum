@@ -13,10 +13,6 @@ class CreateFavoritesTable extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->morphs('favoritable');
-            /*
-            $table->unsignedInteger('favorited_id');
-            $table->string('favorited_type');
-            */
             $table->timestamps();
 
             $table->unique(['user_id', 'favoritable_id', 'favoritable_type']);

@@ -53,20 +53,23 @@ class ReplyTest extends TestCase
         );
     }
 
-
-    /** @test */
-    /*public function it_wraps_mentioned_usernames_within_anchor_tags()
-    {
-        $reply = Reply::factory()->make(['body' => 'Hello @spatie.']);
-
-        $this->assertEquals("<p>Hello <a href='/@spatie'>@spatie</a>.</p>", $reply->body);
-    }*/
-
     /** @test */
     public function it_parses_markdown_to_html()
     {
         $reply = Reply::factory()->make(['body' => 'Hello _Laravel_']);
 
         $this->assertEquals("<p>Hello <em>Laravel</em></p>", $reply->body);
+    }
+
+    /** @test */
+    public function it_knows_if_it_is_the_best_reply()
+    {
+        $reply = Reply::factory()->create();
+
+        $this->assertFalse($reply->isBest());
+
+        $reply->thread->update(['answer_id' => $reply->id]);
+
+        $this->assertTrue($reply->isBest());
     }
 }

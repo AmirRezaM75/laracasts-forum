@@ -56,4 +56,9 @@ class Reply extends Model
 
         return array_values(array_unique($matches[1]));
     }
+
+    public function isBest()
+    {
+        return $this->thread->answer_id == $this->id;
+    }
 }

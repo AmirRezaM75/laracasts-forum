@@ -13,8 +13,8 @@ class ThreadPolicy
     /**
      * Determine whether the user can update the model.
      *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Thread  $thread
+     * @param User $user
+     * @param Thread $thread
      * @return mixed
      */
     public function update(User $user, Thread $thread)
