@@ -55,4 +55,18 @@ class BestReplyTest extends TestCase
 
         $this->assertFalse(Reply::find(1)->isBest());
     }
+
+    /** TODO: SQLite doesn't support the ADD CONSTRAINT variant of the ALTER TABLE command */
+    function set_thread_answer_to_null_if_best_reply_is_deleted()
+    {
+        $this->login();
+
+        $reply = Reply::factory()->create(['user_id' => auth()->id()]);
+
+        $reply->thread->update(['answer_id' => $reply->id]);
+
+        $this->delete(route('replies.delete', $reply));
+
+        $this->assertNull($reply->thread->fresh()->answer_id);
+    }
 }
