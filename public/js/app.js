@@ -2522,11 +2522,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var dompurify__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! dompurify */ "./node_modules/dompurify/dist/purify.js");
-/* harmony import */ var dompurify__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(dompurify__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var highlight_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! highlight.js */ "./node_modules/highlight.js/lib/index.js");
-/* harmony import */ var highlight_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(highlight_js__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var turndown__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! turndown */ "./node_modules/turndown/lib/turndown.es.js");
+/* harmony import */ var turndown__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! turndown */ "./node_modules/turndown/lib/turndown.es.js");
+/* harmony import */ var _mixins_ErrorHandler__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../mixins/ErrorHandler */ "./resources/js/mixins/ErrorHandler.js");
+/* harmony import */ var _mixins_MarkdownPreview__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../mixins/MarkdownPreview */ "./resources/js/mixins/MarkdownPreview.js");
 //
 //
 //
@@ -2609,14 +2607,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "ReplyModal",
   props: ['reply'],
+  mixins: [_mixins_ErrorHandler__WEBPACK_IMPORTED_MODULE_1__.default, _mixins_MarkdownPreview__WEBPACK_IMPORTED_MODULE_2__.default],
   data: function data() {
     return {
       form: {
         body: ''
-      },
-      preview: {
-        status: false,
-        content: ''
       }
     };
   },
@@ -2630,7 +2625,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function created() {
     if (this.mode === 'edit') {
-      var turndownService = new turndown__WEBPACK_IMPORTED_MODULE_2__.default({
+      var turndownService = new turndown__WEBPACK_IMPORTED_MODULE_0__.default({
         headingStyle: 'atx',
         codeBlockStyle: 'fenced'
       });
@@ -2682,47 +2677,6 @@ __webpack_require__.r(__webpack_exports__);
         _this3.handler(error);
       });
       this.close();
-    },
-    handler: function handler(error) {
-      // TODO: any better single word method name?
-      // TODO: Support for showing multiple flash messages
-      // TODO: Extract to dedicated mixin?
-      var data = error.response.data;
-
-      if (data.hasOwnProperty('errors')) {
-        Object.keys(data['errors']).forEach(function (key) {
-          flash(data['errors'][key][0], 'danger');
-        });
-      } else {
-        flash(data.message, 'danger');
-      }
-    },
-    markdown: function markdown() {
-      var _this4 = this;
-
-      axios.post('/markdown', {
-        markdown: this.form.body
-      }).then(function (_ref2) {
-        var data = _ref2.data;
-        _this4.preview.content = dompurify__WEBPACK_IMPORTED_MODULE_0___default().sanitize(data, {
-          USE_PROFILES: {
-            html: true
-          }
-        });
-
-        _this4.$nextTick(function () {
-          return _this4.highlight();
-        });
-      });
-    },
-    highlight: function highlight() {
-      this.$el.querySelectorAll('.user-content pre code').forEach(function (dom) {
-        return highlight_js__WEBPACK_IMPORTED_MODULE_1___default().highlightElement(dom);
-      });
-    },
-    changePreview: function changePreview() {
-      this.preview.status = !this.preview.status;
-      if (this.preview.status) this.markdown();
     }
   }
 });
@@ -2946,13 +2900,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var turndown__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! turndown */ "./node_modules/turndown/lib/turndown.es.js");
-/* harmony import */ var dompurify__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! dompurify */ "./node_modules/dompurify/dist/purify.js");
-/* harmony import */ var dompurify__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(dompurify__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var highlight_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! highlight.js */ "./node_modules/highlight.js/lib/index.js");
-/* harmony import */ var highlight_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(highlight_js__WEBPACK_IMPORTED_MODULE_2__);
-//
-//
-//
+/* harmony import */ var _mixins_MarkdownPreview__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../mixins/MarkdownPreview */ "./resources/js/mixins/MarkdownPreview.js");
+/* harmony import */ var _mixins_ErrorHandler__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../mixins/ErrorHandler */ "./resources/js/mixins/ErrorHandler.js");
 //
 //
 //
@@ -3045,18 +2994,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "ThreadModal",
   props: ['thread'],
+  mixins: [_mixins_MarkdownPreview__WEBPACK_IMPORTED_MODULE_1__.default, _mixins_ErrorHandler__WEBPACK_IMPORTED_MODULE_2__.default],
   data: function data() {
     return {
       form: {
         category_id: '',
         title: '',
         body: ''
-      },
-      preview: {
-        status: false,
-        content: ''
-      },
-      errors: false
+      }
     };
   },
   computed: {
@@ -3131,47 +3076,6 @@ __webpack_require__.r(__webpack_exports__);
         _this3.handler(error);
       });
       this.close();
-    },
-    handler: function handler(error) {
-      // TODO: any better single word method name?
-      // TODO: Support for showing multiple flash messages
-      // TODO: Extract to dedicated mixin?
-      var data = error.response.data;
-
-      if (data.hasOwnProperty('errors')) {
-        Object.keys(data['errors']).forEach(function (key) {
-          flash(data['errors'][key][0], 'danger');
-        });
-      } else {
-        flash(data.message, 'danger');
-      }
-    },
-    markdown: function markdown() {
-      var _this4 = this;
-
-      axios.post('/markdown', {
-        markdown: this.form.body
-      }).then(function (_ref3) {
-        var data = _ref3.data;
-        _this4.preview.content = dompurify__WEBPACK_IMPORTED_MODULE_1___default().sanitize(data, {
-          USE_PROFILES: {
-            html: true
-          }
-        });
-
-        _this4.$nextTick(function () {
-          return _this4.highlight();
-        });
-      });
-    },
-    highlight: function highlight() {
-      this.$el.querySelectorAll('.user-content pre code').forEach(function (dom) {
-        return highlight_js__WEBPACK_IMPORTED_MODULE_2___default().highlightElement(dom);
-      });
-    },
-    changePreview: function changePreview() {
-      this.preview.status = !this.preview.status;
-      if (this.preview.status) this.markdown();
     }
   }
 });
@@ -3324,6 +3228,97 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     authorize: function authorize(handler) {
       return this.$auth ? handler(this.$auth) : false;
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/mixins/ErrorHandler.js":
+/*!*********************************************!*\
+  !*** ./resources/js/mixins/ErrorHandler.js ***!
+  \*********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  methods: {
+    handler: function handler(error) {
+      // TODO: any better single word method name?
+      // TODO: Support for showing multiple flash messages
+      // TODO: Extract to dedicated mixin?
+      var data = error.response.data;
+
+      if (data.hasOwnProperty('errors')) {
+        Object.keys(data['errors']).forEach(function (key) {
+          flash(data['errors'][key][0], 'danger');
+        });
+      } else {
+        flash(data.message, 'danger');
+      }
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/mixins/MarkdownPreview.js":
+/*!************************************************!*\
+  !*** ./resources/js/mixins/MarkdownPreview.js ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var dompurify__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! dompurify */ "./node_modules/dompurify/dist/purify.js");
+/* harmony import */ var dompurify__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(dompurify__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var highlight_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! highlight.js */ "./node_modules/highlight.js/lib/index.js");
+/* harmony import */ var highlight_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(highlight_js__WEBPACK_IMPORTED_MODULE_1__);
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      preview: {
+        status: false,
+        content: ''
+      }
+    };
+  },
+  methods: {
+    markdown: function markdown() {
+      var _this = this;
+
+      axios.post('/markdown', {
+        markdown: this.form.body
+      }).then(function (_ref) {
+        var data = _ref.data;
+        _this.preview.content = dompurify__WEBPACK_IMPORTED_MODULE_0___default().sanitize(data, {
+          USE_PROFILES: {
+            html: true
+          }
+        });
+
+        _this.$nextTick(function () {
+          return _this.highlight();
+        });
+      });
+    },
+    highlight: function highlight() {
+      this.$el.querySelectorAll('.user-content pre code').forEach(function (dom) {
+        return highlight_js__WEBPACK_IMPORTED_MODULE_1___default().highlightElement(dom);
+      });
+    },
+    changePreview: function changePreview() {
+      this.preview.status = !this.preview.status;
+      if (this.preview.status) this.markdown();
     }
   }
 });
@@ -56447,13 +56442,7 @@ var render = function() {
                     })
                   ])
                 ]
-              ),
-              _vm._v(" "),
-              _vm.errors
-                ? _c("ul", {
-                    staticClass: "list-disc my-6 flex justify-center"
-                  })
-                : _vm._e()
+              )
             ]
           )
         ]

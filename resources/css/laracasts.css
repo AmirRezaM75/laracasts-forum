@@ -6173,3 +6173,164 @@ body.skill .skill-thumbnail-card.is-techniques.is-current {
 .five-lines {
     -webkit-line-clamp: 5
 }
+
+.btn-channel.is-code-review  {
+    color: #8cd362;
+}
+
+.btn-channel.is-code-review:hover {
+    color: white;
+    background: #8cd362;
+}
+.btn-channel.is-eloquent  {
+    color: #09d7c1;
+}
+
+.btn-channel.is-eloquent:hover {
+    color: white;
+    background: #09d7c1;
+}
+.btn-channel.is-envoyer  {
+    color: #F56857;
+}
+
+.btn-channel.is-envoyer:hover {
+    color: white;
+    background: #F56857;
+}
+.btn-channel.is-site-improvements  {
+    color: #88AD48;
+}
+
+.btn-channel.is-site-improvements:hover {
+    color: white;
+    background: #88AD48;
+}
+.btn-channel.is-forge  {
+    color: #5db3b7;
+}
+
+.btn-channel.is-forge:hover {
+    color: white;
+    background: #5db3b7;
+}
+.btn-channel.is-general-discussion  {
+    color: #4E89DA;
+}
+
+.btn-channel.is-general-discussion:hover {
+    color: white;
+    background: #4E89DA;
+}
+.btn-channel.is-guides  {
+    color: #D51E22;
+}
+
+.btn-channel.is-guides:hover {
+    color: white;
+    background: #D51E22;
+}
+.btn-channel.is-javascript  {
+    color: #9AD4E0;
+}
+
+.btn-channel.is-javascript:hover {
+    color: white;
+    background: #9AD4E0;
+}
+.btn-channel.is-laravel  {
+    color: #F56857;
+}
+
+.btn-channel.is-laravel:hover {
+    color: white;
+    background: #F56857;
+}
+.btn-channel.is-livewire  {
+    color: #FB70A9;
+}
+
+.btn-channel.is-livewire:hover {
+    color: white;
+    background: #FB70A9;
+}
+.btn-channel.is-lumen  {
+    color: #F9A97A;
+}
+
+.btn-channel.is-lumen:hover {
+    color: white;
+    background: #F9A97A;
+}
+.btn-channel.is-elixir  {
+    color: #f7c953;
+}
+
+.btn-channel.is-elixir:hover {
+    color: white;
+    background: #f7c953;
+}
+.btn-channel.is-nova  {
+    color: #2C425D;
+}
+
+.btn-channel.is-nova:hover {
+    color: white;
+    background: #2C425D;
+}
+.btn-channel.is-requests  {
+    color: #BB824E;
+}
+
+.btn-channel.is-requests:hover {
+    color: white;
+    background: #BB824E;
+}
+.btn-channel.is-servers  {
+    color: #F9A97A;
+}
+
+.btn-channel.is-servers:hover {
+    color: white;
+    background: #F9A97A;
+}
+.btn-channel.is-spark  {
+    color: #66add3;
+}
+
+.btn-channel.is-spark:hover {
+    color: white;
+    background: #66add3;
+}
+.btn-channel.is-testing  {
+    color: #da5757;
+}
+
+.btn-channel.is-testing:hover {
+    color: white;
+    background: #da5757;
+}
+.btn-channel.is-tips  {
+    color: #837eb6;
+}
+
+.btn-channel.is-tips:hover {
+    color: white;
+    background: #837eb6;
+}
+.btn-channel.is-vapor  {
+    color: #25C4F2;
+}
+
+.btn-channel.is-vapor:hover {
+    color: white;
+    background: #25C4F2;
+}
+.btn-channel.is-vue  {
+    color: #3ab981;
+}
+
+.btn-channel.is-vue:hover {
+    color: white;
+    background: #3ab981;
+}

@@ -79,9 +79,6 @@
                             class="btn btn-blue md:py-25 mobile:flex-1 h-full w-full md:w-auto max-w-full"></button>
                     </div>
                 </div>
-                <ul class="list-disc my-6 flex justify-center" v-if="errors">
-                    <!--mr-5 text-2xs text-red-->
-                </ul>
             </footer>
         </form>
     </div>
@@ -89,24 +86,20 @@
 
 <script>
 import TurndownService from "turndown";
-import DOMPurify from "dompurify";
-import hljs from "highlight.js";
+import MarkdownPreview from "../mixins/MarkdownPreview";
+import ErrorHandler from "../mixins/ErrorHandler";
 
 export default {
     name: "ThreadModal",
     props: ['thread'],
+    mixins: [MarkdownPreview, ErrorHandler],
     data() {
         return {
             form: {
                 category_id: '',
                 title: '',
                 body: ''
-            },
-            preview: {
-                status: false,
-                content: ''
-            },
-            errors: false
+            }
         }
     },
     computed: {
@@ -174,45 +167,6 @@ export default {
             })
 
             this.close()
-        },
-        handler(error) {
-            // TODO: any better single word method name?
-            // TODO: Support for showing multiple flash messages
-            // TODO: Extract to dedicated mixin?
-            let data = error.response.data
-            if (data.hasOwnProperty('errors')) {
-                Object.keys(data['errors']).forEach(function (key) {
-                    flash(data['errors'][key][0], 'danger')
-                })
-            } else {
-                flash(data.message, 'danger')
-            }
-        },
-        markdown() {
-            axios.post('/markdown', {
-                markdown: this.form.body
-            })
-            .then(({data}) => {
-                this.preview.content =
-                    DOMPurify.sanitize(
-                        data,
-                        { USE_PROFILES: { html: true } }
-                    )
-
-                this.$nextTick(() => this.highlight())
-            })
-        },
-        highlight() {
-            this.$el.querySelectorAll('.user-content pre code')
-                .forEach(function (dom) {
-                    return hljs.highlightElement(dom)
-                })
-        },
-        changePreview() {
-            this.preview.status = ! this.preview.status
-
-            if (this.preview.status)
-                this.markdown()
         }
     }
 }

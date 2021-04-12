@@ -75,21 +75,18 @@
 </template>
 
 <script>
-import DOMPurify from 'dompurify'
-import hljs from 'highlight.js'
 import TurndownService from 'turndown'
+import ErrorHandler from "../mixins/ErrorHandler";
+import MarkdownPreview from "../mixins/MarkdownPreview";
 
 export default {
     name: "ReplyModal",
     props: ['reply'],
+    mixins: [ErrorHandler, MarkdownPreview],
     data() {
         return {
             form: {
                 body: ''
-            },
-            preview: {
-                status: false,
-                content: ''
             }
         }
     },
@@ -149,47 +146,8 @@ export default {
             })
 
             this.close()
-        },
-        handler(error) {
-            // TODO: any better single word method name?
-            // TODO: Support for showing multiple flash messages
-            // TODO: Extract to dedicated mixin?
-            let data = error.response.data
-            if (data.hasOwnProperty('errors')) {
-                Object.keys(data['errors']).forEach(function (key) {
-                    flash(data['errors'][key][0], 'danger')
-                })
-            } else {
-                flash(data.message, 'danger')
-            }
-        },
-        markdown() {
-            axios.post('/markdown', {
-                markdown: this.form.body
-            })
-            .then(({data}) => {
-                this.preview.content =
-                    DOMPurify.sanitize(
-                        data,
-                        { USE_PROFILES: { html: true } }
-                    )
-
-                this.$nextTick(() => this.highlight())
-            })
-        },
-        highlight() {
-            this.$el.querySelectorAll('.user-content pre code')
-                .forEach(function (dom) {
-                    return hljs.highlightElement(dom)
-                })
-        },
-        changePreview() {
-            this.preview.status = ! this.preview.status
-
-            if (this.preview.status)
-                this.markdown()
         }
-    },
+    }
 }
 </script>
 
