@@ -37,6 +37,9 @@ export default new Vuex.Store({
         DELETE_REPLY(state, index) {
             state.replies.splice(index, 1)
             state.count--
+        },
+        LOCK_THREAD(state, status = true) {
+            state.thread['locked'] = status
         }
     }
 })

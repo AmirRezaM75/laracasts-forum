@@ -30,6 +30,7 @@ Route::post('replies/{reply}/best', [ReplyController::class, 'best'])->name('rep
 
 Route::resource('threads', ThreadController::class)->except(['index', 'show', 'create', 'edit']);
 Route::post('threads/{thread}/lock', [ThreadController::class, 'lock'])->name('threads.lock');
+Route::delete('threads/{thread}/lock', [ThreadController::class, 'unlock']);
 Route::get('threads/{category?}', [ThreadController::class, 'index'])->name('threads.index');
 Route::get('threads/{category}/{thread}', [ThreadController::class, 'show'])->name('threads.show');
 

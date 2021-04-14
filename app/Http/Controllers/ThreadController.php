@@ -77,6 +77,11 @@ class ThreadController extends Controller
         $thread->update(['locked' => true]);
     }
 
+    public function unlock(Thread $thread)
+    {
+        $thread->update(['locked' => false]);
+    }
+
     protected function getThreads(Category $category, ThreadFilters $filters)
     {
         $threads = Thread::latest()->filter($filters);

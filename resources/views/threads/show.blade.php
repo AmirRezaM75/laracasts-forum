@@ -11,7 +11,10 @@
                     </a>
 
                     @auth
-                    <subscription-button :active="{{ json_encode($thread->isSubscribedTo) }}"></subscription-button>
+                        @if(auth()->user()->isAdmin()){{--TOOD: User Policy--}}
+                            <lock-button :is-locked="{{ json_encode($thread->locked) }}"></lock-button>
+                        @endif
+                        <subscription-button :is-active="{{ json_encode($thread->isSubscribedTo) }}"></subscription-button>
                     @endauth
 
                     @include('partials.sidebar')
@@ -84,4 +87,3 @@
         </div>
     </thread-view>
 @endsection
-{{--TODO: Delete thread--}}

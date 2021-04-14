@@ -1976,6 +1976,22 @@ body.series .generic-content a {
     --text-opacity:1;color: rgba(255,255,255,var(--text-opacity))
 }
 
+.btn-red {
+    background-color: #F44881;
+    border-color: #EC454F;
+    color: rgb(255,255,255)
+}
+
+.btn-red:hover {
+    background-color: #de4074;
+    border-color: #EC454F;
+    color: white;
+}
+
+.btn-red.has-shadow {
+    box-shadow: rgba(236, 69, 79, .15) 0 4px 10px 1px;
+}
+
 .swal-button--confirm.has-shadow,.btn-blue.has-shadow {
     box-shadow: 0 0 15px 0 rgba(0,145,255,.46)
 }
@@ -2039,10 +2055,6 @@ body.series .generic-content a {
 
 .btn-channel:hover {
     background: currentColor
-}
-
-.swal-button:focus {
-    box-shadow: none!important
 }
 
 .title {
@@ -3341,66 +3353,6 @@ a.ais-refinement-list__count:hover.is-primary,a.tag:hover.is-primary {
         display: block;
         text-align: center
     }
-}
-
-.swal-overlay {
-    background-color: rgba(0,0,0,.8)
-}
-
-.swal-title:first-child {
-    margin-top: 0;
-    padding-bottom: 0;
-    padding-top: 0;
-    line-height: 1
-}
-
-.swal-text,.swal-title:first-child {
-    --text-opacity:1;color: rgba(34,41,47,var(--text-opacity))
-}
-
-.swal-text {
-    font-size: .875rem
-}
-
-.swal-modal {
-    padding: 30px;
-    width: 371px;
-    max-width: 80%;
-    border-radius: 10px
-}
-
-.swal-button-container {
-    margin: 0 7px
-}
-
-@media(max-device-width: 736px) and (orientation:portrait) {
-    .swal-button-container {
-        margin-bottom:15px
-    }
-}
-
-.swal-button--cancel,.swal-button--close,.swal-button--stay {
-    background: #fff;
-    --border-opacity:1;border: 1px solid rgba(237,237,237,var(--border-opacity));
-    --text-opacity:1;color: rgba(34,41,47,var(--text-opacity))
-}
-
-.swal-button--cancel:hover,.swal-button--close:hover,.swal-button--stay:hover {
-    --bg-opacity:1;background-color: rgba(246,246,246,var(--bg-opacity))
-}
-
-.swal-button--next {
-    --bg-opacity:1;background-color: rgba(50,138,241,var(--bg-opacity));
-    --text-opacity:1;color: rgba(255,255,255,var(--text-opacity))
-}
-
-.swal-footer {
-    padding: 0;
-    margin: 30px 0 0
-}
-
-.swal-footer,.swal-text {
-    text-align: center
 }
 
 .countdown-block {

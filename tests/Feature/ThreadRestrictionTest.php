@@ -46,4 +46,25 @@ class ThreadRestrictionTest extends TestCase
 
         $this->assertTrue($thread->fresh()->locked);
     }
+
+    /** @test */
+    public function admin_can_unlock_thread()
+    {
+        $this->login(User::factory()->admin()->create());
+
+        $thread = Thread::factory()->create(['locked' => true]);
+
+        $this->delete(route('threads.lock', $thread));
+
+        $this->assertFalse($thread->fresh()->locked);
+    }
+
+    /** @test */
+    public function locked_thread_can_not_receive_new_reply()
+    {
+        $thread = Thread::factory()->create(['locked' => true]);
+
+        $this->post(route('threads.replies.store', $thread), ['body' => 'something'])
+            ->assertStatus(302);
+    }
 }

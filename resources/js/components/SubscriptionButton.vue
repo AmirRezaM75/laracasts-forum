@@ -21,7 +21,12 @@
 <script>
 export default {
     name: "SubscriptionButton",
-    props: ['active'],
+    props: ['isActive'],
+    data() {
+        return {
+            active: this.isActive
+        }
+    },
     computed: {
         endpoint() {
             return '/threads/' + window.location.pathname.match(/\/threads\/\w+\/(\w+)/)[1] + '/subscriptions'
