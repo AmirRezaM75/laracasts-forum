@@ -150,4 +150,14 @@ class ThreadTest extends TestCase
             "<p>Hello, <a href='/@jeffrey'>@jeffrey</a> and <a href='/@spatie'>@spatie</a>.</p>",
             $thread->body);
     }
+
+    /** @test */
+    public function thread_knows_if_it_is_solved()
+    {
+        $this->assertFalse($this->thread->isSolved());
+
+        $thread = Thread::factory()->solved()->create();
+
+        $this->assertTrue($thread->isSolved());
+    }
 }

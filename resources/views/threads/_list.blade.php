@@ -97,16 +97,16 @@
                             Updated
                         </div>
                     @endif
-                    {{--TODO: Solved Questions
-                    <div class="border-solid border border-blue text-blue px-2 h-4 text-3xs rounded-full ml-2 inline-flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="8" viewBox="0 0 21 16" class="hidden md:block mr-1"><g fill="#FFF" fill-rule="evenodd">
-                                <path fill="none" d="M-3-5h27v27H-3z"></path>
-                                <path d="M7.439 12.152l-5.037-5.36c-.447-.477-1.119-.477-1.566 0a1.204 1.204 0 0 0 0 1.667l6.603 7.03L20.086 2.025a1.204 1.204 0 0 0 0-1.668c-.447-.476-1.12-.476-1.567 0L7.44 12.152z" class="fill-current"></path>
-                            </g>
-                        </svg>
-                        Solved
-                    </div>
-                    --}}
+                    @if($thread->isSolved())
+                        <div class="border-solid border border-blue text-blue px-2 h-4 text-3xs rounded-full ml-2 inline-flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="8" viewBox="0 0 21 16" class="hidden md:block mr-1"><g fill="#FFF" fill-rule="evenodd">
+                                    <path fill="none" d="M-3-5h27v27H-3z"></path>
+                                    <path d="M7.439 12.152l-5.037-5.36c-.447-.477-1.119-.477-1.566 0a1.204 1.204 0 0 0 0 1.667l6.603 7.03L20.086 2.025a1.204 1.204 0 0 0 0-1.668c-.447-.476-1.12-.476-1.567 0L7.44 12.152z" class="fill-current"></path>
+                                </g>
+                            </svg>
+                            Solved
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

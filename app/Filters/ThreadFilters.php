@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Redis;
 
 class ThreadFilters extends Filters
 {
-    public static $filters = ['by', 'popular', 'unanswered', 'trending'];
+    public static $filters = ['by', 'popular', 'fresh', 'trending', 'answered'];
 
     /**
      * @param string $username
@@ -30,7 +30,7 @@ class ThreadFilters extends Filters
         return $this->builder->orderBy('replies_count', 'desc');
     }
 
-    protected function unanswered()
+    protected function fresh()
     {
         return $this->builder->whereHas('replies', null, '=', 0);
     }
@@ -43,5 +43,11 @@ class ThreadFilters extends Filters
 
         return $this->builder->whereIn('id', $ids)
             ->orderByRaw("FIELD(id," . implode(',', $ids) . ")");
+    }
+
+
+    protected function answered($state)
+    {
+        return $this->builder->{$state ? 'whereNotNull' : 'whereNull'}('answer_id');
     }
 }

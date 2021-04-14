@@ -91,6 +91,11 @@ class Thread extends Model
         return $this->updated_at->gt(cache($key));
     }
 
+    public function isSolved()
+    {
+        return ! is_null($this->answer_id);
+    }
+
     public function scopeFilter(Builder $query, ThreadFilters $filters)
     {
         return $filters->apply($query);

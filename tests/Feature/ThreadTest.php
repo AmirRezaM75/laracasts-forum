@@ -210,21 +210,46 @@ class ThreadTest extends TestCase
     }
 
     /** @test */
-    public function filter_unanswered_threads()
+    public function filter_threads_with_no_replies()
     {
-        $this->withoutExceptionHandling();
         Thread::factory()
             ->has(Reply::factory()->count(2))
             ->create();
 
-        $response = $this->getJson('/threads?unanswered=1')->json();
+        $response = $this->getJson('/threads?fresh=1')->json();
 
         $this->assertCount(1, $response['data']);
     }
 
-    /** TODO: FIELD is not available in SQLITE, Mock Redis */
+    /** @test */
+    public function filter_solved_threads()
+    {
+        Thread::factory()->solved()->create();
+
+        $response = $this->getJson('/threads?answered=1')->json();
+
+        $this->assertCount(1, $response['data']);
+
+        $this->assertEquals(3, $response['data'][0]['id']);
+    }
+
+    /** @test */
+    public function filter_unsolved_threads()
+    {
+        Thread::factory()->solved()->create();
+
+        $response = $this->getJson('/threads?answered=0')->json();
+
+        $this->assertCount(2, $response['data']);
+
+        $this->assertEquals([1, 2], array_column($response['data'], 'id'));
+    }
+
+    /** @test */
     public function filter_threads_by_visits()
     {
+        $this->markTestSkipped("FIELD is not available in SQLITE");
+
         $this->thread->visited(2);
 
         Thread::factory()->create()->visited(3);
