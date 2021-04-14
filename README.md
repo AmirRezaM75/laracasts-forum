@@ -6,3 +6,4 @@
 
 ## Installation
 1) enable redis
+2) fill out  ``ADMIN_EMAIL`` in .env file

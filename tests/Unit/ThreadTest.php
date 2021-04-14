@@ -160,4 +160,12 @@ class ThreadTest extends TestCase
 
         $this->assertTrue($thread->isSolved());
     }
+
+    /** @test */
+    public function it_casts_locked_attribute_to_boolean()
+    {
+        $thread = Thread::factory()->create(['locked' => '1']);
+
+        $this->assertTrue($thread->locked);
+    }
 }

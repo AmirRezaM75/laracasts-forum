@@ -19,6 +19,8 @@ class Thread extends Model
 
     protected $guarded = [];
 
+    protected $casts = ['locked' => 'boolean'];
+
     protected $with = ['user', 'category'];
 
     //TODO: Append isSubscribedTo attribute?!

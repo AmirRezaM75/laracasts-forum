@@ -25,10 +25,11 @@ Route::delete('threads/{thread}/subscriptions', [SubscriptionController::class, 
 Route::get('threads/{thread}/replies', [ReplyController::class, 'index'])->name('threads.replies.index');
 Route::post('threads/{thread}/replies', [ReplyController::class, 'store'])->name('threads.replies.store');
 Route::patch('replies/{reply}', [ReplyController::class, 'update'])->name('replies.update');
-Route::delete('replies/{reply}', [ReplyController::class, 'destroy'])->name('replies.delete');
+Route::delete('replies/{reply}', [ReplyController::class, 'destroy'])->name('replies.destroy');
 Route::post('replies/{reply}/best', [ReplyController::class, 'best'])->name('replies.best');
 
-Route::resource('threads', ThreadController::class)->except(['index', 'show', 'create', 'edit',]);
+Route::resource('threads', ThreadController::class)->except(['index', 'show', 'create', 'edit']);
+Route::post('threads/{thread}/lock', [ThreadController::class, 'lock'])->name('threads.lock');
 Route::get('threads/{category?}', [ThreadController::class, 'index'])->name('threads.index');
 Route::get('threads/{category}/{thread}', [ThreadController::class, 'show'])->name('threads.show');
 

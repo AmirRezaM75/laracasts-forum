@@ -16,6 +16,7 @@ class CreateThreadsTable extends Migration
             $table->foreignIdFor(Category::class)->constrained()->onDelete('cascade');
             $table->string('title');
             $table->text('body');
+            $table->boolean('locked')->default(false);
             $table->timestamps();
         });
     }

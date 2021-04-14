@@ -15,6 +15,7 @@ class ThreadController extends Controller
     public function __construct()
     {
         $this->middleware('auth')->except(['show', 'index']);
+        $this->middleware('auth.admin')->only('lock');
     }
 
     public function index(Request $request, Category $category, ThreadFilters $filters)
@@ -69,6 +70,11 @@ class ThreadController extends Controller
 
         if ($request->wantsJson())
             return response()->noContent();
+    }
+
+    public function lock(Thread $thread)
+    {
+        $thread->update(['locked' => true]);
     }
 
     protected function getThreads(Category $category, ThreadFilters $filters)

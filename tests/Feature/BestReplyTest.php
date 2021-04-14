@@ -67,7 +67,7 @@ class BestReplyTest extends TestCase
 
         $reply->thread->update(['answer_id' => $reply->id]);
 
-        $this->delete(route('replies.delete', $reply));
+        $this->delete(route('replies.destroy', $reply));
 
         $this->assertNull($reply->thread->fresh()->answer_id);
     }

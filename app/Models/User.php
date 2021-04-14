@@ -45,6 +45,11 @@ class User extends Authenticatable implements MustVerifyEmail
         );
     }
 
+    public function isAdmin()
+    {
+        return in_array($this->email, explode(',', env('ADMIN_EMAIL')));
+    }
+
     public function visitedThreadCacheKey($threadId)
     {
         return sprintf("user.%s.visited.%s", $this, $threadId);

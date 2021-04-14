@@ -163,7 +163,7 @@ class ReplyTest extends TestCase
 
         $reply = Reply::factory()->create();
 
-        $this->delete(route('replies.delete', $reply->id))
+        $this->delete(route('replies.destroy', $reply->id))
             ->assertStatus(403);
     }
 
@@ -174,7 +174,7 @@ class ReplyTest extends TestCase
 
         $reply = Reply::factory()->create(['user_id' => auth()->id()]);
 
-        $this->delete(route('replies.delete', $reply->id))
+        $this->delete(route('replies.destroy', $reply->id))
             ->assertStatus(204);
 
         $this->assertDatabaseMissing('replies', ['id' => $reply->id]);
