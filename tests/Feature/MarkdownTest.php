@@ -14,7 +14,7 @@ class MarkdownTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $this->expectException('Illuminate\Auth\AuthenticationException');
+        $this->expectAuthException();
 
         $this->post('markdown');
     }

@@ -15,7 +15,7 @@ class FavoriteTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $this->expectException('Illuminate\Auth\AuthenticationException');
+        $this->expectAuthException();
 
         $this->post('/replies/1/favorites');
     }

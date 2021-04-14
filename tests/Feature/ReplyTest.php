@@ -21,7 +21,7 @@ class ReplyTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $this->expectException('Illuminate\Auth\AuthenticationException');
+        $this->expectAuthException();
 
         $this->post('threads/1/replies', []);
     }
@@ -94,7 +94,7 @@ class ReplyTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $this->expectException('Illuminate\Auth\AuthenticationException');
+        $this->expectAuthException();
 
         $this->patch('replies/1', []);
     }
@@ -151,7 +151,7 @@ class ReplyTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $this->expectException('Illuminate\Auth\AuthenticationException');
+        $this->expectAuthException();
 
         $this->delete('replies/1', []);
     }

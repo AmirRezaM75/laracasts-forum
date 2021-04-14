@@ -49,7 +49,7 @@ class ThreadTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $this->expectException('Illuminate\Auth\AuthenticationException');
+        $this->expectAuthException();
 
         $this->post(route('threads.store'), []);
     }
@@ -97,7 +97,7 @@ class ThreadTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $this->expectException('Illuminate\Auth\AuthenticationException');
+        $this->expectAuthException();
 
         $this->delete(route('threads.destroy', 1), []);
     }
@@ -266,7 +266,7 @@ class ThreadTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $this->expectException('Illuminate\Auth\AuthenticationException');
+        $this->expectAuthException();
 
         $this->post('/threads/1/subscriptions');
     }

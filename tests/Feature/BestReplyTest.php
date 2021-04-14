@@ -17,7 +17,7 @@ class BestReplyTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $this->expectException('Illuminate\Auth\AuthenticationException');
+        $this->expectAuthException();
 
         $this->post(url('replies/1/best'));
     }

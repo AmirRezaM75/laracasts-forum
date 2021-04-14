@@ -13,4 +13,9 @@ abstract class TestCase extends BaseTestCase
     {
         $this->be($user ?? User::factory()->create());
     }
+
+    protected function expectAuthException()
+    {
+        $this->expectException('Illuminate\Auth\AuthenticationException');
+    }
 }

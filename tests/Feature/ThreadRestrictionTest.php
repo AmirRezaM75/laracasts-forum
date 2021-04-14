@@ -16,7 +16,7 @@ class ThreadRestrictionTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $this->expectException('Illuminate\Auth\AuthenticationException'); //TODO: put in testCase
+        $this->expectAuthException();
 
         $this->post(url('threads/1/lock'));
     }
