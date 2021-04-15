@@ -1,8 +1,14 @@
+@php
+    $classes = [
+        'active' => 'text-blue font-semibold border-blue-light bg-blue-lighter',
+        'default' => 'flex items-center mb-2 text-grey-dark text-sm mb-1 hover:text-blue hover:border-blue-light hover:bg-blue-lighter py-2 px-6 border border-solid border-black-transparent-3 rounded-xl'
+    ];
+@endphp
 <ul class="mobile:hidden">
     <li>
         <a
             href="{{ route('threads.index') }}"
-            class="flex items-center mb-2 text-grey-dark text-sm mb-1 hover:text-blue hover:border-blue-light hover:bg-blue-lighter py-2 px-6 border border-solid border-black-transparent-3 rounded-xl text-blue font-semibold border-blue-light bg-blue-lighter"
+            class="{{ (Request::is('threads') and empty(Request::query())) ? $classes['active'] : '' }} {{ $classes['default'] }}"
             style="height: 41px;"
         >
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="15" viewBox="0 0 16 15" class="mr-4 fill-current">
@@ -25,7 +31,7 @@
     <li>
         <a
             href="{{ url('/threads?by=' . auth()->user()->username) }}"
-            class="flex items-center mb-2 text-grey-dark text-sm mb-1 hover:text-blue hover:border-blue-light hover:bg-blue-lighter py-2 px-6 border border-solid border-black-transparent-3 rounded-xl"
+            class="{{ Request::has('by') ? $classes['active'] : '' }} {{ $classes['default'] }}"
             style="height: 41px;"
         >
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" class="mr-4 fill-current">
@@ -37,7 +43,6 @@
             My Questions
         </a>
     </li>
-    @endauth
     <li>
         <a
             href="/discuss?filter_by=contributed_to"
@@ -84,17 +89,21 @@
             Following
         </a>
     </li>
+    @endauth
     <li>
         <a
-            href="/discuss?trending=1"
-            class="flex items-center mb-2 text-grey-dark text-sm mb-1 hover:text-blue hover:border-blue-light hover:bg-blue-lighter py-2 px-6 border border-solid border-black-transparent-3 rounded-xl"
+            href="{{ url('/threads?trending=1') }}"
+            class="{{ Request::has('trending') ? $classes['active'] : '' }} {{ $classes['default'] }}"
             style="height: 41px;"
         >
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="15" viewBox="0 0 16 15" class="mr-4 fill-current">
-                <path
-                    fill-rule="nonzero"
-                    d="M3.277 15a.46.46 0 0 1-.192-.063.347.347 0 0 1-.128-.347l1.409-5.168L.14 6.05c-.128-.063-.16-.22-.128-.346a.307.307 0 0 1 .288-.22L5.743 5.2 7.696.19c.064-.095.192-.19.32-.19s.256.095.288.19l1.953 5.01 5.443.283c.128 0 .256.095.288.22a.352.352 0 0 1-.096.347l-4.226 3.372 1.408 5.168a.312.312 0 0 1-.128.347c-.096.063-.256.095-.352 0l-4.578-2.9-4.579 2.9c-.064.063-.096.063-.16.063z"
-                ></path>
+            <svg xmlns="http://www.w3.org/2000/svg" width="19" height="13" viewBox="0 0 19 13" class="mr-4 fill-current">
+                <g fill="none" fill-rule="evenodd">
+                    <path d="M0-3h19v19H0z"></path>
+                    <path
+                        fill="currentColor"
+                        d="M9.5.562C5.542.562 2.161 3.025.792 6.5c1.37 3.475 4.75 5.937 8.708 5.937s7.339-2.462 8.708-5.937C16.838 3.025 13.458.562 9.5.562zm0 9.896A3.96 3.96 0 0 1 5.542 6.5 3.96 3.96 0 0 1 9.5 2.542 3.96 3.96 0 0 1 13.458 6.5 3.96 3.96 0 0 1 9.5 10.458zm0-6.333A2.372 2.372 0 0 0 7.125 6.5 2.372 2.372 0 0 0 9.5 8.875 2.372 2.372 0 0 0 11.875 6.5 2.372 2.372 0 0 0 9.5 4.125z"
+                    ></path>
+                </g>
             </svg>
             Popular This Week
         </a>
@@ -102,7 +111,7 @@
     <li>
         <a
             href="{{ url("/threads?popular=1") }}"
-            class="flex items-center mb-2 text-grey-dark text-sm mb-1 hover:text-blue hover:border-blue-light hover:bg-blue-lighter py-2 px-6 border border-solid border-black-transparent-3 rounded-xl"
+            class="{{ Request::has('popular') ? $classes['active'] : '' }} {{ $classes['default'] }}"
             style="height: 41px;"
         >
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="15" viewBox="0 0 16 15" class="mr-4 fill-current">
@@ -117,7 +126,7 @@
     <li>
         <a
             href="{{ url('/threads?answered=1') }}"
-            class="flex items-center mb-2 text-grey-dark text-sm mb-1 hover:text-blue hover:border-blue-light hover:bg-blue-lighter py-2 px-6 border border-solid border-black-transparent-3 rounded-xl"
+            class="{{ Request::get('answered') === '1' ? $classes['active'] : '' }} {{ $classes['default'] }}"
             style="height: 41px;"
         >
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" class="mr-4 fill-current">
@@ -132,7 +141,7 @@
     <li>
         <a
             href="{{ url('/threads?answered=0') }}"
-            class="flex items-center mb-2 text-grey-dark text-sm mb-1 hover:text-blue hover:border-blue-light hover:bg-blue-lighter py-2 px-6 border border-solid border-black-transparent-3 rounded-xl"
+            class="{{ Request::get('answered') === '0' ? $classes['active'] : '' }} {{ $classes['default'] }}"
             style="height: 41px;"
         >
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" class="mr-4 fill-current">
@@ -147,31 +156,13 @@
     <li>
         <a
             href="{{ url('/threads?fresh=1') }}"
-            class="flex items-center mb-2 text-grey-dark text-sm mb-1 hover:text-blue hover:border-blue-light hover:bg-blue-lighter py-2 px-6 border border-solid border-black-transparent-3 rounded-xl"
+            class="{{ Request::has('fresh') ? $classes['active'] : '' }} {{ $classes['default'] }}"
             style="height: 41px;"
         >
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="12" viewBox="0 0 16 12" class="mr-4 fill-current">
                 <path fill-rule="nonzero" d="M15.206 7.366v4.401s-1.882-4.202-4.203-4.202h-4.5v3.602L0 5.664l6.503-5.5v2.999h4.5a4.204 4.204 0 0 1 4.203 4.203z"></path>
             </svg>
             No Replies Yet
-        </a>
-    </li>
-    <li>
-        <a
-            href="{{ url('/threads?trending=1') }}"
-            class="flex items-center mb-2 text-grey-dark text-sm mb-1 hover:text-blue hover:border-blue-light hover:bg-blue-lighter py-2 px-6 border border-solid border-black-transparent-3 rounded-xl"
-            style="height: 41px;"
-        >
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 19 13" class="mr-4 fill-current">
-                <g fill="none" fill-rule="evenodd">
-                    <path d="M0-3h19v19H0z"></path>
-                    <path
-                        fill="#78909C"
-                        d="M9.5.562C5.542.562 2.161 3.025.792 6.5c1.37 3.475 4.75 5.937 8.708 5.937s7.339-2.462 8.708-5.937C16.838 3.025 13.458.562 9.5.562zm0 9.896A3.96 3.96 0 0 1 5.542 6.5 3.96 3.96 0 0 1 9.5 2.542 3.96 3.96 0 0 1 13.458 6.5 3.96 3.96 0 0 1 9.5 10.458zm0-6.333A2.372 2.372 0 0 0 7.125 6.5 2.372 2.372 0 0 0 9.5 8.875 2.372 2.372 0 0 0 11.875 6.5 2.372 2.372 0 0 0 9.5 4.125z"
-                    ></path>
-                </g>
-            </svg>
-            Trending
         </a>
     </li>
 </ul>

@@ -5,8 +5,8 @@ namespace App\Filters;
 
 use App\Models\User;
 use App\Utilities\Trending;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Facades\Redis;
 
 class ThreadFilters extends Filters
 {
@@ -42,7 +42,8 @@ class ThreadFilters extends Filters
         $ids = Trending::get();
 
         return $this->builder->whereIn('id', $ids)
-            ->orderByRaw("FIELD(id," . implode(',', $ids) . ")");
+            ->orderByRaw("FIELD(id," . implode(',', $ids) . ")")
+            ->whereDate('created_at', '>=', Carbon::today()->startOfWeek());
     }
 
 
