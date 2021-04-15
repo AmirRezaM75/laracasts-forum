@@ -3,6 +3,7 @@
 namespace App\Utilities;
 
 use ParsedownExtra;
+use Stevebauman\Purify\Facades\Purify;
 
 class Markdown
 {
@@ -13,6 +14,6 @@ class Markdown
         if (! app()->environment('testing'))
             $parsedown->setSafeMode(true);
 
-        return $parsedown->text($text);
+        return Purify::clean($parsedown->text($text));
     }
 }

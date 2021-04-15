@@ -48,7 +48,7 @@ class ReplyTest extends TestCase
         ]);
 
         $this->assertEquals(
-            "<p>Hello, <a href='/@jeffrey'>@jeffrey</a> and <a href='/@spatie'>@spatie</a>.</p>",
+            '<p>Hello, <a href="/@jeffrey">@jeffrey</a> and <a href="/@spatie">@spatie</a>.</p>',
             $reply->body
         );
     }

@@ -30,4 +30,14 @@ class MarkdownTest extends TestCase
 
         $this->assertEquals("<p><code>public function test() {}</code></p>", $response->json());
     }
+
+    /** @test */
+    public function it_stripes_out_forbidden_tags()
+    {
+        $this->login();
+
+        $response = $this->post('markdown', ['markdown' => "#heading <a href='#' onclick='alert()'>Danger</a>"]);
+
+        $this->assertEquals('heading <a href="#">Danger</a>', $response->json());
+    }
 }
