@@ -42,11 +42,27 @@ class RegistrationTest extends TestCase
             ->assertSessionHasErrors('username');
     }
 
-
+    /** @test */
     public function username_must_only_contains_characters_and_numbers()
     {
         # We do further checking on RegexTest.php
         $this->post('/register', User::factory()->raw(['username' => '@spatie']))
             ->assertSessionHasErrors('username');
+    }
+
+    /** @test */
+    public function email_must_be_unique()
+    {
+        User::factory()->create(['email' => 'example@test.com']);
+
+        $this->post('/register', User::factory()->raw(['email' => 'example@test.com']))
+            ->assertSessionHasErrors('email');
+    }
+
+    /** @test */
+    public function email_must_be_valid()
+    {
+        $this->post('/register', User::factory()->raw(['email' => 'example.com']))
+            ->assertSessionHasErrors('email');
     }
 }

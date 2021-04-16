@@ -44,4 +44,22 @@ class UserTest extends TestCase
 
         $this->assertTrue($user->isAdmin());
     }
+
+    /** @test */
+    public function it_casts_properties_to_array()
+    {
+        $user = User::factory()->create(['properties' => ['twitter' => 'twitter']]);
+
+        $this->assertIsArray($user->properties);
+
+        $this->assertEquals('twitter', $user->properties['twitter']);
+    }
+
+    /** @test */
+    public function it_casts_visibility_status_to_boolean()
+    {
+        $user = User::factory()->create(['private' => '1']);
+
+        $this->assertTrue($user->private);
+    }
 }

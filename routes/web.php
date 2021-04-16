@@ -2,6 +2,7 @@
 
 use App\Utilities\Regex;
 use App\Http\Controllers\{
+    ProfileAccountController,
     NotificationController,
     SubscriptionController,
     MarkdownController,
@@ -44,6 +45,11 @@ Route::delete('users/notifications/{notification}', [NotificationController::cla
 Route::get('@{username}', [ProfileController::class, 'show'])
     ->where('username', trim(Regex::USERNAME, '/'))
     ->name('profile');
+
+Route::patch('profile', [ProfileController::class, 'update']);
+
+Route::get('profile/account', [ProfileAccountController::class, 'show']);
+Route::patch('profile/account', [ProfileAccountController::class, 'update']);
 
 Route::post('users/{user}/avatar', [AvatarController::class, 'store']);
 

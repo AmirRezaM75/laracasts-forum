@@ -12,12 +12,14 @@ class User extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory, Notifiable;
 
-    protected $fillable = ['username', 'email', 'password', 'avatar'];
+    protected $fillable = ['username', 'email', 'password', 'avatar', 'properties'];
 
     protected $hidden = ['email', 'password', 'remember_token'];
 
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'properties' => 'array',
+        'private' => 'boolean',
     ];
 
     protected $appends = ['avatar'];
