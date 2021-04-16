@@ -17,7 +17,7 @@ class ThreadTest extends TestCase
 
     protected function setUp(): void
     {
-        parent::setUp(); // because we are extending Illuminate\Foundation\Testing\TestCase
+        parent::setUp();
 
         $this->thread = Thread::factory()->create();
     }
@@ -53,7 +53,6 @@ class ThreadTest extends TestCase
 
         $this->post(route('threads.store'), []);
     }
-
 
     /** @test */
     public function users_can_create_thread()
@@ -166,131 +165,6 @@ class ThreadTest extends TestCase
 
         $this->publishThread(['category_id' => 999])
             ->assertSessionHasErrors('category_id');
-    }
-
-    /** @test */
-    public function filter_threads_by_category()
-    {
-        $category = Category::factory()->create();
-        $threadInCategory = Thread::factory()->create(['category_id' => $category->id]);
-        $randomThread = Thread::factory()->create();
-
-        $this->get("threads/{$category->slug}")
-            ->assertSee($threadInCategory->title)
-            ->assertDontSee($randomThread->title);
-    }
-
-    /** @test */
-    public function filter_threads_by_user()
-    {
-        $user = User::factory()->create();
-        $thread = Thread::factory()->create(['user_id' => $user->id]);
-
-        $this->get('threads?by=' . $user->username)
-            ->assertSee($thread->title)
-            ->assertDontSee($this->thread->title);
-    }
-
-    /** @test */
-    public function filter_threads_by_popularity()
-    {
-        Thread::factory()
-            ->has(Reply::factory()->count(3))
-            ->create();
-
-        Thread::factory()
-            ->has(Reply::factory()->count(2))
-            ->create();
-
-        // Notice: We are creating a thread with no reply before each test.
-
-        $response = $this->getJson('threads?popular=1')->json();
-
-        $this->assertEquals([3, 2, 0], array_column($response['data'], 'replies_count'));
-    }
-
-    /** @test */
-    public function filter_threads_with_no_replies()
-    {
-        Thread::factory()
-            ->has(Reply::factory()->count(2))
-            ->create();
-
-        $response = $this->getJson('/threads?fresh=1')->json();
-
-        $this->assertCount(1, $response['data']);
-    }
-
-    /** @test */
-    public function filter_solved_threads()
-    {
-        Thread::factory()->solved()->create();
-
-        $response = $this->getJson('/threads?answered=1')->json();
-
-        $this->assertCount(1, $response['data']);
-
-        $this->assertEquals(3, $response['data'][0]['id']);
-    }
-
-    /** @test */
-    public function filter_unsolved_threads()
-    {
-        Thread::factory()->solved()->create();
-
-        $response = $this->getJson('/threads?answered=0')->json();
-
-        $this->assertCount(2, $response['data']);
-
-        $this->assertEquals([1, 2], array_column($response['data'], 'id'));
-    }
-
-    /** @test */
-    public function filter_threads_by_visits()
-    {
-        $this->markTestSkipped("FIELD is not available in SQLITE");
-
-        $this->thread->visited(2);
-
-        Thread::factory()->create()->visited(3);
-
-        Thread::factory()->create()->visited(1);
-
-        $response = $this->getJson('threads?trending=1')->json();
-
-        $this->assertEquals([2, 1, 3], array_column($response['data'], 'id'));
-    }
-
-    /** @test */
-    public function guests_can_not_subscribe_to_thread()
-    {
-        $this->withoutExceptionHandling();
-
-        $this->expectAuthException();
-
-        $this->post('/threads/1/subscriptions');
-    }
-
-    /** @test */
-    public function users_can_subscribe_to_thread()
-    {
-        $this->login();
-
-        $this->post('/threads/' . $this->thread->id . '/subscriptions');
-
-        $this->assertCount(1, $this->thread->subscribers);
-    }
-
-    /** @test */
-    public function users_can_unsubscribe_from_thread()
-    {
-        $this->login();
-
-        $this->thread->subscribe();
-
-        $this->delete('/threads/' . $this->thread->id . '/subscriptions');
-
-        $this->assertCount(0, $this->thread->subscribers);
     }
 
     protected function publishThread($overrides)
