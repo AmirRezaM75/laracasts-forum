@@ -20,7 +20,10 @@
                             <div class="flex flex-1">
                                 <div class="mobile:mr-4 md:hidden lg:block mr-6">
                                     <div class="select-wrap">
-                                        <select class="text-grey-darker text-sm bg-grey-panel rounded-full px-5 py-3 flex items-center cursor-pointer leading-none" style="width: 115px;">
+                                        <select
+                                            @change="filter"
+                                            class="text-grey-darker text-sm bg-grey-panel rounded-full px-5 py-3 flex items-center cursor-pointer leading-none"
+                                            style="width: 115px;">
                                             <option value="">Latest</option>
                                             <option value="?trending=1">Popular This Week</option>
                                             <option value="?popular=1">Popular All Time</option>
@@ -28,7 +31,6 @@
                                             <option value="?answered=0">Unsolved</option>
                                             <option value="?fresh=1">No Replies Yet</option>
                                             <option value="?me">My Questions</option>
-                                            <option value="/leaderboard">Leaderboard</option>
                                             <option value="?filter_by=contributed_to">My Participation</option>
                                             <option value="?filter_by=best_answers">My Best Answers</option>
                                             <option value="?favorites=1">Following</option>
@@ -38,7 +40,10 @@
                                 </div>
                                 <div>
                                     <div class="select-wrap">
-                                        <select class="text-grey-darker text-sm bg-grey-panel rounded-full px-5 cursor-pointer" style="width: 92px;">
+                                        <select
+                                            @change="filter"
+                                            class="text-grey-darker text-sm bg-grey-panel rounded-full px-5 cursor-pointer"
+                                            style="width: 92px;">
                                             <option value="all">All</option>
                                             @foreach($categories as $category)
                                                 <option value="{{ $category->slug }}">{{ $category->name }}</option>
@@ -48,25 +53,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="flex items-center md:px-4">
-                                <button class="forum-excerpt-toggle">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15" class="mx-2">
-                                        <g fill="#78909C" fill-rule="evenodd" class="forum-excerpt-toggle-lines">
-                                            <rect width="15" height="6" rx="2" class="forum-excerpt-toggle-line"></rect>
-                                            <rect width="15" height="6" y="9" rx="2" class="forum-excerpt-toggle-line"></rect>
-                                        </g>
-                                    </svg>
-                                </button>
-                                <button disabled="disabled" class="forum-excerpt-toggle is-active">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15" class="mx-2">
-                                        <g fill="#78909C" fill-rule="evenodd" class="forum-excerpt-toggle-lines">
-                                            <rect width="15" height="4" rx="2" class="forum-excerpt-toggle-line"></rect>
-                                            <rect width="8" height="4" y="11" rx="2" class="forum-excerpt-toggle-line"></rect>
-                                            <rect width="15" height="4" y="5.5" rx="2" class="forum-excerpt-toggle-line"></rect>
-                                        </g>
-                                    </svg>
-                                </button>
-                            </div>
+
+                            <excerpt-buttons></excerpt-buttons>
+
                             <form action="/discuss" autocomplete="off" class="search-form bg-grey-panel rounded-full hidden md:block md:w-52">
                                 <input name="q" placeholder="Whatcha Looking For?" value="" class="px-5 pt-0 text-sm w-full h-full" />
                             </form>

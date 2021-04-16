@@ -48,10 +48,10 @@
                     </h4>
                     <div class="hidden md:flex md:items-center md:flex-row-reverse text-center md:ml-auto relative">
                         <a
-                            href="https://laracasts.com/discuss/channels/site-improvements"
+                            href="{{ url('threads/' . $thread->category->slug) }}"
                             class="btn btn-channel is-site-improvements py-2 px-4 text-2xs block text-center ml-5 w-24"
                         >
-                            Feedback
+                            {{ $thread->category->name }}
                         </a>
                         <div class="flex items-center justify-center ml-4">
                             <div class="mr-1">
@@ -84,7 +84,8 @@
                     </div>
                 </div>
                 <div class="conversation-list-excerpt mb-6 lg:mb-0 lg:pr-8 lg:clamp two-lines break-words text-black phone:leading-loose" data-conversation-excerpt="">
-                    {{ $thread->body }}
+                    {!! $thread->body !!}
+                    {{--TODO: How to handle if it start with <code> --}}
                 </div>
                 <div class="text-grey-dark text-xs leading-none">
                     <a href="#" class="font-bold link hover:text-blue uppercase">

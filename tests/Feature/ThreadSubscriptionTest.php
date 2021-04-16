@@ -6,7 +6,7 @@ use App\Models\Thread;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class ThreadSubscription extends TestCase
+class ThreadSubscriptionTest extends TestCase
 {
     use RefreshDatabase;
 
