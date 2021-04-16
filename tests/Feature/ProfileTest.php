@@ -52,7 +52,7 @@ class ProfileTest extends TestCase
     {
         $this->login();
 
-        $data['properties'] = [
+        $data['profile'] = [
             'website' => 'www.example.com',
             'twitter' => 'twitter',
             'github' => 'github',
@@ -62,7 +62,7 @@ class ProfileTest extends TestCase
 
         $this->patch('profile/account', $data);
 
-        $this->assertEquals(auth()->user()->fresh()->properties, $data['properties']);
+        $this->assertEquals(auth()->user()->fresh()->profile, $data['profile']);
     }
 
     /** @test */

@@ -32,7 +32,7 @@ class ProfileController extends Controller
 
         $user->email = $request->get('email');
 
-        $user->private = $request->has('private');
+        $user->private = $request->get('private', false);
 
         $user->username = $request->get('username');
 

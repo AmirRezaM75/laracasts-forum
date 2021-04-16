@@ -48,11 +48,11 @@ class UserTest extends TestCase
     /** @test */
     public function it_casts_properties_to_array()
     {
-        $user = User::factory()->create(['properties' => ['twitter' => 'twitter']]);
+        $user = User::factory()->create(['profile' => ['twitter' => 'twitter']]);
 
-        $this->assertIsArray($user->properties);
+        $this->assertIsArray($user->profile);
 
-        $this->assertEquals('twitter', $user->properties['twitter']);
+        $this->assertEquals('twitter', $user->profile['twitter']);
     }
 
     /** @test */

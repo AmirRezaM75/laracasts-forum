@@ -13,13 +13,13 @@ class ProfileAccountController extends Controller
 
     public function show()
     {
-        return view('profiles.account');
+        return view('profiles.account', ['user' => auth()->user()->makeVisible('email')]);
     }
 
     public function update(Request $request)
     {
         auth()->user()->update([
-            'properties' => $request->get('properties')
+            'profile' => $request->get('profile')
         ]);
     }
 }

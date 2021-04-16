@@ -15,6 +15,8 @@ Vue.component('notification', require('./components/Notification').default)
 Vue.component('paginator', require('./components/Paginator').default)
 Vue.component('flash', require('./components/Flash').default)
 Vue.component('avatar-form', require('./components/AvatarForm').default)
+Vue.component('user-account-form', require('./components/UserAccountForm').default)
+Vue.component('user-profile-form', require('./components/UserProfileForm').default)
 Vue.component('thread-view', require('./views/Thread').default)
 Vue.component('threads-view', require('./views/Threads').default)
 
