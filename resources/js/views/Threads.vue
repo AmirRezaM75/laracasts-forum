@@ -1,7 +1,7 @@
 <script>
     import ThreadModal from "../components/ThreadModal";
     import ExcerptButtons from "../components/ExcerptButtons";
-    
+
     export default {
         name: "Threads",
         props: ['categories'],

@@ -2278,6 +2278,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _mixins_ErrorHandler__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../mixins/ErrorHandler */ "./resources/js/mixins/ErrorHandler.js");
 //
 //
 //
@@ -2345,8 +2346,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "LoginForm",
+  mixins: [_mixins_ErrorHandler__WEBPACK_IMPORTED_MODULE_0__.default],
   data: function data() {
     return {
       email: '',
@@ -2355,13 +2361,15 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     login: function login() {
+      var _this = this;
+
       axios.post('login', {
         email: this.email,
         password: this.password
       }).then(function (response) {
         if (response.status === 204) location.reload();
       })["catch"](function (error) {
-        console.log(error);
+        _this.handler(error, false);
       });
     }
   }
@@ -2551,6 +2559,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _mixins_ErrorHandler__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../mixins/ErrorHandler */ "./resources/js/mixins/ErrorHandler.js");
 //
 //
 //
@@ -2642,8 +2651,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "RegisterForm",
+  mixins: [_mixins_ErrorHandler__WEBPACK_IMPORTED_MODULE_0__.default],
   data: function data() {
     return {
       email: '',
@@ -2653,6 +2672,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     register: function register() {
+      var _this = this;
+
       axios.post('register', {
         email: this.email,
         password: this.password,
@@ -2660,7 +2681,7 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (response) {
         if (response.status === 204) location.reload();
       })["catch"](function (error) {
-        console.log(error);
+        _this.handler(error, false);
       });
     }
   }
@@ -3946,15 +3967,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _utilities_Errors__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utilities/Errors */ "./resources/js/utilities/Errors.js");
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      errors: new _utilities_Errors__WEBPACK_IMPORTED_MODULE_0__.default()
+    };
+  },
   methods: {
     handler: function handler(error) {
+      var flashMessage = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
       // TODO: any better single word method name?
       // TODO: Support for showing multiple flash messages
       var data = error.response.data;
 
       if (data.hasOwnProperty('errors')) {
-        Object.keys(data['errors']).forEach(function (key) {
+        this.errors.save(data['errors']);
+        if (flashMessage) Object.keys(data['errors']).forEach(function (key) {
           flash(data['errors'][key][0], 'danger');
         });
       } else {
@@ -4086,6 +4116,65 @@ vue__WEBPACK_IMPORTED_MODULE_0__.default.use(vuex__WEBPACK_IMPORTED_MODULE_1__.d
     }
   }
 }));
+
+/***/ }),
+
+/***/ "./resources/js/utilities/Errors.js":
+/*!******************************************!*\
+  !*** ./resources/js/utilities/Errors.js ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var Errors = /*#__PURE__*/function () {
+  function Errors() {
+    _classCallCheck(this, Errors);
+
+    this.errors = {};
+  }
+
+  _createClass(Errors, [{
+    key: "save",
+    value: function save(errors) {
+      this.errors = errors;
+    }
+  }, {
+    key: "get",
+    value: function get(field) {
+      if (this.errors[field]) return this.errors[field][0];
+    }
+  }, {
+    key: "clear",
+    value: function clear(field) {
+      if (field) return delete this.errors[field];
+      this.errors = {};
+    }
+  }, {
+    key: "has",
+    value: function has(field) {
+      return this.errors.hasOwnProperty(field);
+    }
+  }, {
+    key: "any",
+    value: function any() {
+      return Object.keys(this.errors).length > 0;
+    }
+  }]);
+
+  return Errors;
+}();
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Errors);
 
 /***/ }),
 
@@ -56652,11 +56741,14 @@ var render = function() {
             "form",
             {
               staticClass: "max-w-xs md:w-2/3 lg:w-1/3 mx-auto",
-              attrs: { role: "form", method: "post" },
+              attrs: { role: "form", method: "post", spellcheck: "false" },
               on: {
                 submit: function($event) {
                   $event.preventDefault()
                   return _vm.login($event)
+                },
+                keydown: function($event) {
+                  return _vm.errors.clear($event.target.id)
                 }
               }
             },
@@ -56692,9 +56784,9 @@ var render = function() {
                       attrs: {
                         type: "email",
                         id: "email",
-                        autocomplete: "username",
+                        autocomplete: "email",
                         placeholder: "Enter Email",
-                        required: "required"
+                        required: ""
                       },
                       domProps: { value: _vm.email },
                       on: {
@@ -56739,7 +56831,20 @@ var render = function() {
                       ]
                     )
                   ]
-                )
+                ),
+                _vm._v(" "),
+                _c("p", {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.errors.has("email"),
+                      expression: "errors.has('email')"
+                    }
+                  ],
+                  staticClass: "text-red text-xs mt-2",
+                  domProps: { textContent: _vm._s(_vm.errors.get("email")) }
+                })
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "control max-w-sm mx-auto" }, [
@@ -57173,11 +57278,14 @@ var render = function() {
             _c(
               "form",
               {
-                attrs: { role: "form", method: "POST" },
+                attrs: { role: "form", method: "POST", spellcheck: "false" },
                 on: {
                   submit: function($event) {
                     $event.preventDefault()
                     return _vm.register($event)
+                  },
+                  keydown: function($event) {
+                    return _vm.errors.clear($event.target.id)
                   }
                 }
               },
@@ -57260,7 +57368,22 @@ var render = function() {
                         ]
                       )
                     ]
-                  )
+                  ),
+                  _vm._v(" "),
+                  _c("p", {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.errors.has("username"),
+                        expression: "errors.has('username')"
+                      }
+                    ],
+                    staticClass: "text-red text-xs mt-2",
+                    domProps: {
+                      textContent: _vm._s(_vm.errors.get("username"))
+                    }
+                  })
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "control max-w-sm mx-auto" }, [
@@ -57341,7 +57464,20 @@ var render = function() {
                         ]
                       )
                     ]
-                  )
+                  ),
+                  _vm._v(" "),
+                  _c("p", {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.errors.has("email"),
+                        expression: "errors.has('email')"
+                      }
+                    ],
+                    staticClass: "text-red text-xs mt-2",
+                    domProps: { textContent: _vm._s(_vm.errors.get("email")) }
+                  })
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "control max-w-sm mx-auto" }, [
@@ -57401,7 +57537,7 @@ var render = function() {
                         },
                         [
                           _vm._v(
-                            "\n                                    Show\n                                "
+                            "\n                                Show\n                            "
                           )
                         ]
                       ),
@@ -57438,7 +57574,22 @@ var render = function() {
                         ]
                       )
                     ]
-                  )
+                  ),
+                  _vm._v(" "),
+                  _c("p", {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.errors.has("password"),
+                        expression: "errors.has('password')"
+                      }
+                    ],
+                    staticClass: "text-red text-xs mt-2",
+                    domProps: {
+                      textContent: _vm._s(_vm.errors.get("password"))
+                    }
+                  })
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "control text-center mt-10" }, [
@@ -57465,7 +57616,7 @@ var render = function() {
                     },
                     [
                       _vm._v(
-                        "\n                                Already Have an Account?\n                            "
+                        "\n                            Already Have an Account?\n                        "
                       )
                     ]
                   )
@@ -57492,7 +57643,7 @@ var staticRenderFns = [
         _c(
           "h1",
           { staticClass: "text-3xl font-light tracking-tight text-black" },
-          [_vm._v("\n                        Sign Up!\n                    ")]
+          [_vm._v("\n                    Sign Up!\n                ")]
         )
       ]
     )

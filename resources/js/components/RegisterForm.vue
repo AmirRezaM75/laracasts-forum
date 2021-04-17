@@ -8,7 +8,12 @@
                     </h1>
                 </header>
                 <div class="md:w-2/3 lg:w-1/3 md:mx-auto mt-8">
-                    <form role="form" method="POST" @submit.prevent="register">
+                    <form role="form"
+                          method="POST"
+                          @submit.prevent="register"
+                          @keydown="errors.clear($event.target.id)"
+                          spellcheck="false"
+                    >
                         <div class="control max-w-sm mx-auto">
                             <label for="username" class="block font-bold text-2xs text-grey-dark">Username</label>
                             <div class="flex items-center relative borderd border-solid border-b border-grey-light">
@@ -19,7 +24,8 @@
                                        placeholder="Enter Username"
                                        required
                                        class="text-black input is-minimal text-sm"
-                                       style="border: none;">
+                                       style="border: none;"
+                                >
                                 <div class="w-4 h-4 rounded-full p-1 mx-auto flex justify-center items-center ml-4 bg-grey">
                                     <svg width="10" height="8" viewBox="0 0 10 8">
                                         <path fill="#FFF" fill-rule="evenodd" stroke="#FFF" stroke-width=".728"
@@ -27,7 +33,7 @@
                                     </svg>
                                 </div>
                             </div>
-<!--                            <p v-show="errors.has('username')" class="tw-text-red tw-text-xs tw-mt-2" v-text="errors.get('username')"></p>-->
+                            <p v-show="errors.has('username')" class="text-red text-xs mt-2" v-text="errors.get('username')"></p>
                         </div>
                         <div class="control max-w-sm mx-auto">
                             <label for="email" class="block font-bold text-2xs text-grey-dark">Email</label>
@@ -47,6 +53,7 @@
                                     </svg>
                                 </div>
                             </div>
+                            <p v-show="errors.has('email')" class="text-red text-xs mt-2" v-text="errors.get('email')"></p>
                         </div>
                         <div class="control max-w-sm mx-auto">
                             <label for="password" class="block font-bold text-2xs text-grey-dark">Password</label>
@@ -71,6 +78,7 @@
                                     </svg>
                                 </div>
                             </div>
+                            <p v-show="errors.has('password')" class="text-red text-xs mt-2" v-text="errors.get('password')"></p>
                         </div>
                         <div class="control text-center mt-10">
                             <button type="submit" class="btn btn-blue w-full md:max-w-2/3 mx-auto">Create Account</button>
@@ -90,8 +98,11 @@
 </template>
 
 <script>
+import ErrorHandler from "../mixins/ErrorHandler";
+
 export default {
     name: "RegisterForm",
+    mixins: [ErrorHandler],
     data() {
         return {
             email: '',
@@ -109,7 +120,7 @@ export default {
                 if (response.status === 204)
                     location.reload()
             }).catch(error => {
-                console.log(error)
+                this.handler(error, false)
             })
         }
     }
