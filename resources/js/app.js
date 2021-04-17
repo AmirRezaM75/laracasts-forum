@@ -17,21 +17,11 @@ Vue.component('flash', require('./components/Flash').default)
 Vue.component('avatar-form', require('./components/AvatarForm').default)
 Vue.component('user-account-form', require('./components/UserAccountForm').default)
 Vue.component('user-profile-form', require('./components/UserProfileForm').default)
+Vue.component('auth-modal', require('./components/AuthModal').default)
 Vue.component('thread-view', require('./views/Thread').default)
 Vue.component('threads-view', require('./views/Threads').default)
 
-Vue.use(VueJSModal, {
-    dynamic: true,
-    dynamicDefaults: {
-        shiftY: 1,
-        'pivot-y': 1,
-        width: "800",
-        height: "auto",
-        adaptive: true,
-        'click-to-close': false,
-        transition: "modal-slide-up"
-    }
-});
+Vue.use(VueJSModal, { dynamic: true });
 
 Vue.mixin(Auth);
 

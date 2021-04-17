@@ -109,9 +109,20 @@
         },
         methods: {
             edit() {
-                this.$modal.show(ReplyModal,
+                this.$modal.show(
+                    ReplyModal,
                     { reply: this.reply },
-                    { name: "edit-reply", classes: ['v--modal', 'conversation-modal'] }
+                    {
+                        name: "edit-reply",
+                        shiftY: 1,
+                        'pivot-y': 1,
+                        width: "800",
+                        height: "auto",
+                        adaptive: true,
+                        'click-to-close': false,
+                        transition: "modal-slide-up",
+                        classes: ['v--modal', 'conversation-modal']
+                    }
                 );
             },
             destroy() {

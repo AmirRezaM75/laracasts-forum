@@ -29,7 +29,11 @@
                         @yield('content')
                     </div>
                 </div>
+
+                <auth-modal></auth-modal>
+
                 <modals-container></modals-container>
+
                 <flash message="{{ session('flash') }}"></flash>
             </div>
         </div>

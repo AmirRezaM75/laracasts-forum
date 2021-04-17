@@ -52,7 +52,21 @@ export default {
     },
     methods: {
         create() {
-            this.$modal.show(ReplyModal,{}, { name: "create-reply", classes: ['v--modal', 'conversation-modal'] });
+            this.$modal.show(
+                ReplyModal,
+                {},
+                {
+                    name: "create-reply",
+                    shiftY: 1,
+                    'pivot-y': 1,
+                    width: "800",
+                    height: "auto",
+                    adaptive: true,
+                    'click-to-close': false,
+                    transition: "modal-slide-up",
+                    classes: ['v--modal', 'conversation-modal']
+                }
+            );
         },
         fetch(page) {
             axios.get(this.endpoint(page)).then(response => {

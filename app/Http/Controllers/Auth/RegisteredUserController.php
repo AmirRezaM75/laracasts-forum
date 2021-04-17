@@ -40,6 +40,8 @@ class RegisteredUserController extends Controller
 
         event(new Registered($user));
 
-        return redirect(RouteServiceProvider::HOME);
+        return $request->ajax()
+            ? response()->noContent()
+            : redirect(RouteServiceProvider::HOME);
     }
 }

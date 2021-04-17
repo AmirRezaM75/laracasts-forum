@@ -95,9 +95,20 @@ export default {
     },
     methods: {
         edit() {
-            this.$modal.show(ThreadModal,
+            this.$modal.show(
+                ThreadModal,
                 { thread: this.thread },
-                { name: "edit-thread", classes: ['v--modal', 'conversation-modal'] }
+                {
+                    name: "edit-thread",
+                    shiftY: 1,
+                    'pivot-y': 1,
+                    width: "800",
+                    height: "auto",
+                    adaptive: true,
+                    'click-to-close': false,
+                    transition: "modal-slide-up",
+                    classes: ['v--modal', 'conversation-modal']
+                }
             );
         },
         destroy() {
