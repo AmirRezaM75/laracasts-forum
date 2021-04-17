@@ -23,7 +23,8 @@
                                    required
                                    class="text-black input is-minimal text-sm"
                                    style="border: none;">
-                            <div class="w-4 h-4 rounded-full p-1 mx-auto flex justify-center items-center ml-4 bg-grey">
+                            <div class="w-4 h-4 rounded-full p-1 mx-auto flex justify-center items-center ml-4"
+                                    :class="errors.has('email') || ! email ? 'bg-grey' : 'bg-blue'">
                                 <svg width="10" height="8" viewBox="0 0 10 8">
                                     <path fill="#FFF" fill-rule="evenodd" stroke="#FFF" stroke-width=".728"
                                           d="M3.533 5.646l-2.199-2.19c-.195-.194-.488-.194-.684 0-.195.195-.195.487 0 .682l2.883 2.87L9.055 1.51c.195-.194.195-.487 0-.681-.196-.195-.49-.195-.685 0L3.533 5.646z"></path>
@@ -35,7 +36,7 @@
                     <div class="control max-w-sm mx-auto">
                         <label for="password" class="block font-bold text-2xs text-grey-dark">Password</label>
                         <div class="flex items-center relative borderd border-solid border-b border-grey-light">
-                            <input type="password"
+                            <input :type="privateMode ? 'password' : 'text'"
                                    id="password"
                                    v-model="password"
                                    autocomplete="current-password"
@@ -44,11 +45,13 @@
                                    class="text-black input is-minimal text-sm"
                                    style="border: none;">
                             <button type="button"
+                                    @click="privateMode = ! privateMode"
                                     title="Toggle private mode"
-                                    class="ml-4 text-2xs font-bold text-grey">
-                                Show
-                            </button>
-                            <div class="w-4 h-4 rounded-full p-1 mx-auto flex justify-center items-center ml-4 bg-grey">
+                                    class="ml-4 text-2xs font-bold text-grey"
+                                    v-text="privateMode ? 'Show' : 'Hide'"
+                            ></button>
+                            <div class="w-4 h-4 rounded-full p-1 mx-auto flex justify-center items-center ml-4"
+                                    :class="errors.has('password') || ! password ? 'bg-grey' : 'bg-blue'">
                                 <svg width="10" height="8" viewBox="0 0 10 8">
                                     <path fill="#FFF" fill-rule="evenodd" stroke="#FFF" stroke-width=".728"
                                           d="M3.533 5.646l-2.199-2.19c-.195-.194-.488-.194-.684 0-.195.195-.195.487 0 .682l2.883 2.87L9.055 1.51c.195-.194.195-.487 0-.681-.196-.195-.49-.195-.685 0L3.533 5.646z"></path>
@@ -77,7 +80,8 @@ export default {
     data() {
         return {
             email: '',
-            password: ''
+            password: '',
+            privateMode: true
         }
     },
     methods: {

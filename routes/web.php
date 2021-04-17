@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Utilities\Regex;
 use App\Http\Controllers\{
     ProfileAccountController,
@@ -12,9 +13,6 @@ use App\Http\Controllers\{
     ThreadController,
     ReplyController
 };
-
-use Illuminate\Support\Facades\Route;
-
 
 Route::redirect('/', 'threads');
 

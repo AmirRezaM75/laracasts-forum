@@ -1876,6 +1876,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -1890,8 +1893,11 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    initializer: function initializer(event) {
+    beforeOpen: function beforeOpen(event) {
       this.type = event.params.type;
+    },
+    opened: function opened() {
+      this.$el.querySelector(".v--modal-box input:first-child").focus();
     },
     toggle: function toggle() {
       this.type = this.type === 'register' ? 'login' : 'register';
@@ -2349,6 +2355,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "LoginForm",
@@ -2356,7 +2365,8 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       email: '',
-      password: ''
+      password: '',
+      privateMode: true
     };
   },
   methods: {
@@ -2659,6 +2669,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "RegisterForm",
@@ -2667,7 +2681,8 @@ __webpack_require__.r(__webpack_exports__);
     return {
       email: '',
       password: '',
-      username: ''
+      username: '',
+      privateMode: true
     };
   },
   methods: {
@@ -56252,7 +56267,11 @@ var render = function() {
         classes:
           "rounded-none shadow-inner bg-white border-t-3 rounded-2xl max-h-screen"
       },
-      on: { "before-open": _vm.initializer, "toggle-form": _vm.toggle }
+      on: {
+        "before-open": _vm.beforeOpen,
+        opened: _vm.opened,
+        "toggle-form": _vm.toggle
+      }
     },
     [
       _c(
@@ -56264,7 +56283,12 @@ var render = function() {
             {
               staticClass:
                 "bg-grey-panel px-2 py-1 md:px-4 md:py-3 rounded-xl absolute z-10 right-0 pin-0 text-grey-darkest hover:text-blue",
-              staticStyle: { transform: "translate(-50%, 0px)" }
+              staticStyle: { transform: "translate(-50%, 0px)" },
+              on: {
+                click: function($event) {
+                  return _vm.$modal.hide("auth-modal")
+                }
+              }
             },
             [
               _c(
@@ -56803,7 +56827,11 @@ var render = function() {
                       "div",
                       {
                         staticClass:
-                          "w-4 h-4 rounded-full p-1 mx-auto flex justify-center items-center ml-4 bg-grey"
+                          "w-4 h-4 rounded-full p-1 mx-auto flex justify-center items-center ml-4",
+                        class:
+                          _vm.errors.has("email") || !_vm.email
+                            ? "bg-grey"
+                            : "bg-blue"
                       },
                       [
                         _c(
@@ -56864,53 +56892,129 @@ var render = function() {
                       "flex items-center relative borderd border-solid border-b border-grey-light"
                   },
                   [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.password,
-                          expression: "password"
-                        }
-                      ],
-                      staticClass: "text-black input is-minimal text-sm",
-                      staticStyle: { border: "none" },
-                      attrs: {
-                        type: "password",
-                        id: "password",
-                        autocomplete: "current-password",
-                        placeholder: "Enter Password",
-                        required: ""
-                      },
-                      domProps: { value: _vm.password },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
+                    (_vm.privateMode ? "password" : "text") === "checkbox"
+                      ? _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.password,
+                              expression: "password"
+                            }
+                          ],
+                          staticClass: "text-black input is-minimal text-sm",
+                          staticStyle: { border: "none" },
+                          attrs: {
+                            id: "password",
+                            autocomplete: "current-password",
+                            placeholder: "Enter Password",
+                            required: "",
+                            type: "checkbox"
+                          },
+                          domProps: {
+                            checked: Array.isArray(_vm.password)
+                              ? _vm._i(_vm.password, null) > -1
+                              : _vm.password
+                          },
+                          on: {
+                            change: function($event) {
+                              var $$a = _vm.password,
+                                $$el = $event.target,
+                                $$c = $$el.checked ? true : false
+                              if (Array.isArray($$a)) {
+                                var $$v = null,
+                                  $$i = _vm._i($$a, $$v)
+                                if ($$el.checked) {
+                                  $$i < 0 && (_vm.password = $$a.concat([$$v]))
+                                } else {
+                                  $$i > -1 &&
+                                    (_vm.password = $$a
+                                      .slice(0, $$i)
+                                      .concat($$a.slice($$i + 1)))
+                                }
+                              } else {
+                                _vm.password = $$c
+                              }
+                            }
                           }
-                          _vm.password = $event.target.value
+                        })
+                      : (_vm.privateMode ? "password" : "text") === "radio"
+                      ? _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.password,
+                              expression: "password"
+                            }
+                          ],
+                          staticClass: "text-black input is-minimal text-sm",
+                          staticStyle: { border: "none" },
+                          attrs: {
+                            id: "password",
+                            autocomplete: "current-password",
+                            placeholder: "Enter Password",
+                            required: "",
+                            type: "radio"
+                          },
+                          domProps: { checked: _vm._q(_vm.password, null) },
+                          on: {
+                            change: function($event) {
+                              _vm.password = null
+                            }
+                          }
+                        })
+                      : _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.password,
+                              expression: "password"
+                            }
+                          ],
+                          staticClass: "text-black input is-minimal text-sm",
+                          staticStyle: { border: "none" },
+                          attrs: {
+                            id: "password",
+                            autocomplete: "current-password",
+                            placeholder: "Enter Password",
+                            required: "",
+                            type: _vm.privateMode ? "password" : "text"
+                          },
+                          domProps: { value: _vm.password },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.password = $event.target.value
+                            }
+                          }
+                        }),
+                    _vm._v(" "),
+                    _c("button", {
+                      staticClass: "ml-4 text-2xs font-bold text-grey",
+                      attrs: { type: "button", title: "Toggle private mode" },
+                      domProps: {
+                        textContent: _vm._s(_vm.privateMode ? "Show" : "Hide")
+                      },
+                      on: {
+                        click: function($event) {
+                          _vm.privateMode = !_vm.privateMode
                         }
                       }
                     }),
                     _vm._v(" "),
                     _c(
-                      "button",
-                      {
-                        staticClass: "ml-4 text-2xs font-bold text-grey",
-                        attrs: { type: "button", title: "Toggle private mode" }
-                      },
-                      [
-                        _vm._v(
-                          "\n                            Show\n                        "
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
                       "div",
                       {
                         staticClass:
-                          "w-4 h-4 rounded-full p-1 mx-auto flex justify-center items-center ml-4 bg-grey"
+                          "w-4 h-4 rounded-full p-1 mx-auto flex justify-center items-center ml-4",
+                        class:
+                          _vm.errors.has("password") || !_vm.password
+                            ? "bg-grey"
+                            : "bg-blue"
                       },
                       [
                         _c(
@@ -57340,7 +57444,11 @@ var render = function() {
                         "div",
                         {
                           staticClass:
-                            "w-4 h-4 rounded-full p-1 mx-auto flex justify-center items-center ml-4 bg-grey"
+                            "w-4 h-4 rounded-full p-1 mx-auto flex justify-center items-center ml-4",
+                          class:
+                            _vm.errors.has("username") || !_vm.username
+                              ? "bg-grey"
+                              : "bg-blue"
                         },
                         [
                           _c(
@@ -57436,7 +57544,11 @@ var render = function() {
                         "div",
                         {
                           staticClass:
-                            "w-4 h-4 rounded-full p-1 mx-auto flex justify-center items-center ml-4 bg-grey"
+                            "w-4 h-4 rounded-full p-1 mx-auto flex justify-center items-center ml-4",
+                          class:
+                            _vm.errors.has("email") || !_vm.email
+                              ? "bg-grey"
+                              : "bg-blue"
                         },
                         [
                           _c(
@@ -57497,56 +57609,130 @@ var render = function() {
                         "flex items-center relative borderd border-solid border-b border-grey-light"
                     },
                     [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.password,
-                            expression: "password"
-                          }
-                        ],
-                        staticClass: "text-black input is-minimal text-sm",
-                        staticStyle: { border: "none" },
-                        attrs: {
-                          type: "password",
-                          id: "password",
-                          autocomplete: "new-password",
-                          placeholder: "Enter Password",
-                          required: "required"
-                        },
-                        domProps: { value: _vm.password },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
+                      (_vm.privateMode ? "password" : "text") === "checkbox"
+                        ? _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.password,
+                                expression: "password"
+                              }
+                            ],
+                            staticClass: "text-black input is-minimal text-sm",
+                            staticStyle: { border: "none" },
+                            attrs: {
+                              id: "password",
+                              autocomplete: "new-password",
+                              placeholder: "Enter Password",
+                              required: "",
+                              type: "checkbox"
+                            },
+                            domProps: {
+                              checked: Array.isArray(_vm.password)
+                                ? _vm._i(_vm.password, null) > -1
+                                : _vm.password
+                            },
+                            on: {
+                              change: function($event) {
+                                var $$a = _vm.password,
+                                  $$el = $event.target,
+                                  $$c = $$el.checked ? true : false
+                                if (Array.isArray($$a)) {
+                                  var $$v = null,
+                                    $$i = _vm._i($$a, $$v)
+                                  if ($$el.checked) {
+                                    $$i < 0 &&
+                                      (_vm.password = $$a.concat([$$v]))
+                                  } else {
+                                    $$i > -1 &&
+                                      (_vm.password = $$a
+                                        .slice(0, $$i)
+                                        .concat($$a.slice($$i + 1)))
+                                  }
+                                } else {
+                                  _vm.password = $$c
+                                }
+                              }
                             }
-                            _vm.password = $event.target.value
+                          })
+                        : (_vm.privateMode ? "password" : "text") === "radio"
+                        ? _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.password,
+                                expression: "password"
+                              }
+                            ],
+                            staticClass: "text-black input is-minimal text-sm",
+                            staticStyle: { border: "none" },
+                            attrs: {
+                              id: "password",
+                              autocomplete: "new-password",
+                              placeholder: "Enter Password",
+                              required: "",
+                              type: "radio"
+                            },
+                            domProps: { checked: _vm._q(_vm.password, null) },
+                            on: {
+                              change: function($event) {
+                                _vm.password = null
+                              }
+                            }
+                          })
+                        : _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.password,
+                                expression: "password"
+                              }
+                            ],
+                            staticClass: "text-black input is-minimal text-sm",
+                            staticStyle: { border: "none" },
+                            attrs: {
+                              id: "password",
+                              autocomplete: "new-password",
+                              placeholder: "Enter Password",
+                              required: "",
+                              type: _vm.privateMode ? "password" : "text"
+                            },
+                            domProps: { value: _vm.password },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.password = $event.target.value
+                              }
+                            }
+                          }),
+                      _vm._v(" "),
+                      _c("button", {
+                        staticClass: "ml-4 text-2xs font-bold text-grey",
+                        attrs: { type: "button", title: "Toggle private mode" },
+                        domProps: {
+                          textContent: _vm._s(_vm.privateMode ? "Show" : "Hide")
+                        },
+                        on: {
+                          click: function($event) {
+                            _vm.privateMode = !_vm.privateMode
                           }
                         }
                       }),
                       _vm._v(" "),
                       _c(
-                        "button",
-                        {
-                          staticClass: "ml-4 text-2xs font-bold text-grey",
-                          attrs: {
-                            type: "button",
-                            title: "Toggle private mode"
-                          }
-                        },
-                        [
-                          _vm._v(
-                            "\n                                Show\n                            "
-                          )
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c(
                         "div",
                         {
                           staticClass:
-                            "w-4 h-4 rounded-full p-1 mx-auto flex justify-center items-center ml-4 bg-grey"
+                            "w-4 h-4 rounded-full p-1 mx-auto flex justify-center items-center ml-4",
+                          class:
+                            _vm.errors.has("password") || !_vm.password
+                              ? "bg-grey"
+                              : "bg-blue"
                         },
                         [
                           _c(
