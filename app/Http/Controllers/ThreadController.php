@@ -20,7 +20,9 @@ class ThreadController extends Controller
 
     public function index(Request $request, Category $category, ThreadFilters $filters)
     {
-        $threads = $this->getThreads($category, $filters);
+        $threads = $request->has('q')
+            ? Thread::search($request->get('q'))->paginate(15)
+            : $this->getThreads($category, $filters);
 
         if ($request->wantsJson())
             return $threads;
@@ -86,9 +88,8 @@ class ThreadController extends Controller
     {
         $threads = Thread::latest()->filter($filters);
 
-        if ($category->exists) {
+        if ($category->exists)
             $threads->where('category_id', $category->id);
-        }
 
         return $threads->paginate(15);
     }

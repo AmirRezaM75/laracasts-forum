@@ -114,16 +114,27 @@ class ThreadFilterTest extends TestCase
         $this->assertEquals([2, 1, 3], array_column($response['data'], 'id'));
     }
 
-    /** @test */
+    /**
+     * @test
+     * @see https://docs.meilisearch.com/learn/core_concepts/relevancy.html#ranking-rules
+     * default ranking is: ["typo", "words", "proximity", "attribute", "wordsPosition", "exactness"]
+     */
     public function filter_threads_by_query()
     {
-        Thread::factory()->create(['title' => 'Laravel Framework']);
-        Thread::factory()->create(['title' => 'Unit testing in laravel']);
-        Thread::factory()->create();
+        config(['scout.driver' => 'meilisearch']);
 
-        $response = $this->getJson('threads?q=laravel')->json();
+        Thread::factory()->create(['title' => 'Meilisearch Features']);
+        Thread::factory()->create(['body' => 'Less priority meilisearch keyword']);
+        Thread::factory()->create(['title' => 'Kanji is supported in MeiliSearch']);
+        Thread::factory()->create(['title' => 'Melisearch is typo tolerant']);
 
-        $this->assertCount(2, $response['data']);
-        $this->assertEquals('Laravel Framework', $response['data'][0]['title']);
+        sleep(1);
+        $response = $this->getJson('threads?q=meilisearch')->json();
+
+        $this->assertCount(4, $response['data']);
+        $this->assertEquals('Meilisearch Features', $response['data'][0]['title']);
+        $this->assertEquals([2,4,3,5], array_column($response['data'], 'id'));
+
+        Thread::latest()->take(4)->unsearchable();
     }
 }

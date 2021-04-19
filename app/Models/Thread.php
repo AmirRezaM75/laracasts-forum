@@ -11,11 +11,11 @@ use App\Utilities\Trending;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Redis;
+use Laravel\Scout\Searchable;
 
 class Thread extends Model
 {
-    use HasFactory, HasActivity;
+    use HasFactory, HasActivity, Searchable;
 
     protected $guarded = [];
 
@@ -121,5 +121,10 @@ class Thread extends Model
                 ' <a href="/$1">$1</a>',
                 Markdown::parse($body)
             );
+    }
+
+    public function toSearchableArray()
+    {
+        return $this->only(['id', 'title', 'body', 'created_at']);
     }
 }
