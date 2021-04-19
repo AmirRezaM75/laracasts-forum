@@ -80,7 +80,7 @@ import ErrorHandler from "../mixins/ErrorHandler";
 import MarkdownPreview from "../mixins/MarkdownPreview";
 
 export default {
-    name: "ReplyModal",
+    name: "ReplyForm",
     props: ['reply'],
     mixins: [ErrorHandler, MarkdownPreview],
     data() {
@@ -111,10 +111,7 @@ export default {
     },
     methods: {
         close() {
-            let element = document.querySelector(".v--modal-box");
-            element.style.transition = "top .4s";
-            element.style.top = "100vh";
-            setTimeout(e => this.$modal.hide(this.mode + '-reply'), 500)
+            this.$parent.$emit('close')
         },
         submit() {
           this.mode === 'edit' ? this.update() : this.store()

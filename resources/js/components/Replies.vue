@@ -36,7 +36,7 @@
 
 <script>
 import Reply from "./Reply";
-import ReplyModal from "./ReplyModal";
+import ReplyModal from "./ReplyForm";
 import { mapState } from 'vuex'
 
 export default {
@@ -53,21 +53,7 @@ export default {
     methods: {
         create() {
             if (this.$auth.email_verified_at) {
-                this.$modal.show(
-                    ReplyModal,
-                    {},
-                    {
-                        name: "create-reply",
-                        shiftY: 1,
-                        'pivot-y': 1,
-                        width: "800",
-                        height: "auto",
-                        adaptive: true,
-                        'click-to-close': false,
-                        transition: "modal-slide-up",
-                        classes: ['v--modal', 'conversation-modal']
-                    }
-                );
+                this.$modal.show('conversation-modal', { type: 'reply' });
             } else {
                 this.confirmEmailAddress()
             }

@@ -95,7 +95,7 @@
 
 <script>
     import ConversationDropdown from "./ConversationDropdown"
-    import ReplyModal from "./ReplyModal"
+    import ReplyModal from "./ReplyForm"
     import Favorite from "./Favorite"
     import hljs from 'highlight.js'
 
@@ -109,21 +109,7 @@
         },
         methods: {
             edit() {
-                this.$modal.show(
-                    ReplyModal,
-                    { reply: this.reply },
-                    {
-                        name: "edit-reply",
-                        shiftY: 1,
-                        'pivot-y': 1,
-                        width: "800",
-                        height: "auto",
-                        adaptive: true,
-                        'click-to-close': false,
-                        transition: "modal-slide-up",
-                        classes: ['v--modal', 'conversation-modal']
-                    }
-                );
+                this.$modal.show('conversation-modal', { type: 'reply', model: this.reply });
             },
             destroy() {
                 swal({

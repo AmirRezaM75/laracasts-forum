@@ -69,7 +69,7 @@
 
 <script>
 import ConversationDropdown from "./ConversationDropdown"
-import ThreadModal from "./ThreadModal"
+import ThreadModal from "./ThreadForm"
 import hljs from "highlight.js"
 
 export default {
@@ -95,21 +95,7 @@ export default {
     },
     methods: {
         edit() {
-            this.$modal.show(
-                ThreadModal,
-                { thread: this.thread },
-                {
-                    name: "edit-thread",
-                    shiftY: 1,
-                    'pivot-y': 1,
-                    width: "800",
-                    height: "auto",
-                    adaptive: true,
-                    'click-to-close': false,
-                    transition: "modal-slide-up",
-                    classes: ['v--modal', 'conversation-modal']
-                }
-            );
+            this.$modal.show('conversation-modal', { type: 'thread', model: this.thread});
         },
         destroy() {
             axios.delete('/threads/' + this.thread.id)

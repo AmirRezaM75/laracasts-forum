@@ -32,6 +32,8 @@
 
                 <auth-modal></auth-modal>
 
+                <conversation-modal></conversation-modal>
+
                 <modals-container></modals-container>
 
                 <flash message="{{ session('flash') }}"></flash>

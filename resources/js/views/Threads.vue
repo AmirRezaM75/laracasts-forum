@@ -1,5 +1,4 @@
 <script>
-    import ThreadModal from "../components/ThreadModal";
     import ExcerptButtons from "../components/ExcerptButtons";
 
     export default {
@@ -11,21 +10,7 @@
         methods: {
             create() {
                 if (this.$auth) {
-                    this.$modal.show(
-                        ThreadModal,
-                        { categories: this.categories },
-                        {
-                            name: "create-thread",
-                            shiftY: 1,
-                            'pivot-y': 1,
-                            width: "800",
-                            height: "auto",
-                            adaptive: true,
-                            'click-to-close': false,
-                            transition: "modal-slide-up",
-                            classes: ['v--modal', 'conversation-modal']
-                        }
-                    );
+                    this.$modal.show('conversation-modal', { type: 'thread' });
                 } else {
                     this.$modal.show('auth-modal', { 'type': 'register' })
                 }

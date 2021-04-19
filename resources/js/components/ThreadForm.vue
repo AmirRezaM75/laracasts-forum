@@ -90,7 +90,7 @@ import MarkdownPreview from "../mixins/MarkdownPreview";
 import ErrorHandler from "../mixins/ErrorHandler";
 
 export default {
-    name: "ThreadModal",
+    name: "ThreadForm",
     props: ['thread'],
     mixins: [MarkdownPreview, ErrorHandler],
     data() {
@@ -126,10 +126,7 @@ export default {
     },
     methods: {
         close() {
-            let element = document.querySelector(".v--modal-box");
-            element.style.transition = "top .4s";
-            element.style.top = "100vh";
-            setTimeout(e => this.$modal.hide(this.mode + '-thread'), 500)
+            this.$parent.$emit('close')
         },
         submit() {
             this.mode === 'edit' ? this.update() : this.store()
