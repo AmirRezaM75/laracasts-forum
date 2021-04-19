@@ -59,7 +59,7 @@
                                     <span class="text-xs text-grey-dark font-semibold" v-text="repliesCount"></span>
                                 </div>
                                 <a href="{{ route('threads.index', $thread->category) }}"
-                                   class="btn btn-channel is-laravel py-2 px-6 text-2xs block text-center">
+                                   class="btn btn-channel is-{{ $thread->category->slug }} py-2 px-6 text-2xs block text-center">
                                     {{ $thread->category->name }}
                                 </a>
                             </div>

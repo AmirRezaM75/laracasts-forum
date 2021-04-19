@@ -48,8 +48,8 @@
                     </h4>
                     <div class="hidden md:flex md:items-center md:flex-row-reverse text-center md:ml-auto relative">
                         <a
-                            href="{{ url('threads/' . $thread->category->slug) }}"
-                            class="btn btn-channel is-site-improvements py-2 px-4 text-2xs block text-center ml-5 w-24"
+                            href="{{ route('threads.index', $thread->category) }}"
+                            class="btn btn-channel is-{{ $thread->category->slug }} py-2 px-4 text-2xs block text-center ml-5 w-24"
                         >
                             {{ $thread->category->name }}
                         </a>
