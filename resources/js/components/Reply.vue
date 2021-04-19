@@ -126,12 +126,18 @@
                 );
             },
             destroy() {
-                axios.delete('/replies/' + this.reply.id)
-                    .then( () => {
-                        this.$store.commit('DELETE_REPLY', this.index)
-                    })
-
-                flash('Reply was removed')
+                swal({
+                    title: "Are you sure?",
+                    text: "This will erase your reply.",
+                    buttons: ["Cancel", "Delete"]
+                }).then( t => {
+                    t && axios.delete('/replies/' + this.reply.id)
+                        .then( () => {
+                            this.$store.commit('DELETE_REPLY', this.index)
+                            swal.close()
+                            flash("Okay, your reply has been deleted.")
+                        })
+                })
             },
             markAsAnswer() {
                 axios.post('/replies/' + this.reply.id + '/best')

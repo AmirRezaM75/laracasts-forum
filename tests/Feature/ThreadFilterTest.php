@@ -117,7 +117,7 @@ class ThreadFilterTest extends TestCase
     /**
      * @test
      * @see https://docs.meilisearch.com/learn/core_concepts/relevancy.html#ranking-rules
-     * default ranking is: ["typo", "words", "proximity", "attribute", "wordsPosition", "exactness"]
+     * @description default ranking: ["typo", "words", "proximity", "attribute", "wordsPosition", "exactness"]
      */
     public function filter_threads_by_query()
     {

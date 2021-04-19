@@ -52,21 +52,25 @@ export default {
     },
     methods: {
         create() {
-            this.$modal.show(
-                ReplyModal,
-                {},
-                {
-                    name: "create-reply",
-                    shiftY: 1,
-                    'pivot-y': 1,
-                    width: "800",
-                    height: "auto",
-                    adaptive: true,
-                    'click-to-close': false,
-                    transition: "modal-slide-up",
-                    classes: ['v--modal', 'conversation-modal']
-                }
-            );
+            if (this.$auth.email_verified_at) {
+                this.$modal.show(
+                    ReplyModal,
+                    {},
+                    {
+                        name: "create-reply",
+                        shiftY: 1,
+                        'pivot-y': 1,
+                        width: "800",
+                        height: "auto",
+                        adaptive: true,
+                        'click-to-close': false,
+                        transition: "modal-slide-up",
+                        classes: ['v--modal', 'conversation-modal']
+                    }
+                );
+            } else {
+                this.confirmEmailAddress()
+            }
         },
         fetch(page) {
             axios.get(this.endpoint(page)).then(response => {
@@ -83,6 +87,20 @@ export default {
             }
 
             return '/threads/' + window.location.pathname.match(/\/threads\/\w+\/(\w+)/)[1] + '/replies?page=' + page
+        },
+        confirmEmailAddress() {
+            swal({
+                title: "One Last Step",
+                text: "Please confirm your email address to verify that you're human. Sorry - spammers ruin it for the rest of us, right?",
+                buttons: {
+                    resend: "Resend Email",
+                    close: true
+                }
+            }).then((function(t) {
+                    "resend" === t && (axios.post("/email/verification-notification"),
+                        swal("Check Your Email!", "We just fired off your email confirmation again."))
+                }
+            ))
         }
     },
     mounted() {
