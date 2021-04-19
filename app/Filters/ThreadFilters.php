@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 class ThreadFilters extends Filters
 {
-    public static $filters = ['by', 'popular', 'fresh', 'trending', 'answered'];
+    public static $filters = ['by', 'popular', 'fresh', 'trending', 'answered', 'q'];
 
     /**
      * @param string $username
@@ -46,9 +46,13 @@ class ThreadFilters extends Filters
             ->whereDate('created_at', '>=', Carbon::today()->startOfWeek());
     }
 
-
     protected function answered($state)
     {
         return $this->builder->{$state ? 'whereNotNull' : 'whereNull'}('answer_id');
+    }
+
+    protected function q($query)
+    {
+        return $this->builder->where('title', 'LIKE', "%$query%");
     }
 }

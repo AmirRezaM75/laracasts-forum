@@ -113,4 +113,17 @@ class ThreadFilterTest extends TestCase
 
         $this->assertEquals([2, 1, 3], array_column($response['data'], 'id'));
     }
+
+    /** @test */
+    public function filter_threads_by_query()
+    {
+        Thread::factory()->create(['title' => 'Laravel Framework']);
+        Thread::factory()->create(['title' => 'Unit testing in laravel']);
+        Thread::factory()->create();
+
+        $response = $this->getJson('threads?q=laravel')->json();
+
+        $this->assertCount(2, $response['data']);
+        $this->assertEquals('Laravel Framework', $response['data'][0]['title']);
+    }
 }

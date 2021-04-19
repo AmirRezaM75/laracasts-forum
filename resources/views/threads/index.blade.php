@@ -35,7 +35,9 @@
                                             <option value="?filter_by=best_answers">My Best Answers</option>
                                             <option value="?favorites=1">Following</option>
                                         </select>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="10" height="16" viewBox="0 0 10 16" class="fill-current text-grey-dark"><path d="M5 11L0 6l1.5-1.5L5 8.25 8.5 4.5 10 6z"></path></svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="10" height="16" viewBox="0 0 10 16" class="fill-current text-grey-dark">
+                                            <path d="M5 11L0 6l1.5-1.5L5 8.25 8.5 4.5 10 6z"></path>
+                                        </svg>
                                     </div>
                                 </div>
                                 <div>
@@ -56,8 +58,11 @@
 
                             <excerpt-buttons></excerpt-buttons>
 
-                            <form action="/discuss" autocomplete="off" class="search-form bg-grey-panel rounded-full hidden md:block md:w-52">
-                                <input name="q" placeholder="Whatcha Looking For?" value="" class="px-5 pt-0 text-sm w-full h-full" />
+                            <form action="{{ route('threads.index') }}"
+                                  autocomplete="off"
+                                  class="search-form bg-grey-panel rounded-full hidden md:block md:w-52"
+                            >
+                                <input name="q" placeholder="Whatcha Looking For?" value="{{ Request::get('q', '') }}" class="px-5 pt-0 text-sm w-full h-full" />
                             </form>
                         </div>
                         <div class="conversation-list">
