@@ -125,6 +125,6 @@ class Thread extends Model
 
     public function toSearchableArray()
     {
-        return $this->only(['id', 'title', 'body', 'created_at']);
+        return $this->only(['id', 'title', 'body', 'replies_count', 'created_at', 'updated_at']);
     }
 }

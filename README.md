@@ -5,6 +5,8 @@
 4) atwho.js plugin
 5) awarded best reply on timeline
 6) multilevel reply
+7) User must have verified email to contribute
+8) replies_count is not updating at cluster during replies creation
 
 ## Installation
 1) enable redis
