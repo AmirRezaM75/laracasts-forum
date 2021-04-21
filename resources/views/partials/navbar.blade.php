@@ -37,8 +37,8 @@
             @auth
                 <a class="block leading-none ml-4">
                     <img
-                        src="{{ auth()->user()->avatar }}"
-                        alt="mehdi_ahd23"
+                        :src="$auth.avatar"
+                        :alt="$auth.username"
                         width="27.5"
                         class="is-circle bg-white relative"
                     />
@@ -71,8 +71,8 @@
                                 <div>
                                     <a class="block leading-none">
                                         <img
-                                            src="{{ auth()->user()->avatar }}"
-                                            alt="mehdi_ahd23 avatar"
+                                            :src="$auth.avatar"
+                                            :alt="$auth.username"
                                             width="35"
                                             class="is-circle"
                                         />

@@ -1935,19 +1935,21 @@ __webpack_require__.r(__webpack_exports__);
   props: ['user'],
   methods: {
     change: function change(event) {
+      var _this = this;
+
       if (!event.target.files.length) return;
       var file = event.target.files[0];
       var reader = new FileReader();
       reader.readAsDataURL(file);
 
       reader.onload = function (e) {
-        var src = e.target.result;
+        _this.$store.commit('UPDATE_USER_AVATAR', e.target.result);
       };
 
       var data = new FormData();
       data.append('avatar', file);
       axios.post('/users/' + this.$auth.id() + '/avatar', data).then(function (res) {
-        window.location.reload(); // TODO: Use src to update avatar without reloading the page
+        return flash('Avatar has been updated');
       });
     }
   }
@@ -4172,6 +4174,9 @@ vue__WEBPACK_IMPORTED_MODULE_0__.default.use(vuex__WEBPACK_IMPORTED_MODULE_1__.d
     LOCK_THREAD: function LOCK_THREAD(state) {
       var status = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
       state.thread['locked'] = status;
+    },
+    UPDATE_USER_AVATAR: function UPDATE_USER_AVATAR(state, path) {
+      state.user['avatar'] = path;
     }
   }
 }));

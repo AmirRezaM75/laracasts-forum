@@ -25,7 +25,7 @@ export default {
             reader.readAsDataURL(file)
 
             reader.onload = e => {
-                let src = e.target.result
+                this.$store.commit('UPDATE_USER_AVATAR', e.target.result)
             }
 
             let data = new FormData
@@ -33,10 +33,7 @@ export default {
             data.append('avatar', file)
 
             axios.post('/users/' + this.$auth.id() + '/avatar', data)
-            .then( res => {
-                window.location.reload()
-                // TODO: Use src to update avatar without reloading the page
-            })
+                .then( res => flash('Avatar has been updated'))
         }
     }
 }

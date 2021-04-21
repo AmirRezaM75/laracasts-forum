@@ -13,14 +13,14 @@
                                        class="relative inline-flex items-start mb-2"
                                        style="width: 150px; height: 150px; padding: 2px;">
                                         <img
-                                            data-src="{{ $user->avatar }}"
+                                            :data-src="$auth.avatar"
+                                            :src="$auth.avatar"
                                             loading="lazy"
                                             alt="{{ $user->username }} avatar"
                                             width="150"
                                             height="150"
                                             class="bg-white relative rounded-full text-black-transparent-10 mb-4 lg:mb-0 ls-is-cached lazyloaded"
                                             style="width: 100%; max-width: none; box-shadow: currentcolor 0 0 0 10px;"
-                                            src="{{ $user->avatar }}"
                                         />
                                     </a>
                                 </div>

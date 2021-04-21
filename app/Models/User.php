@@ -22,8 +22,6 @@ class User extends Authenticatable implements MustVerifyEmail
         'private' => 'boolean',
     ];
 
-    protected $appends = ['avatar'];
-
     public function activities()
     {
         return $this->hasMany(Activity::class);
