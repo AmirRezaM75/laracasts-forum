@@ -32,14 +32,8 @@ export default {
             location.href = '/threads' + e.target.value
         },
         setSelectWidth() {
-            let junk = document.createElement("span");
-            junk.style.position = "absolute"
-            junk.style.visibility = "hidden"
-            junk.innerHTML = this.$el.querySelector("select option:checked").innerText
-            document.body.appendChild(junk);
-            let width = junk.getBoundingClientRect().width
-            this.selectWidth = Math.round(width) + 70 + "px"
-            junk.remove()
+            let text = this.$el.querySelector("select option:checked").innerText
+            this.selectWidth = Math.round(text.length * 9) + 70 + "px"
         }
     },
     mounted() {

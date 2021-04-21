@@ -3538,14 +3538,8 @@ __webpack_require__.r(__webpack_exports__);
       location.href = '/threads' + e.target.value;
     },
     setSelectWidth: function setSelectWidth() {
-      var junk = document.createElement("span");
-      junk.style.position = "absolute";
-      junk.style.visibility = "hidden";
-      junk.innerHTML = this.$el.querySelector("select option:checked").innerText;
-      document.body.appendChild(junk);
-      var width = junk.getBoundingClientRect().width;
-      this.selectWidth = Math.round(width) + 70 + "px";
-      junk.remove();
+      var text = this.$el.querySelector("select option:checked").innerText;
+      this.selectWidth = Math.round(text.length * 9) + 70 + "px";
     }
   },
   mounted: function mounted() {
