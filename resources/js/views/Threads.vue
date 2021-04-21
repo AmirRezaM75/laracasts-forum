@@ -9,11 +9,9 @@
         },
         methods: {
             create() {
-                if (this.$auth) {
+                this.$authorize(() => {
                     this.$modal.show('conversation-modal', { type: 'thread' });
-                } else {
-                    this.$modal.show('auth-modal', { 'type': 'register' })
-                }
+                })
             },
             filter(e) {
                 const value = e.target.value

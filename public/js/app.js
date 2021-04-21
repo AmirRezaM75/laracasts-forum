@@ -2844,23 +2844,23 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapState)(['replies'])),
   methods: {
     create: function create() {
-      if (this.$auth.email_verified_at) {
-        this.$modal.show('conversation-modal', {
-          type: 'reply'
-        });
-      } else {
-        this.confirmEmailAddress();
-      }
-    },
-    fetch: function fetch(page) {
       var _this = this;
 
+      this.$authorize(function () {
+        _this.$modal.show('conversation-modal', {
+          type: 'reply'
+        });
+      });
+    },
+    fetch: function fetch(page) {
+      var _this2 = this;
+
       axios.get(this.endpoint(page)).then(function (response) {
-        _this.$store.commit('SET_REPLIES', response.data.data);
+        _this2.$store.commit('SET_REPLIES', response.data.data);
 
-        _this.$store.commit('SET_REPLIES_COUNT', response.data.total);
+        _this2.$store.commit('SET_REPLIES_COUNT', response.data.total);
 
-        _this.pagination = response.data;
+        _this2.pagination = response.data;
         window.scrollTo(0, 0); // TODO: scroll to first reply smoothly
       });
     },
@@ -2871,18 +2871,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
 
       return '/threads/' + window.location.pathname.match(/\/threads\/\w+\/(\w+)/)[1] + '/replies?page=' + page;
-    },
-    confirmEmailAddress: function confirmEmailAddress() {
-      swal({
-        title: "One Last Step",
-        text: "Please confirm your email address to verify that you're human. Sorry - spammers ruin it for the rest of us, right?",
-        buttons: {
-          resend: "Resend Email",
-          close: true
-        }
-      }).then(function (t) {
-        "resend" === t && (axios.post("/email/verification-notification"), swal("Check Your Email!", "We just fired off your email confirmation again."));
-      });
     }
   },
   mounted: function mounted() {
@@ -3031,7 +3019,8 @@ __webpack_require__.r(__webpack_exports__);
       swal({
         title: "Are you sure?",
         text: "This will erase your reply.",
-        buttons: ["Cancel", "Delete"]
+        buttons: ["Cancel", "Delete"],
+        dangerMode: true
       }).then(function (t) {
         t && axios["delete"]('/replies/' + _this.reply.id).then(function () {
           _this.$store.commit('DELETE_REPLY', _this.index);
@@ -3879,6 +3868,20 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     repliesCount: function repliesCount() {
       return this.$store.state.count;
+    },
+    isLocked: function isLocked() {
+      return this.$store.state.thread['locked'];
+    }
+  },
+  methods: {
+    showReplyModal: function showReplyModal() {
+      var _this = this;
+
+      this.$authorize(function () {
+        _this.$modal.show('conversation-modal', {
+          type: 'reply'
+        });
+      });
     }
   },
   created: function created() {
@@ -3910,15 +3913,13 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     create: function create() {
-      if (this.$auth) {
-        this.$modal.show('conversation-modal', {
+      var _this = this;
+
+      this.$authorize(function () {
+        _this.$modal.show('conversation-modal', {
           type: 'thread'
         });
-      } else {
-        this.$modal.show('auth-modal', {
-          'type': 'register'
-        });
-      }
+      });
     },
     filter: function filter(e) {
       var value = e.target.value;
@@ -4002,11 +4003,25 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     $authorize: function $authorize(handler) {
-      return this.$auth ? handler(this.$auth) : false;
+      if (!this.$auth) this.$modal.show('auth-modal', {
+        'type': 'register'
+      });else if (!this.$auth.email_verified_at) this.confirmEmailAddress();else handler();
     },
     $owns: function $owns(model) {
       var prop = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'user_id';
       return model[prop] === this.$auth.id;
+    },
+    confirmEmailAddress: function confirmEmailAddress() {
+      swal({
+        title: "One Last Step",
+        text: "Please confirm your email address to verify that you're human. Sorry - spammers ruin it for the rest of us, right?",
+        buttons: {
+          resend: "Resend Email",
+          close: true
+        }
+      }).then(function (t) {
+        "resend" === t && (axios.post("/email/verification-notification"), swal("Check Your Email!", "We just fired off your email confirmation again."));
+      });
     }
   }
 });
@@ -56880,8 +56895,11 @@ var render = function() {
   return _c(
     "a",
     {
-      staticClass: "btn block mb-4 max-w-2xs mx-auto has-shadow",
-      class: _vm.locked ? "btn-red" : "",
+      staticClass:
+        "btn btn-outlined bg-transparent block w-full mb-4 max-w-2xs mx-auto",
+      class: _vm.locked
+        ? "border-red text-red"
+        : "border-grey-dark text-grey-dark",
       attrs: {
         type: "submit",
         title:

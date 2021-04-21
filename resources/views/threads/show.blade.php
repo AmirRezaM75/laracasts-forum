@@ -5,10 +5,10 @@
         <div class="flex flex-col flex-col-reverse md:flex-row mx-auto" style="max-width: 1070px;">
             <div class="hidden lg:block lg:sticky lg:self-start flex-none mr-9" style="min-width: 200px; top: 40px;">
                 <div class="lg:sticky lg:text-center">
-                    <a class="btn btn-blue block mb-4 max-w-2xs mx-auto"
-                       style="box-shadow: rgb(215, 232, 253) 0 4px 10px 1px;">
-                        Reply
-                    </a>
+                    <a v-if="! isLocked"
+                       class="btn btn-blue block mb-4 max-w-2xs mx-auto"
+                       @click="showReplyModal"
+                       style="box-shadow: rgb(215, 232, 253) 0 4px 10px 1px;">Reply</a>
 
                     @auth
                         @if(auth()->user()->isAdmin()){{--TOOD: User Policy--}}

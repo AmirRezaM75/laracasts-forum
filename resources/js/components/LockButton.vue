@@ -2,8 +2,8 @@
     <a
         type="submit"
         title="Want to lock this conversation and stop it from receiving a new reply?"
-        class="btn block mb-4 max-w-2xs mx-auto has-shadow"
-        :class="locked ? 'btn-red' : '' "
+        class="btn btn-outlined bg-transparent block w-full mb-4 max-w-2xs mx-auto"
+        :class="locked ? 'border-red text-red' : 'border-grey-dark text-grey-dark' "
         @click="toggle"
     >
         {{ locked ? 'Unlock' : 'Lock'}}

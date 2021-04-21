@@ -11,6 +11,16 @@
         computed: {
             repliesCount() {
                 return this.$store.state.count
+            },
+            isLocked() {
+                return this.$store.state.thread['locked']
+            }
+        },
+        methods: {
+            showReplyModal() {
+                this.$authorize(() => {
+                    this.$modal.show('conversation-modal', { type: 'reply' })
+                })
             }
         },
         created() {

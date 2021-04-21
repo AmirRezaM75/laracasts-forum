@@ -115,7 +115,8 @@
                 swal({
                     title: "Are you sure?",
                     text: "This will erase your reply.",
-                    buttons: ["Cancel", "Delete"]
+                    buttons: ["Cancel", "Delete"],
+                    dangerMode: true
                 }).then( t => {
                     t && axios.delete('/replies/' + this.reply.id)
                         .then( () => {
