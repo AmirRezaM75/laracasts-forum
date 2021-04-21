@@ -55,7 +55,7 @@
                 <div v-html="thread.body" class="content user-content text-black md:text-sm"></div>
                 <div class="forum-comment-edit-links flex justify-end lg:justify-start relative mt-4 -mb-1 md:leading-none justify-start" style="height: 34px;">
                     <conversation-dropdown>
-                        <template v-if="$owns(thread)">
+                        <template v-if="$auth.owns(thread)">
                             <li class="dropdown-menu-link"><a @click.prevent="edit">Edit</a></li>
                             <li class="dropdown-menu-link"><a @click.prevent="destroy">Delete</a></li>
                         </template>

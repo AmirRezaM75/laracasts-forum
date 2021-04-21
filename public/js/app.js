@@ -1946,7 +1946,7 @@ __webpack_require__.r(__webpack_exports__);
 
       var data = new FormData();
       data.append('avatar', file);
-      axios.post('/users/' + this.$auth.id + '/avatar', data).then(function (res) {
+      axios.post('/users/' + this.$auth.id() + '/avatar', data).then(function (res) {
         window.location.reload(); // TODO: Use src to update avatar without reloading the page
       });
     }
@@ -2534,7 +2534,7 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var _this = this;
 
-    if (!this.$auth) return;
+    if (!this.$auth.check()) return;
     axios.get('/users/notifications').then(function (response) {
       _this.notifications = response.data;
     });
@@ -3825,7 +3825,7 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this2 = this;
 
-    var profile = this.$auth.profile;
+    var profile = this.$auth.user.profile;
 
     if (profile) {
       Object.keys(profile).forEach(function (item) {
@@ -3995,33 +3995,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _utilities_User__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utilities/User */ "./resources/js/utilities/User.js");
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   computed: {
     $auth: function $auth() {
-      return window.App.user;
+      return new _utilities_User__WEBPACK_IMPORTED_MODULE_0__.default(this.$store.state.user);
     }
   },
   methods: {
     $authorize: function $authorize(handler) {
-      if (!this.$auth) this.$modal.show('auth-modal', {
+      if (!this.$auth.check()) this.$modal.show('auth-modal', {
         'type': 'register'
-      });else if (!this.$auth.email_verified_at) this.confirmEmailAddress();else handler();
-    },
-    $owns: function $owns(model) {
-      var prop = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'user_id';
-      return model[prop] === this.$auth.id;
-    },
-    confirmEmailAddress: function confirmEmailAddress() {
-      swal({
-        title: "One Last Step",
-        text: "Please confirm your email address to verify that you're human. Sorry - spammers ruin it for the rest of us, right?",
-        buttons: {
-          resend: "Resend Email",
-          close: true
-        }
-      }).then(function (t) {
-        "resend" === t && (axios.post("/email/verification-notification"), swal("Check Your Email!", "We just fired off your email confirmation again."));
-      });
+      });else if (!this.$auth.hasVerifiedEmail()) this.$auth.confirmEmailAddress();else handler();
     }
   }
 });
@@ -4145,7 +4131,8 @@ __webpack_require__.r(__webpack_exports__);
 vue__WEBPACK_IMPORTED_MODULE_0__.default.use(vuex__WEBPACK_IMPORTED_MODULE_1__.default);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new vuex__WEBPACK_IMPORTED_MODULE_1__.default.Store({
   state: {
-    thread: false,
+    user: window.App.user,
+    thread: {},
     replies: [],
     categories: [],
     count: 0
@@ -4247,6 +4234,76 @@ var Errors = /*#__PURE__*/function () {
 }();
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Errors);
+
+/***/ }),
+
+/***/ "./resources/js/utilities/User.js":
+/*!****************************************!*\
+  !*** ./resources/js/utilities/User.js ***!
+  \****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var User = /*#__PURE__*/function () {
+  function User(user) {
+    _classCallCheck(this, User);
+
+    this.user = user;
+  }
+
+  _createClass(User, [{
+    key: "id",
+    value: function id() {
+      return this.user.id;
+    }
+  }, {
+    key: "hasVerifiedEmail",
+    value: function hasVerifiedEmail() {
+      return this.user.email_verified_at !== null;
+    }
+  }, {
+    key: "check",
+    value: function check() {
+      return this.user !== null;
+    }
+  }, {
+    key: "owns",
+    value: function owns(model) {
+      var prop = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'user_id';
+      return model[prop] === this.id();
+    }
+  }, {
+    key: "confirmEmailAddress",
+    value: function confirmEmailAddress() {
+      swal({
+        title: "One Last Step",
+        text: "Please confirm your email address to verify that you're human. Sorry - spammers ruin it for the rest of us, right?",
+        buttons: {
+          resend: "Resend Email",
+          close: true
+        }
+      }).then(function (button) {
+        if (button === "resend") axios.post("/email/verification-notification").then(function () {
+          return swal("Check Your Email!", "We just fired off your email confirmation again.");
+        }); // TODO: show throttle error message
+      });
+    }
+  }]);
+
+  return User;
+}();
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (User);
 
 /***/ }),
 
@@ -56487,7 +56544,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm.$owns(_vm.user, "id")
+  return _vm.$auth.owns(_vm.user, "id")
     ? _c("div", { staticClass: "flex items-center mt-4" }, [
         _c("form", { attrs: { enctype: "multipart/form-data" } }, [
           _c(
@@ -58328,7 +58385,7 @@ var render = function() {
                   ]
                 ),
                 _vm._v(" "),
-                _vm.$owns(_vm.reply.thread)
+                _vm.$auth.owns(_vm.reply.thread)
                   ? _c(
                       "button",
                       {
@@ -58365,7 +58422,7 @@ var render = function() {
                   attrs: { styles: "show-on-hover lg:ml-auto", align: "right" }
                 },
                 [
-                  _vm.$owns(_vm.reply)
+                  _vm.$auth.owns(_vm.reply)
                     ? [
                         _c("li", { staticClass: "dropdown-menu-link" }, [
                           _c(
@@ -58875,7 +58932,7 @@ var render = function() {
               _c(
                 "conversation-dropdown",
                 [
-                  _vm.$owns(_vm.thread)
+                  _vm.$auth.owns(_vm.thread)
                     ? [
                         _c("li", { staticClass: "dropdown-menu-link" }, [
                           _c(
@@ -59059,8 +59116,8 @@ var render = function() {
               _c("img", {
                 staticClass: "hidden md:inline-block is-circle bg-white",
                 attrs: {
-                  src: this.$auth.avatar,
-                  alt: this.$auth.username,
+                  src: _vm.$auth.user.avatar,
+                  alt: _vm.$auth.user.username,
                   width: "30"
                 }
               })

@@ -65,7 +65,7 @@ export default {
         }
     },
     mounted() {
-        if (! this.$auth) return
+        if (! this.$auth.check()) return
 
         axios.get('/users/notifications').then(response => {
             this.notifications = response.data

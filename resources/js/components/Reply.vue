@@ -73,7 +73,7 @@
                             Reply
                         </a>
                         <button
-                            v-if="$owns(reply.thread)"
+                            v-if="$auth.owns(reply.thread)"
                             @click="markAsAnswer"
                             v-show="! isBest"
                             class="transition-all border border-solid border-black-transparent-3 hover:border-black-transparent-10 bg-black-transparent-2 hover:bg-black-transparent-3 font-semibold inline-flex items-center px-3 md:text-xs mobile:text-sm mobile:p-2 mobile:flex mobile:items-center btn normal-case font-semibold border border-solid border-black-transparent-3 bg-black-transparent-2 rounded-lg py-2 px-3 text-black h-full md:text-xs hover:bg-blue-lighter hover:text-blue hover:border-blue-light" type="submit" data-title="Answered your question?" title="Did this reply answer your question?" style="border-radius: 12px;">
@@ -81,7 +81,7 @@
                         </button>
                     </div>
                     <conversation-dropdown styles="show-on-hover lg:ml-auto" align="right">
-                        <template v-if="$owns(reply)">
+                        <template v-if="$auth.owns(reply)">
                             <li class="dropdown-menu-link"><a @click.prevent="edit">Edit</a></li>
                             <li class="dropdown-menu-link"><a @click.prevent="destroy">Delete</a></li>
                         </template>

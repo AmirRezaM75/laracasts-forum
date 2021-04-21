@@ -5,7 +5,8 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
-        thread: false,
+        user: window.App.user,
+        thread: {},
         replies: [],
         categories: [],
         count: 0

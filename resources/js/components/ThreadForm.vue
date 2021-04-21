@@ -21,8 +21,8 @@
                         <option v-for="category in categories" :value="category.id" v-text="category.name"></option>
                     </select>
                 </div>
-                <img :src="this.$auth.avatar"
-                     :alt="this.$auth.username"
+                <img :src="$auth.user.avatar"
+                     :alt="$auth.user.username"
                      width="30"
                      class="hidden md:inline-block is-circle bg-white"
                 >
