@@ -1,6 +1,8 @@
 class User {
     constructor(user) {
         this.user = user
+
+        return new Proxy(this, this)
     }
 
     id() {
@@ -16,7 +18,7 @@ class User {
     }
 
     owns(model, prop = 'user_id') {
-        return model[prop] === this.id()
+        return this.check() ? model[prop] === this.id() : false
     }
 
     confirmEmailAddress() {
@@ -34,6 +36,12 @@ class User {
                 // TODO: show throttle error message
             }
         ))
+    }
+
+    get(target, prop) {
+        return typeof target[prop] === 'undefined'
+            ? target.user[prop]
+            : target[prop]
     }
 }
 

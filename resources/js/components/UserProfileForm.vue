@@ -92,7 +92,7 @@ export default {
         }
     },
     created() {
-        const profile = this.$auth.user.profile
+        const profile = this.$auth.profile
         if (profile) {
             Object.keys(profile).forEach(item => {
                 this.profile[item] = profile[item]

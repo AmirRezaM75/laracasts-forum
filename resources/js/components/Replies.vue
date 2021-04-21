@@ -16,7 +16,7 @@
         <p v-if="$store.state.thread['locked']"
            class="mt-8 font-bold text-center">Thread is locked and you can not reply.</p>
         <div
-            v-else-if="$auth"
+            v-else-if="$auth.check()"
             class="border border-grey-light hover:border-blue transition-all border-dashed text-grey-darkest text-sm rounded-xl">
             <a class="block flex items-center inherits-color p-8" @click.prevent="create">
                 <div class="mr-4">

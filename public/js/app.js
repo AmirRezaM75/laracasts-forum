@@ -3825,7 +3825,7 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this2 = this;
 
-    var profile = this.$auth.user.profile;
+    var profile = this.$auth.profile;
 
     if (profile) {
       Object.keys(profile).forEach(function (item) {
@@ -4259,6 +4259,7 @@ var User = /*#__PURE__*/function () {
     _classCallCheck(this, User);
 
     this.user = user;
+    return new Proxy(this, this);
   }
 
   _createClass(User, [{
@@ -4280,7 +4281,7 @@ var User = /*#__PURE__*/function () {
     key: "owns",
     value: function owns(model) {
       var prop = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'user_id';
-      return model[prop] === this.id();
+      return this.check() ? model[prop] === this.id() : false;
     }
   }, {
     key: "confirmEmailAddress",
@@ -4297,6 +4298,11 @@ var User = /*#__PURE__*/function () {
           return swal("Check Your Email!", "We just fired off your email confirmation again.");
         }); // TODO: show throttle error message
       });
+    }
+  }, {
+    key: "get",
+    value: function get(target, prop) {
+      return typeof target[prop] === 'undefined' ? target.user[prop] : target[prop];
     }
   }]);
 
@@ -58148,7 +58154,7 @@ var render = function() {
       ? _c("p", { staticClass: "mt-8 font-bold text-center" }, [
           _vm._v("Thread is locked and you can not reply.")
         ])
-      : _vm.$auth
+      : _vm.$auth.check()
       ? _c(
           "div",
           {
@@ -59116,8 +59122,8 @@ var render = function() {
               _c("img", {
                 staticClass: "hidden md:inline-block is-circle bg-white",
                 attrs: {
-                  src: _vm.$auth.user.avatar,
-                  alt: _vm.$auth.user.username,
+                  src: _vm.$auth.avatar,
+                  alt: _vm.$auth.username,
                   width: "30"
                 }
               })
