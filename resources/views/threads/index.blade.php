@@ -24,16 +24,11 @@
                                             @change="filter"
                                             class="text-grey-darker text-sm bg-grey-panel rounded-full px-5 py-3 flex items-center cursor-pointer leading-none"
                                             style="width: 115px;">
-                                            <option value="">Latest</option>
-                                            <option value="?trending=1">Popular This Week</option>
-                                            <option value="?popular=1">Popular All Time</option>
-                                            <option value="?answered=1">Solved</option>
-                                            <option value="?answered=0">Unsolved</option>
-                                            <option value="?fresh=1">No Replies Yet</option>
-                                            <option value="?me">My Questions</option>
-                                            <option value="?filter_by=contributed_to">My Participation</option>
-                                            <option value="?filter_by=best_answers">My Best Answers</option>
-                                            <option value="?favorites=1">Following</option>
+                                            @foreach($menu as $item)
+                                                <option value="{{ $item['query'] }}" {{ $item['isActive'] ? 'selected' : '' }}>
+                                                    {{ $item['name'] }}
+                                                </option>
+                                            @endforeach
                                         </select>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="10" height="16" viewBox="0 0 10 16" class="fill-current text-grey-dark">
                                             <path d="M5 11L0 6l1.5-1.5L5 8.25 8.5 4.5 10 6z"></path>
