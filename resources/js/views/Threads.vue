@@ -1,11 +1,15 @@
 <script>
     import ExcerptButtons from "../components/ExcerptButtons";
+    import ThreadFilters from "../components/ThreadFilters";
+    import ThreadCategories from "../components/ThreadCategories";
 
     export default {
         name: "Threads",
         props: ['categories'],
         components: {
-            'excerpt-buttons': ExcerptButtons
+            ThreadCategories,
+            ExcerptButtons,
+            ThreadFilters
         },
         methods: {
             create() {

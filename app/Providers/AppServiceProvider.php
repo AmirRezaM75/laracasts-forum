@@ -27,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
             $view->with(compact('categories'));
         });
 
-        View::composer('threads.index', function($view) {
+        View::composer(['threads.index', 'threads.show'], function($view) {
             $menu = collect([
                 [
                     'query' => '',

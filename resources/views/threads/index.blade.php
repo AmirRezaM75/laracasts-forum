@@ -19,35 +19,12 @@
                         <div class="flex justify-center md:justify-between mb-8">
                             <div class="flex flex-1">
                                 <div class="mobile:mr-4 md:hidden lg:block mr-6">
-                                    <div class="select-wrap">
-                                        <select
-                                            @change="filter"
-                                            class="text-grey-darker text-sm bg-grey-panel rounded-full px-5 py-3 flex items-center cursor-pointer leading-none"
-                                            style="width: 115px;">
-                                            @foreach($menu as $item)
-                                                <option value="{{ $item['query'] }}" {{ $item['isActive'] ? 'selected' : '' }}>
-                                                    {{ $item['name'] }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="10" height="16" viewBox="0 0 10 16" class="fill-current text-grey-dark">
-                                            <path d="M5 11L0 6l1.5-1.5L5 8.25 8.5 4.5 10 6z"></path>
-                                        </svg>
-                                    </div>
+                                    <thread-filters :items="{{ $menu }}"></thread-filters>
                                 </div>
                                 <div>
-                                    <div class="select-wrap">
-                                        <select
-                                            @change="filter"
-                                            class="text-grey-darker text-sm bg-grey-panel rounded-full px-5 cursor-pointer"
-                                            style="width: 92px;">
-                                            <option value="all">All</option>
-                                            @foreach($categories as $category)
-                                                <option value="{{ $category->slug }}">{{ $category->name }}</option>
-                                            @endforeach
-                                        </select>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="10" height="16" viewBox="0 0 10 16" class="fill-current text-grey-darker"><path d="M5 11L0 6l1.5-1.5L5 8.25 8.5 4.5 10 6z"></path></svg>
-                                    </div>
+                                    <thread-categories
+                                        :items="{{ $categories }}"
+                                        :selected="{{ json_encode(Request::route('category')) }}"></thread-categories>
                                 </div>
                             </div>
 
