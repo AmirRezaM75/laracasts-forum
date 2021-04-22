@@ -23,8 +23,6 @@ class Thread extends Model
 
     protected $with = ['user', 'category'];
 
-    //TODO: Append isSubscribedTo attribute?!
-
     public static function booted()
     {
         static::addGlobalScope('REPLIES_COUNT', function($builder) {

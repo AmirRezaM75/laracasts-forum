@@ -71,4 +71,25 @@ class BestReplyTest extends TestCase
 
         $this->assertNull($reply->thread->fresh()->answer_id);
     }
+
+    /** @test */
+    public function it_records_awarded_best_reply_activity()
+    {
+        $this->login();
+
+        $user = User::factory()->create();
+
+        $thread = Thread::factory()->create(['user_id' => auth()->id()]);
+
+        $reply = Reply::factory()->create(['user_id' => $user->id, 'thread_id' => $thread->id]);
+
+        $this->post(route('replies.best', $reply));
+
+        $this->assertDatabaseHas('activities', [
+            'user_id' => $user->id,
+            'subject_id' => $reply->id,
+            'subject_type' => 'App\Models\Reply',
+            'type' => 'awarded_best_reply'
+        ]);
+    }
 }

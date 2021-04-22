@@ -47,5 +47,10 @@ class ReplyController extends Controller
         $this->authorize('update', $reply->thread);
 
         $reply->thread->update(['answer_id' => $reply->id]);
+
+        $reply->activities()->create([
+            'user_id' => $reply->user->id,
+            'type' => 'awarded_best_reply'
+        ]);
     }
 }
