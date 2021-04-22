@@ -2,10 +2,10 @@
     <div class="conversation-list-item bg-black-transparent-1 border border-solid border-black-transparent-3 flex cursor-pointer flex-col md:flex-row md:hover:bg-grey-panel mb-4 md:mb-3 transition-all px-6 py-4 rounded-xl">
         <div class="conversation-list-avatar self-start w-full md:w-auto md:mr-5 flex items-center md:block mb-4 md:mb-0">
             <div class="flex items-center">
-                <a href="#" class="relative inline-flex items-start mb-2 mr-3 md:mr-0" style="width: 56px; height: 56px; padding: 2px;">
+                <a href="{{ '@' . $thread->user->username }}" class="relative inline-flex items-start mb-2 mr-3 md:mr-0" style="width: 56px; height: 56px; padding: 2px;">
                     <img
                         loading="lazy"
-                        alt="CheshireC4t"
+                        alt="{{ $thread->user->username }}"
                         width="56"
                         height="56"
                         class="bg-white relative lazyloaded"
@@ -26,12 +26,13 @@
                             opacity=".5"
                         ></path>
                     </svg>
-                    <span class="text-xs text-grey-dark font-semibold leading-none">0</span>
+                    <span class="text-xs text-grey-dark font-semibold leading-none">{{ $thread->replies_count }}</span>
                 </div>
             </div>
             <div class="conversation-list-channel-button md:hidden">
-                <a href="https://laracasts.com/discuss/channels/site-improvements" class="btn btn-channel is-site-improvements py-2 px-4 text-2xs block text-center">
-                    Feedback
+                <a href="{{ route('threads.index', $thread->category) }}"
+                   class="btn btn-channel is-{{ $thread->category->slug }} py-2 px-4 text-2xs block text-center">
+                    {{ $thread->category->name }}
                 </a>
             </div>
         </div>
@@ -88,7 +89,7 @@
                     {{--TODO: How to handle if it start with <code> --}}
                 </div>
                 <div class="text-grey-dark text-xs leading-none">
-                    <a href="#" class="font-bold link hover:text-blue uppercase">
+                    <a href="{{ '@' . $thread->user->username }}" class="font-bold link hover:text-blue uppercase">
                         {{ $thread->user->username }}
                     </a>
                     posted

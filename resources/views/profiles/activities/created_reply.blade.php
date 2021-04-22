@@ -13,5 +13,5 @@
             {{ $activity->subject->thread->title }}
         </a>
     </p>
-    <div class="content user-content text-black text-sm">{{ $activity->subject->body }}</div>
+    <div class="content user-content text-black text-sm">{!! $activity->subject->body !!}</div>
 </div>

@@ -69,7 +69,6 @@
 
 <script>
 import ConversationDropdown from "./ConversationDropdown"
-import ThreadModal from "./ThreadForm"
 import hljs from "highlight.js"
 
 export default {
@@ -80,7 +79,7 @@ export default {
             return this.$store.state.thread
         },
         ownerURL() {
-            return '@' + this.owner.username
+            return '/@' + this.owner.username
         },
         owner() {
             return this.thread.user

@@ -9,16 +9,20 @@
                         <div class="profile-avatar mobile:mx-auto mobile:mb-6 lg:pr-6">
                             <div class="lg:block text-center">
                                 <div class="relative flex flex-col items-center">
-                                    <a href="{{ url('users/' . $user->id) }}"
+                                    <a href="#"
                                        class="relative inline-flex items-start mb-2"
-                                       style="width: 150px; height: 150px; padding: 2px;">
+                                       style="width: 135px; height: 135px; padding: 2px;">
                                         <img
-                                            :data-src="$auth.avatar"
+                                            data-src="{{ $user->avatar }}"
+                                            @auth
                                             :src="$auth.avatar"
+                                            @else
+                                            src="{{ $user->avatar }}"
+                                            @endauth
                                             loading="lazy"
                                             alt="{{ $user->username }} avatar"
-                                            width="150"
-                                            height="150"
+                                            width="135"
+                                            height="135"
                                             class="bg-white relative rounded-full text-black-transparent-10 mb-4 lg:mb-0 ls-is-cached lazyloaded"
                                             style="width: 100%; max-width: none; box-shadow: currentcolor 0 0 0 10px;"
                                         />
@@ -113,7 +117,7 @@
             </div>
         </section>
 
-        @unless($items)
+        @unless($items->isEmpty())
             <div class="section bg-grey-panel">
                 <div class="py-3">
                     <div>

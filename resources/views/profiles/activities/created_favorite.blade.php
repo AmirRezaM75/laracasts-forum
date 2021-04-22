@@ -13,5 +13,5 @@
             {{ $activity->subject->favorited->thread->title }}
         </a>
     </p>
-    <div class="content user-content text-black text-sm">{{ $activity->subject->favorited->body }}</div>
+    <div class="content user-content text-black text-sm">{!! $activity->subject->favorited->body !!}</div>
 </div>

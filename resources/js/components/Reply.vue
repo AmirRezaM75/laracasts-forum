@@ -5,7 +5,7 @@
          :id="'reply-' + reply.id">
         <div class="flex px-6 py-4 lg:p-5">
             <div class="hidden md:block mr-5 text-left">
-                <a :href="'users/' + reply.user.id"
+                <a :href="ownerURL"
                    class="block relative rounded-lg overflow-hidden mb-1">
                     <div class="flex items-start">
                         <img
@@ -21,7 +21,7 @@
             <div class="flex-1 relative">
                 <header class="flex mb-4 justify-between">
                     <div class="md:hidden">
-                        <a :href="'users/' + reply.user.id" class="block relative rounded-lg overflow-hidden mr-4">
+                        <a :href="ownerURL" class="block relative rounded-lg overflow-hidden mr-4">
                             <img
                                 :alt="reply.user.username"
                                 :src="reply.user.avatar"
@@ -32,7 +32,7 @@
                     </div>
                     <div class="flex-1 leading-none text-left">
                         <div class="flex items-center">
-                            <a :href="'users/' + reply.user.id"
+                            <a :href="ownerURL"
                                class="font-bold block font-lg mr-2 text-black"
                                v-text="reply.user.username"
                             ></a>
@@ -95,7 +95,6 @@
 
 <script>
     import ConversationDropdown from "./ConversationDropdown"
-    import ReplyModal from "./ReplyForm"
     import Favorite from "./Favorite"
     import hljs from 'highlight.js'
 
@@ -149,7 +148,10 @@
             },
             isBest() {
                 return this.$store.state.thread['answer_id'] === this.reply.id
-            }
+            },
+            ownerURL() {
+                return '/@' + this.reply.user.username
+            },
         },
         mounted() {
             this.highlight()

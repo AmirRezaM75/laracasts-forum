@@ -37,3 +37,14 @@
         </div>
     </div>
 </div>
+
+@push('scripts')
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.user-content pre code')
+                .forEach(function (dom) {
+                    return hljs.highlightBlock(dom)
+                })
+        })
+    </script>
+@endpush
