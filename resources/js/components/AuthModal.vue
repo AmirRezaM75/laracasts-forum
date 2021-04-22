@@ -22,7 +22,7 @@
                 </svg>
             </button>
 
-            <transition name="fade">
+            <transition name="slide" mode="out-in">
                 <register-form v-if="type === 'register'"></register-form>
                 <login-form v-else></login-form>
             </transition>
@@ -60,13 +60,36 @@ export default {
 </script>
 
 <style scoped>
-.fade-enter-active,
-.fade-leave-active {
-    transition: opacity .5s ease;
+.slide-enter-active {
+    animation: slideInLeft .5s;
+}
+.slide-leave-active {
+    animation: slideInLeft .5s reverse;
 }
 
-.fade-enter-from,
-.fade-leave-to {
-    opacity: 0;
+@-webkit-keyframes slideInLeft {
+    0% {
+        -webkit-transform: translate3d(-100%, 0, 0);
+        transform: translate3d(-100%, 0, 0);
+        visibility: visible
+    }
+
+    to {
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0)
+    }
+}
+
+@keyframes slideInLeft {
+    0% {
+        -webkit-transform: translate3d(-100%, 0, 0);
+        transform: translate3d(-100%, 0, 0);
+        visibility: visible
+    }
+
+    to {
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0)
+    }
 }
 </style>

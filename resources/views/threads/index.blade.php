@@ -6,7 +6,11 @@
             <div class="hidden lg:block lg:sticky lg:self-start flex-none mr-9" style="min-width: 200px; top: 40px;">
                 <div class="lg:sticky lg:text-center">
                     <a class="btn btn-blue mb-8 w-full"
-                       style="box-shadow: rgb(215, 232, 253) 0px 4px 10px 1px;"
+                       @if(auth()->check() && auth()->user()->hasVerifiedEmail())
+                       :class="['btn-unique']"
+                       @else
+                       style="box-shadow: rgb(215, 232, 253) 0 4px 10px 1px;"
+                       @endif
                        @click.prevent="create">
                         New Discussion
                     </a>

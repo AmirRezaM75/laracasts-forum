@@ -61,6 +61,12 @@
                     </div>
                     <div class="text-center">
                         <button type="submit" class="btn btn-blue w-full mb-4 mx-auto">Log In</button>
+                        <p class="text-grey-darkest text-sm">
+                            Not Registered?
+                            <a class="hover:underline" @click.prevent="$parent.$emit('toggle-form')">
+                                Create new account.
+                            </a>
+                        </p>
                     </div>
                 </form>
             </div>

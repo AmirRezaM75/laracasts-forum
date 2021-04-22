@@ -2002,6 +2002,18 @@ body.series .generic-content a {
     --text-opacity:1;color: rgba(255,255,255,var(--text-opacity))
 }
 
+.swal-button--confirm.btn-unique,
+.btn-blue.btn-unique,
+.btn-primary.btn-unique {
+    box-shadow: 0 0 15px #328af1
+}
+
+.swal-button--confirm.btn-unique:hover,
+.btn-blue.btn-unique:hover,
+.btn-primary.btn-unique:hover {
+    box-shadow: 0 0 20px rgba(0,117,255,.45)
+}
+
 .btn-white {
     --bg-opacity:1;background-color: rgba(255,255,255,var(--bg-opacity));
     border-color: rgba(255,255,255,var(--border-opacity));
@@ -3367,8 +3379,7 @@ a.ais-refinement-list__count:hover.is-primary,a.tag:hover.is-primary {
 }
 
 .swal-text,.swal-title:first-child {
-    --tw-text-opacity: 1;
-    color: rgba(34,41,47,var(--tw-text-opacity))
+    color: rgba(34, 41, 47, 1)
 }
 
 .swal-text {
@@ -3392,21 +3403,23 @@ a.ais-refinement-list__count:hover.is-primary,a.tag:hover.is-primary {
     }
 }
 
-.swal-button--cancel,.swal-button--close,.swal-button--stay {
+.swal-button--cancel,
+.swal-button--close,
+.swal-button--stay {
     background: #fff;
     border: 1px solid rgba(237, 237, 237, 1);
     color: rgba(34, 41, 47, 1)
 }
 
-.swal-button--cancel:hover,.swal-button--close:hover,.swal-button--stay:hover {
+.swal-button--cancel:hover,
+.swal-button--close:hover,
+.swal-button--stay:hover {
     background-color: rgba(246, 246, 246, 1) !important;
 }
 
 .swal-button--next {
-    --tw-bg-opacity: 1;
-    background-color: rgba(50,138,241,var(--tw-bg-opacity));
-    --tw-text-opacity: 1;
-    color: rgba(255,255,255,var(--tw-text-opacity))
+    background-color: rgba(50, 138, 241, 1);
+    color: rgba(255, 255, 255, 1)
 }
 
 .swal-footer {

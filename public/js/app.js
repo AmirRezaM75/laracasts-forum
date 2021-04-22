@@ -2428,6 +2428,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "LoginForm",
@@ -4459,7 +4465,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.fade-enter-active[data-v-8062b4ec],\n.fade-leave-active[data-v-8062b4ec] {\n    transition: opacity .5s ease;\n}\n.fade-enter-from[data-v-8062b4ec],\n.fade-leave-to[data-v-8062b4ec] {\n    opacity: 0;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.slide-enter-active[data-v-8062b4ec] {\n    -webkit-animation: slideInLeft-data-v-8062b4ec .5s;\n            animation: slideInLeft-data-v-8062b4ec .5s;\n}\n.slide-leave-active[data-v-8062b4ec] {\n    animation: slideInLeft-data-v-8062b4ec .5s reverse;\n}\n@-webkit-keyframes slideInLeft-data-v-8062b4ec {\n0% {\n        transform: translate3d(-100%, 0, 0);\n        visibility: visible\n}\nto {\n        transform: translateZ(0)\n}\n}\n@keyframes slideInLeft-data-v-8062b4ec {\n0% {\n        transform: translate3d(-100%, 0, 0);\n        visibility: visible\n}\nto {\n        transform: translateZ(0)\n}\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -56790,7 +56796,7 @@ var render = function() {
           _vm._v(" "),
           _c(
             "transition",
-            { attrs: { name: "fade" } },
+            { attrs: { name: "slide", mode: "out-in" } },
             [_vm.type === "register" ? _c("register-form") : _c("login-form")],
             1
           )
@@ -57570,32 +57576,49 @@ var render = function() {
                 )
               ]),
               _vm._v(" "),
-              _vm._m(0)
+              _c("div", { staticClass: "text-center" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-blue w-full mb-4 mx-auto",
+                    attrs: { type: "submit" }
+                  },
+                  [_vm._v("Log In")]
+                ),
+                _vm._v(" "),
+                _c("p", { staticClass: "text-grey-darkest text-sm" }, [
+                  _vm._v(
+                    "\n                        Not Registered?\n                        "
+                  ),
+                  _c(
+                    "a",
+                    {
+                      staticClass: "hover:underline",
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.$parent.$emit("toggle-form")
+                        }
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                            Create new account.\n                        "
+                      )
+                    ]
+                  )
+                ])
+              ])
             ]
           )
         ])
       ]),
       _vm._v(" "),
-      _vm._m(1)
+      _vm._m(0)
     ]
   )
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "text-center" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-blue w-full mb-4 mx-auto",
-          attrs: { type: "submit" }
-        },
-        [_vm._v("Log In")]
-      )
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
