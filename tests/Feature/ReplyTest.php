@@ -197,4 +197,20 @@ class ReplyTest extends TestCase
 
         Notification::assertSentTo($user, UserMention::class);
     }
+
+    /** @test */
+    public function users_can_answer_a_reply()
+    {
+        $this->login();
+
+        $reply = Reply::factory()->create();
+
+        $answer = Reply::factory()->raw(['parent_id' => $reply->id]);
+
+        $thread = Thread::factory()->create();
+
+        $this->post(route('threads.replies.store', $thread), $answer);
+
+        $this->assertCount(1, $reply->children);
+    }
 }

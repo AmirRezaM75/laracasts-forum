@@ -30,6 +30,16 @@ class Reply extends Model
         return $this->belongsTo(Thread::class);
     }
 
+    public function parent()
+    {
+        return $this->hasOne(Reply::class, 'id', 'parent_id');
+    }
+
+    public function children()
+    {
+        return $this->hasMany(Reply::class, 'parent_id');
+    }
+
     public function setBodyAttribute($body)
     {
         $this->attributes['body'] =

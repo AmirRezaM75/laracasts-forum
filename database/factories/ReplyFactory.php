@@ -16,6 +16,7 @@ class ReplyFactory extends Factory
         return [
             'user_id' => User::factory(),
             'thread_id' => Thread::factory(),
+            'parent_id' => null,
             'body' => $this->faker->paragraph
         ];
     }

@@ -5,6 +5,7 @@ namespace Tests\Unit;
 use App\Models\Reply;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -71,5 +72,21 @@ class ReplyTest extends TestCase
         $reply->thread->update(['answer_id' => $reply->id]);
 
         $this->assertTrue($reply->isBest());
+    }
+
+    /** @test */
+    public function reply_may_have_answers()
+    {
+        $reply = Reply::factory()->create();
+
+        $answer = Reply::factory()->create(['parent_id' => $reply->id]);
+
+        $this->assertTrue($reply->children->contains($answer));
+
+        $this->assertInstanceOf(Collection::class, $reply->children);
+
+        $this->assertInstanceOf(Reply::class, $answer->parent);
+
+        $this->assertTrue($answer->parent->is($reply));
     }
 }

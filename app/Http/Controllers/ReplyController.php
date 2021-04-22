@@ -22,7 +22,8 @@ class ReplyController extends Controller
     {
         return $thread->createReply([
             'body' => $request->get('body'),
-            'user_id' => auth()->id()
+            'user_id' => auth()->id(),
+            'parent_id' => $request->get('parent_id')
         ])->load('user');
     }
 
