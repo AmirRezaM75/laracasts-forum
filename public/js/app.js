@@ -2053,15 +2053,17 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       type: 'thread',
-      model: null
+      model: null,
+      parentId: null
     };
   },
   methods: {
     beforeOpen: function beforeOpen(event) {
-      var _event$params$model;
+      var _event$params$model, _event$params$parentI;
 
       this.type = event.params.type;
       this.model = (_event$params$model = event.params.model) !== null && _event$params$model !== void 0 ? _event$params$model : null;
+      this.parentId = (_event$params$parentI = event.params.parentId) !== null && _event$params$parentI !== void 0 ? _event$params$parentI : null;
     },
     close: function close() {
       var _this = this;
@@ -2836,6 +2838,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2998,6 +3011,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -3029,7 +3043,10 @@ __webpack_require__.r(__webpack_exports__);
         dangerMode: true
       }).then(function (t) {
         t && axios["delete"]('/replies/' + _this.reply.id).then(function () {
-          _this.$store.commit('DELETE_REPLY', _this.index);
+          _this.$store.commit('DELETE_REPLY', {
+            parentId: _this.reply.parent_id,
+            index: _this.index
+          });
 
           swal.close();
           flash("Okay, your reply has been deleted.");
@@ -3052,6 +3069,11 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     creationTime: function creationTime() {
       return new Date(this.reply.created_at).toLocaleDateString("en-US").split('/').reverse().join('/');
+    },
+    parentId: function parentId() {
+      var _this$reply$parent_id;
+
+      return (_this$reply$parent_id = this.reply.parent_id) !== null && _this$reply$parent_id !== void 0 ? _this$reply$parent_id : this.reply.id;
     },
     isBest: function isBest() {
       return this.$store.state.thread['answer_id'] === this.reply.id;
@@ -3165,7 +3187,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "ReplyForm",
-  props: ['reply'],
+  props: ['reply', 'parentId'],
   mixins: [_mixins_ErrorHandler__WEBPACK_IMPORTED_MODULE_1__.default, _mixins_MarkdownPreview__WEBPACK_IMPORTED_MODULE_2__.default],
   data: function data() {
     return {
@@ -3219,12 +3241,16 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       axios.post(this.endpoint, {
-        'body': this.form.body
+        'body': this.form.body,
+        'parent_id': this.parentId
       }).then(function (_ref) {
         var data = _ref.data;
         flash('Your reply has been created.');
 
-        _this2.$store.commit('ADD_REPLY', data);
+        _this2.$store.commit('ADD_REPLY', {
+          reply: data,
+          parentId: _this2.parentId
+        });
       })["catch"](function (error) {
         _this2.handler(error);
       });
@@ -4281,23 +4307,31 @@ vue__WEBPACK_IMPORTED_MODULE_0__.default.use(vuex__WEBPACK_IMPORTED_MODULE_1__.d
     SET_REPLIES: function SET_REPLIES(state, replies) {
       state.replies = replies;
     },
-    ADD_REPLY: function ADD_REPLY(state, reply) {
-      state.replies.push(reply);
+    ADD_REPLY: function ADD_REPLY(state, _ref) {
+      var parentId = _ref.parentId,
+          reply = _ref.reply;
+      if (parentId) state.replies.forEach(function (item) {
+        if (item.id === parentId) item.children.push(reply);
+      });else state.replies.push(reply);
       state.count++;
     },
-    UPDATE_REPLY: function UPDATE_REPLY(state, _ref) {
-      var reply = _ref.reply,
-          value = _ref.value;
+    UPDATE_REPLY: function UPDATE_REPLY(state, _ref2) {
+      var reply = _ref2.reply,
+          value = _ref2.value;
       reply['body'] = value;
     },
-    UPDATE_THREAD: function UPDATE_THREAD(state, _ref2) {
-      var thread = _ref2.thread,
-          object = _ref2.object;
+    UPDATE_THREAD: function UPDATE_THREAD(state, _ref3) {
+      var thread = _ref3.thread,
+          object = _ref3.object;
       thread['body'] = object['body'];
       thread['title'] = object['title'];
     },
-    DELETE_REPLY: function DELETE_REPLY(state, index) {
-      state.replies.splice(index, 1);
+    DELETE_REPLY: function DELETE_REPLY(state, _ref4) {
+      var parentId = _ref4.parentId,
+          index = _ref4.index;
+      if (parentId) state.replies.forEach(function (item) {
+        if (item.id === parentId) item.children.splice(index, 1);
+      });else state.replies.splice(index, 1);
       state.count--;
     },
     LOCK_THREAD: function LOCK_THREAD(state) {
@@ -56971,8 +57005,10 @@ var render = function() {
     },
     [
       _vm.type === "reply"
-        ? _c("reply-form", { attrs: { reply: this.model } })
-        : _c("thread-form", { attrs: { thread: this.model } })
+        ? _c("reply-form", {
+            attrs: { reply: _vm.model, "parent-id": _vm.parentId }
+          })
+        : _c("thread-form", { attrs: { thread: _vm.model } })
     ],
     1
   )
@@ -58423,10 +58459,36 @@ var render = function() {
         "div",
         [
           _vm._l(_vm.replies, function(reply, index) {
-            return _c("reply", {
-              key: reply.id,
-              attrs: { index: index, model: reply }
-            })
+            return [
+              _c(
+                "div",
+                { class: { "reply-with-responses": reply.children } },
+                [
+                  _c("reply", {
+                    key: reply.id,
+                    attrs: { index: index, model: reply }
+                  }),
+                  _vm._v(" "),
+                  reply.children
+                    ? _c(
+                        "div",
+                        { staticClass: "responses" },
+                        _vm._l(reply.children, function(
+                          response,
+                          responseIndex
+                        ) {
+                          return _c("reply", {
+                            key: response.id,
+                            attrs: { index: responseIndex, model: response }
+                          })
+                        }),
+                        1
+                      )
+                    : _vm._e()
+                ],
+                1
+              )
+            ]
           }),
           _vm._v(" "),
           _c(
@@ -58653,7 +58715,15 @@ var render = function() {
                   {
                     staticClass:
                       "transition-all border border-solid border-black-transparent-3 hover:border-black-transparent-10 bg-black-transparent-2 hover:bg-black-transparent-3 font-semibold inline-flex items-center px-3 md:text-xs mobile:text-sm mobile:p-2 mobile:flex mobile:items-center mr-2 text-black",
-                    staticStyle: { "border-radius": "12px" }
+                    staticStyle: { "border-radius": "12px" },
+                    on: {
+                      click: function($event) {
+                        return _vm.$modal.show("conversation-modal", {
+                          type: "reply",
+                          parentId: _vm.parentId
+                        })
+                      }
+                    }
                   },
                   [
                     _c(

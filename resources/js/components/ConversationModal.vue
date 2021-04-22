@@ -12,8 +12,8 @@
         @before-open="beforeOpen"
         @close="close"
     >
-        <reply-form v-if="type === 'reply'" :reply="this.model"></reply-form>
-        <thread-form v-else :thread="this.model"></thread-form>
+        <reply-form v-if="type === 'reply'" :reply="model" :parent-id="parentId"></reply-form>
+        <thread-form v-else :thread="model"></thread-form>
     </modal>
 </template>
 
@@ -27,13 +27,15 @@ export default {
     data() {
         return {
             type: 'thread',
-            model: null
+            model: null,
+            parentId: null
         }
     },
     methods: {
         beforeOpen(event) {
             this.type = event.params.type
             this.model = event.params.model ?? null
+            this.parentId = event.params.parentId ?? null
         },
         close() {
             let element = document.querySelector(".v--modal-box");

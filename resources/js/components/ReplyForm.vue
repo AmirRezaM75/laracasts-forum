@@ -81,7 +81,7 @@ import MarkdownPreview from "../mixins/MarkdownPreview";
 
 export default {
     name: "ReplyForm",
-    props: ['reply'],
+    props: ['reply', 'parentId'],
     mixins: [ErrorHandler, MarkdownPreview],
     data() {
         return {
@@ -134,10 +134,11 @@ export default {
         },
         store() {
             axios.post(this.endpoint, {
-                'body': this.form.body
+                'body': this.form.body,
+                'parent_id': this.parentId
             }).then(({data}) => {
                 flash('Your reply has been created.')
-                this.$store.commit('ADD_REPLY', data)
+                this.$store.commit('ADD_REPLY', { reply: data, parentId: this.parentId })
             }).catch(error => {
                 this.handler(error)
             })

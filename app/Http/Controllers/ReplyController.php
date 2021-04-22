@@ -15,7 +15,10 @@ class ReplyController extends Controller
 
     public function index(Thread $thread)
     {
-        return $thread->replies()->paginate(15);
+        return $thread->replies()
+            ->whereNull('parent_id')
+            ->with('children')
+            ->paginate(15);
     }
 
     public function store(ReplyRequest $request, Thread $thread)

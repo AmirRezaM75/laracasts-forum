@@ -24,8 +24,15 @@ export default new Vuex.Store({
         SET_REPLIES(state, replies) {
             state.replies = replies
         },
-        ADD_REPLY(state, reply) {
-            state.replies.push(reply)
+        ADD_REPLY(state, { parentId, reply }) {
+            if (parentId)
+                state.replies.forEach(item => {
+                    if (item.id === parentId)
+                        item.children.push(reply)
+                })
+            else
+                state.replies.push(reply)
+
             state.count++
         },
         UPDATE_REPLY(state, {reply, value}) {
@@ -35,8 +42,15 @@ export default new Vuex.Store({
             thread['body'] = object['body']
             thread['title'] = object['title']
         },
-        DELETE_REPLY(state, index) {
-            state.replies.splice(index, 1)
+        DELETE_REPLY(state, { parentId, index }) {
+            if (parentId)
+                state.replies.forEach(item => {
+                    if (item.id === parentId)
+                        item.children.splice(index, 1)
+                })
+            else
+                state.replies.splice(index, 1)
+
             state.count--
         },
         LOCK_THREAD(state, status = true) {

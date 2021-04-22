@@ -58,6 +58,7 @@
                     <favorite v-if="$auth" :reply="reply"></favorite>
                     <div class="flex show-on-hover">
                         <a
+                            @click="$modal.show('conversation-modal', { type: 'reply', parentId })"
                             class="transition-all border border-solid border-black-transparent-3 hover:border-black-transparent-10 bg-black-transparent-2 hover:bg-black-transparent-3 font-semibold inline-flex items-center px-3 md:text-xs mobile:text-sm mobile:p-2 mobile:flex mobile:items-center mr-2 text-black"
                             style="border-radius: 12px;"
                         >
@@ -119,7 +120,7 @@
                 }).then( t => {
                     t && axios.delete('/replies/' + this.reply.id)
                         .then( () => {
-                            this.$store.commit('DELETE_REPLY', this.index)
+                            this.$store.commit('DELETE_REPLY', { parentId: this.reply.parent_id, index: this.index })
                             swal.close()
                             flash("Okay, your reply has been deleted.")
                         })
@@ -145,6 +146,9 @@
                     .split('/')
                     .reverse()
                     .join('/');
+            },
+            parentId() {
+                return this.reply.parent_id ?? this.reply.id
             },
             isBest() {
                 return this.$store.state.thread['answer_id'] === this.reply.id

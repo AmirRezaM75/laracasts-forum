@@ -2,12 +2,23 @@
     <div>
         <div class="relative">
             <div>
-                <reply
-                    v-for="(reply, index) in replies"
-                    :key="reply.id"
-                    :index="index"
-                    :model="reply"
-                ></reply>
+                <template v-for="(reply, index) in replies">
+                    <div :class="{ 'reply-with-responses': reply.children }">
+                        <reply
+                            :key="reply.id"
+                            :index="index"
+                            :model="reply"
+                        ></reply>
+                        <div v-if="reply.children" class="responses">
+                            <reply
+                                v-for="(response, responseIndex) in reply.children"
+                                :key="response.id"
+                                :index="responseIndex"
+                                :model="response"
+                            ></reply>
+                        </div>
+                    </div>
+                </template>
                 <div class="my-4">
                     <paginator :data="pagination" @changed="fetch"></paginator>
                 </div>
