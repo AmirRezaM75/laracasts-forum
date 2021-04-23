@@ -68,10 +68,10 @@ export default {
             })
         },
         fetch(page) {
-            axios.get(this.endpoint(page)).then(response => {
-                this.$store.commit('SET_REPLIES', response.data.data)
-                this.$store.commit('SET_REPLIES_COUNT', response.data.total)
-                this.pagination = response.data
+            axios.get(this.endpoint(page)).then( ({data}) => {
+                this.$store.commit('SET_REPLIES', data.replies.data)
+                this.$store.commit('SET_REPLIES_COUNT', data['replies_count'])
+                this.pagination = data.replies
                 window.scrollTo(0, 0) // TODO: scroll to first reply smoothly
             })
         },

@@ -2875,12 +2875,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     fetch: function fetch(page) {
       var _this2 = this;
 
-      axios.get(this.endpoint(page)).then(function (response) {
-        _this2.$store.commit('SET_REPLIES', response.data.data);
+      axios.get(this.endpoint(page)).then(function (_ref) {
+        var data = _ref.data;
 
-        _this2.$store.commit('SET_REPLIES_COUNT', response.data.total);
+        _this2.$store.commit('SET_REPLIES', data.replies.data);
 
-        _this2.pagination = response.data;
+        _this2.$store.commit('SET_REPLIES_COUNT', data['replies_count']);
+
+        _this2.pagination = data.replies;
         window.scrollTo(0, 0); // TODO: scroll to first reply smoothly
       });
     },
@@ -4030,7 +4032,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     repliesCount: function repliesCount() {
-      return this.$store.state.count;
+      return this.$store.state.replies_count;
     },
     isLocked: function isLocked() {
       return this.$store.state.thread['locked'];
@@ -4304,7 +4306,7 @@ vue__WEBPACK_IMPORTED_MODULE_0__.default.use(vuex__WEBPACK_IMPORTED_MODULE_1__.d
     thread: {},
     replies: [],
     categories: [],
-    count: 0
+    replies_count: 0
   },
   mutations: {
     SET_CATEGORIES: function SET_CATEGORIES(state, categories) {
@@ -4314,7 +4316,7 @@ vue__WEBPACK_IMPORTED_MODULE_0__.default.use(vuex__WEBPACK_IMPORTED_MODULE_1__.d
       state.thread = thread;
     },
     SET_REPLIES_COUNT: function SET_REPLIES_COUNT(state, number) {
-      state.count = number;
+      state.replies_count = number;
     },
     SET_REPLIES: function SET_REPLIES(state, replies) {
       state.replies = replies;
@@ -4330,7 +4332,7 @@ vue__WEBPACK_IMPORTED_MODULE_0__.default.use(vuex__WEBPACK_IMPORTED_MODULE_1__.d
         state.replies[parentIndex].children.push(reply);
       } else state.replies.push(reply);
 
-      state.count++;
+      state.replies_count++;
     },
     UPDATE_REPLY: function UPDATE_REPLY(state, _ref2) {
       var reply = _ref2.reply,
@@ -4347,7 +4349,7 @@ vue__WEBPACK_IMPORTED_MODULE_0__.default.use(vuex__WEBPACK_IMPORTED_MODULE_1__.d
       var parentIndex = _ref4.parentIndex,
           targetIndex = _ref4.targetIndex;
       parentIndex === null ? state.replies.splice(targetIndex, 1) : state.replies[parentIndex].children.splice(targetIndex, 1);
-      state.count--;
+      state.replies_count--;
     },
     LOCK_THREAD: function LOCK_THREAD(state) {
       var status = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;

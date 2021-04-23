@@ -34,7 +34,6 @@ class ThreadRestrictionTest extends TestCase
         $this->assertFalse($thread->fresh()->locked);
     }
 
-
     /** @test */
     public function admin_can_lock_thread()
     {

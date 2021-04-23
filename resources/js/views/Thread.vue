@@ -10,7 +10,7 @@
         components: { Replies, SubscriptionButton, Thread, LockButton },
         computed: {
             repliesCount() {
-                return this.$store.state.count
+                return this.$store.state.replies_count
             },
             isLocked() {
                 return this.$store.state.thread['locked']

@@ -9,7 +9,7 @@ export default new Vuex.Store({
         thread: {},
         replies: [],
         categories: [],
-        count: 0
+        replies_count: 0
     },
     mutations: {
         SET_CATEGORIES(state, categories) {
@@ -19,7 +19,7 @@ export default new Vuex.Store({
             state.thread = thread
         },
         SET_REPLIES_COUNT(state, number) {
-            state.count = number
+            state.replies_count = number
         },
         SET_REPLIES(state, replies) {
             state.replies = replies
@@ -31,7 +31,7 @@ export default new Vuex.Store({
             } else
                 state.replies.push(reply)
 
-            state.count++
+            state.replies_count++
         },
         UPDATE_REPLY(state, {reply, value}) {
             reply['body'] = value
@@ -45,7 +45,7 @@ export default new Vuex.Store({
                 ? state.replies.splice(targetIndex, 1)
                 : state.replies[parentIndex].children.splice(targetIndex, 1)
 
-            state.count--
+            state.replies_count--
         },
         LOCK_THREAD(state, status = true) {
             state.thread['locked'] = status

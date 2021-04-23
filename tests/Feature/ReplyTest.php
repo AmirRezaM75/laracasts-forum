@@ -213,4 +213,22 @@ class ReplyTest extends TestCase
 
         $this->assertCount(1, $reply->children);
     }
+
+    /** @test */
+    public function users_can_get_list_of_thread_replies()
+    {
+        $thread = Thread::factory()->create();
+
+        $reply = Reply::factory()->create(['thread_id' => $thread->id]);
+
+        Reply::factory(2)->create([
+            'parent_id' => $reply->id,
+            'thread_id' => $thread->id
+        ]);
+
+        $response = $this->getJson(route('threads.replies.index', $thread))->json();
+
+        $this->assertCount(1, $response['replies']['data']);
+        $this->assertEquals(3, $response['replies_count']);
+    }
 }
