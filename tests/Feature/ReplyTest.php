@@ -211,7 +211,7 @@ class ReplyTest extends TestCase
 
         $this->post(route('threads.replies.store', $thread), $answer);
 
-        $this->assertCount(1, $reply->children);
+        $this->assertCount(1, $reply->responses);
     }
 
     /** @test */

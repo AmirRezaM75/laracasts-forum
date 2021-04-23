@@ -4329,7 +4329,7 @@ vue__WEBPACK_IMPORTED_MODULE_0__.default.use(vuex__WEBPACK_IMPORTED_MODULE_1__.d
         var parentIndex = state.replies.findIndex(function (reply) {
           return reply.id === parentId;
         });
-        state.replies[parentIndex].children.push(reply);
+        state.replies[parentIndex].responses.push(reply);
       } else state.replies.push(reply);
 
       state.replies_count++;
@@ -4348,7 +4348,7 @@ vue__WEBPACK_IMPORTED_MODULE_0__.default.use(vuex__WEBPACK_IMPORTED_MODULE_1__.d
     DELETE_REPLY: function DELETE_REPLY(state, _ref4) {
       var parentIndex = _ref4.parentIndex,
           targetIndex = _ref4.targetIndex;
-      parentIndex === null ? state.replies.splice(targetIndex, 1) : state.replies[parentIndex].children.splice(targetIndex, 1);
+      parentIndex === null ? state.replies.splice(targetIndex, 1) : state.replies[parentIndex].responses.splice(targetIndex, 1);
       state.replies_count--;
     },
     LOCK_THREAD: function LOCK_THREAD(state) {
@@ -58479,18 +58479,18 @@ var render = function() {
             return [
               _c(
                 "div",
-                { class: { "reply-with-responses": reply.children } },
+                { class: { "reply-with-responses": reply.responses } },
                 [
                   _c("reply", {
                     key: reply.id,
                     attrs: { index: index, model: reply }
                   }),
                   _vm._v(" "),
-                  reply.children
+                  reply.responses
                     ? _c(
                         "div",
                         { staticClass: "responses" },
-                        _vm._l(reply.children, function(
+                        _vm._l(reply.responses, function(
                           response,
                           responseIndex
                         ) {

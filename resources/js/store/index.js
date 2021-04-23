@@ -27,7 +27,7 @@ export default new Vuex.Store({
         ADD_REPLY(state, { parentId, reply }) {
             if (parentId) {
                 let parentIndex = state.replies.findIndex(reply => reply.id === parentId)
-                state.replies[parentIndex].children.push(reply)
+                state.replies[parentIndex].responses.push(reply)
             } else
                 state.replies.push(reply)
 
@@ -43,7 +43,7 @@ export default new Vuex.Store({
         DELETE_REPLY(state, { parentIndex, targetIndex }) {
             parentIndex === null
                 ? state.replies.splice(targetIndex, 1)
-                : state.replies[parentIndex].children.splice(targetIndex, 1)
+                : state.replies[parentIndex].responses.splice(targetIndex, 1)
 
             state.replies_count--
         },

@@ -18,7 +18,7 @@ class ReplyController extends Controller
         return response()->json([
             'replies' => $thread->replies()
                 ->whereNull('parent_id')
-                ->with('children')
+                ->with('responses')
                 ->paginate(15),
             'replies_count' => $thread->replies_count
         ]);

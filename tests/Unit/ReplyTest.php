@@ -81,12 +81,8 @@ class ReplyTest extends TestCase
 
         $answer = Reply::factory()->create(['parent_id' => $reply->id]);
 
-        $this->assertTrue($reply->children->contains($answer));
+        $this->assertTrue($reply->responses->contains($answer));
 
-        $this->assertInstanceOf(Collection::class, $reply->children);
-
-        $this->assertInstanceOf(Reply::class, $answer->parent);
-
-        $this->assertTrue($answer->parent->is($reply));
+        $this->assertInstanceOf(Collection::class, $reply->responses);
     }
 }

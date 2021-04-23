@@ -3,15 +3,15 @@
         <div class="relative">
             <div>
                 <template v-for="(reply, index) in replies">
-                    <div :class="{ 'reply-with-responses': reply.children }">
+                    <div :class="{ 'reply-with-responses': reply.responses }">
                         <reply
                             :key="reply.id"
                             :index="index"
                             :model="reply"
                         ></reply>
-                        <div v-if="reply.children" class="responses">
+                        <div v-if="reply.responses" class="responses">
                             <reply
-                                v-for="(response, responseIndex) in reply.children"
+                                v-for="(response, responseIndex) in reply.responses"
                                 :key="response.id"
                                 :index="responseIndex"
                                 :parent-index="index"
