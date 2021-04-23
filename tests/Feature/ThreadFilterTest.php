@@ -137,4 +137,31 @@ class ThreadFilterTest extends TestCase
 
         Thread::latest()->take(4)->unsearchable();
     }
+
+    /** @test */
+    public function filter_threads_according_to_user_contribution()
+    {
+        $this->login();
+
+        Reply::factory(2)->create(['user_id' => auth()->id()]);
+
+        $response = $this->getJson('threads?contributed')->json();
+
+        $this->assertCount(2, $response['data']);
+    }
+
+
+    /** @test */
+    public function filter_threads_according_to_user_best_reply()
+    {
+        $this->login();
+
+        $replies = Reply::factory(2)->create(['user_id' => auth()->id()]);
+
+        Thread::factory()->create(['answer_id' => $replies->first()->id]);
+
+        $response = $this->getJson('threads?besties')->json();
+
+        $this->assertCount(1, $response['data']);
+    }
 }
