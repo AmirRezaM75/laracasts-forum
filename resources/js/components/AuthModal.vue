@@ -8,6 +8,7 @@
         :adpative="true"
         :scrollable="true"
         classes="rounded-none shadow-inner bg-white border-t-3 rounded-2xl max-h-screen"
+        transition="modal-slide-up"
         @before-open="beforeOpen"
         @opened="opened"
         @toggle-form="toggle"

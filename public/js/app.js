@@ -1879,6 +1879,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -3608,8 +3609,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var turndown__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! turndown */ "./node_modules/turndown/lib/turndown.es.js");
 /* harmony import */ var _mixins_MarkdownPreview__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../mixins/MarkdownPreview */ "./resources/js/mixins/MarkdownPreview.js");
 /* harmony import */ var _mixins_ErrorHandler__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../mixins/ErrorHandler */ "./resources/js/mixins/ErrorHandler.js");
-//
-//
 //
 //
 //
@@ -56796,7 +56795,8 @@ var render = function() {
         adpative: true,
         scrollable: true,
         classes:
-          "rounded-none shadow-inner bg-white border-t-3 rounded-2xl max-h-screen"
+          "rounded-none shadow-inner bg-white border-t-3 rounded-2xl max-h-screen",
+        transition: "modal-slide-up"
       },
       on: {
         "before-open": _vm.beforeOpen,
@@ -58981,12 +58981,11 @@ var render = function() {
                   staticClass:
                     "textarea mb-1 border-l-0 border-r-0 px-0 py-4 text-sm focus:border-grey-light",
                   staticStyle: {
-                    "min-height": "150px",
+                    "min-height": "250px",
                     "max-height": "45vh",
-                    overflow: "hidden",
+                    overflow: "hidden auto",
                     "overflow-wrap": "break-word",
-                    resize: "none",
-                    height: "150px"
+                    resize: "none"
                   },
                   attrs: { required: "", name: "body" },
                   domProps: { value: _vm.form.body },
@@ -59660,20 +59659,17 @@ var render = function() {
                   staticClass:
                     "textarea border-none mb-1 px-0 py-4 text-sm focus:border-grey hover:border-grey",
                   staticStyle: {
-                    "min-height": "175px",
+                    "min-height": "250px",
                     "max-height": "45vh",
-                    overflow: "hidden",
+                    overflow: "hidden auto",
                     "overflow-wrap": "break-word",
-                    resize: "none",
-                    height: "175px"
+                    resize: "none"
                   },
                   attrs: {
                     id: "body",
                     name: "body",
-                    "data-autosize": "",
-                    required: "required",
-                    placeholder: "What's on your mind?",
-                    "data-tribute": "true"
+                    required: "",
+                    placeholder: "What's on your mind?"
                   },
                   domProps: { value: _vm.form.body },
                   on: {

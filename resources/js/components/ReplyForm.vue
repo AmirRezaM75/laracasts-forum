@@ -28,7 +28,7 @@
                     name="body"
                     v-model="form.body"
                     class="textarea mb-1 border-l-0 border-r-0 px-0 py-4 text-sm focus:border-grey-light"
-                    style="min-height: 150px; max-height: 45vh; overflow: hidden; overflow-wrap: break-word; resize: none; height: 150px;"
+                    style="min-height: 250px; max-height: 45vh; overflow: hidden auto; overflow-wrap: break-word; resize: none;"
                 ></textarea>
             </div>
             <div class="flex items-center justify-between">

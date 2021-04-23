@@ -37,12 +37,10 @@
                     id="body"
                     name="body"
                     v-model="form.body"
-                    data-autosize=""
-                    required="required"
+                    required
                     placeholder="What's on your mind?"
                     class="textarea border-none mb-1 px-0 py-4 text-sm focus:border-grey hover:border-grey"
-                    data-tribute="true"
-                    style="min-height: 175px; max-height: 45vh; overflow: hidden; overflow-wrap: break-word; resize: none; height: 175px;"></textarea>
+                    style="min-height: 250px; max-height: 45vh; overflow: hidden auto; overflow-wrap: break-word; resize: none;"></textarea>
             </div>
             <div class="flex justify-between pt-px">
                 <div class="mobile:hidden flex items-center text-xs mb-2">
