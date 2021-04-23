@@ -117,7 +117,7 @@ export default {
     },
     methods: {
         register() {
-            axios.post('register', {
+            axios.post('/register', {
                 email: this.email,
                 password: this.password,
                 username: this.username

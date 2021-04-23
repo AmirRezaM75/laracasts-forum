@@ -2451,7 +2451,7 @@ __webpack_require__.r(__webpack_exports__);
     login: function login() {
       var _this = this;
 
-      axios.post('login', {
+      axios.post('/login', {
         email: this.email,
         password: this.password
       }).then(function (response) {
@@ -2767,7 +2767,7 @@ __webpack_require__.r(__webpack_exports__);
     register: function register() {
       var _this = this;
 
-      axios.post('register', {
+      axios.post('/register', {
         email: this.email,
         password: this.password,
         username: this.username

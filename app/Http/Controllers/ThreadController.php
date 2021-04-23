@@ -49,7 +49,10 @@ class ThreadController extends Controller
 
         Trending::push($thread->id);
 
-        return view('threads.show', compact('thread'));
+        return view('threads.show', [
+            'participatorsCount' => $thread->replies()->distinct()->count('user_id'),
+            'thread' => $thread
+        ]);
     }
 
     public function update(Request $request, Thread $thread)

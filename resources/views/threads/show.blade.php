@@ -30,7 +30,8 @@
                         >
                             <div>
                                 <p class="hidden lg:block text-grey-40 text-2xs font-semibold">
-                                    {{ $thread->user->username }} started this conversation {{ $thread->created_at->diffForHumans() }}. 3 people have replied.
+                                    {{ $thread->user->username }} started this conversation {{ $thread->created_at->diffForHumans() }}.
+                                    {{ $participatorsCount . ' ' . Str::plural('person', $participatorsCount) }} have replied.
                                 </p>
                             </div>
                             <div class="flex items-center flex-1 justify-around lg:justify-end">
