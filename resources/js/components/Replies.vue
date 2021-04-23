@@ -14,6 +14,7 @@
                                 v-for="(response, responseIndex) in reply.children"
                                 :key="response.id"
                                 :index="responseIndex"
+                                :parent-index="index"
                                 :model="response"
                             ></reply>
                         </div>
@@ -47,7 +48,6 @@
 
 <script>
 import Reply from "./Reply";
-import ReplyModal from "./ReplyForm";
 import { mapState } from 'vuex'
 
 export default {

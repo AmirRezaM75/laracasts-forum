@@ -2794,8 +2794,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _Reply__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Reply */ "./resources/js/components/Reply.vue");
-/* harmony import */ var _ReplyForm__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ReplyForm */ "./resources/js/components/ReplyForm.vue");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -2849,7 +2848,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -2862,7 +2861,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       pagination: null
     };
   },
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapState)(['replies'])),
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapState)(['replies'])),
   methods: {
     create: function create() {
       var _this = this;
@@ -3016,7 +3015,20 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['model', 'index'],
+  props: {
+    model: {
+      required: true,
+      type: Object
+    },
+    index: {
+      required: true,
+      type: Number
+    },
+    parentIndex: {
+      required: false,
+      "default": null
+    }
+  },
   components: {
     Favorite: _Favorite__WEBPACK_IMPORTED_MODULE_1__.default,
     ConversationDropdown: _ConversationDropdown__WEBPACK_IMPORTED_MODULE_0__.default
@@ -3044,8 +3056,8 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (t) {
         t && axios["delete"]('/replies/' + _this.reply.id).then(function () {
           _this.$store.commit('DELETE_REPLY', {
-            parentId: _this.reply.parent_id,
-            index: _this.index
+            parentIndex: _this.parentIndex,
+            targetIndex: _this.index
           });
 
           swal.close();
@@ -4310,9 +4322,14 @@ vue__WEBPACK_IMPORTED_MODULE_0__.default.use(vuex__WEBPACK_IMPORTED_MODULE_1__.d
     ADD_REPLY: function ADD_REPLY(state, _ref) {
       var parentId = _ref.parentId,
           reply = _ref.reply;
-      if (parentId) state.replies.forEach(function (item) {
-        if (item.id === parentId) item.children.push(reply);
-      });else state.replies.push(reply);
+
+      if (parentId) {
+        var parentIndex = state.replies.findIndex(function (reply) {
+          return reply.id === parentId;
+        });
+        state.replies[parentIndex].children.push(reply);
+      } else state.replies.push(reply);
+
       state.count++;
     },
     UPDATE_REPLY: function UPDATE_REPLY(state, _ref2) {
@@ -4327,11 +4344,9 @@ vue__WEBPACK_IMPORTED_MODULE_0__.default.use(vuex__WEBPACK_IMPORTED_MODULE_1__.d
       thread['title'] = object['title'];
     },
     DELETE_REPLY: function DELETE_REPLY(state, _ref4) {
-      var parentId = _ref4.parentId,
-          index = _ref4.index;
-      if (parentId) state.replies.forEach(function (item) {
-        if (item.id === parentId) item.children.splice(index, 1);
-      });else state.replies.splice(index, 1);
+      var parentIndex = _ref4.parentIndex,
+          targetIndex = _ref4.targetIndex;
+      parentIndex === null ? state.replies.splice(targetIndex, 1) : state.replies[parentIndex].children.splice(targetIndex, 1);
       state.count--;
     },
     LOCK_THREAD: function LOCK_THREAD(state) {
@@ -58479,7 +58494,11 @@ var render = function() {
                         ) {
                           return _c("reply", {
                             key: response.id,
-                            attrs: { index: responseIndex, model: response }
+                            attrs: {
+                              index: responseIndex,
+                              "parent-index": index,
+                              model: response
+                            }
                           })
                         }),
                         1

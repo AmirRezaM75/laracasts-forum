@@ -25,12 +25,10 @@ export default new Vuex.Store({
             state.replies = replies
         },
         ADD_REPLY(state, { parentId, reply }) {
-            if (parentId)
-                state.replies.forEach(item => {
-                    if (item.id === parentId)
-                        item.children.push(reply)
-                })
-            else
+            if (parentId) {
+                let parentIndex = state.replies.findIndex(reply => reply.id === parentId)
+                state.replies[parentIndex].children.push(reply)
+            } else
                 state.replies.push(reply)
 
             state.count++
@@ -42,14 +40,10 @@ export default new Vuex.Store({
             thread['body'] = object['body']
             thread['title'] = object['title']
         },
-        DELETE_REPLY(state, { parentId, index }) {
-            if (parentId)
-                state.replies.forEach(item => {
-                    if (item.id === parentId)
-                        item.children.splice(index, 1)
-                })
-            else
-                state.replies.splice(index, 1)
+        DELETE_REPLY(state, { parentIndex, targetIndex }) {
+            parentIndex === null
+                ? state.replies.splice(targetIndex, 1)
+                : state.replies[parentIndex].children.splice(targetIndex, 1)
 
             state.count--
         },

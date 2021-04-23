@@ -100,7 +100,20 @@
     import hljs from 'highlight.js'
 
     export default {
-        props: ['model', 'index'],
+        props: {
+            model: {
+                required: true,
+                type: Object
+            },
+            index: {
+                required: true,
+                type: Number
+            },
+            parentIndex: {
+                required: false,
+                default: null
+            }
+        },
         components: { Favorite, ConversationDropdown },
         data() {
             return {
@@ -120,7 +133,10 @@
                 }).then( t => {
                     t && axios.delete('/replies/' + this.reply.id)
                         .then( () => {
-                            this.$store.commit('DELETE_REPLY', { parentId: this.reply.parent_id, index: this.index })
+                            this.$store.commit('DELETE_REPLY',{
+                                parentIndex: this.parentIndex,
+                                targetIndex: this.index
+                            });
                             swal.close()
                             flash("Okay, your reply has been deleted.")
                         })
