@@ -2,6 +2,10 @@ import Vue from 'vue'
 import VueJSModal from 'vue-js-modal'
 import Auth from "./mixins/Auth"
 import store from './store'
+import dayjs from "dayjs";
+
+let relativeTime = require('dayjs/plugin/relativeTime')
+dayjs.extend(relativeTime)
 
 window.axios = require('axios')
 
@@ -24,9 +28,13 @@ Vue.component('account-slideout-menu', require('./components/AccountSlideoutMenu
 Vue.component('thread-view', require('./views/Thread').default)
 Vue.component('threads-view', require('./views/Threads').default)
 
-Vue.use(VueJSModal);
+Vue.use(VueJSModal)
 
-Vue.mixin(Auth);
+Vue.mixin(Auth)
+
+Vue.filter('diffForHumans', function(date) {
+    return dayjs(date).fromNow()
+})
 
 new Vue({
     el: '#app',

@@ -93,7 +93,9 @@
                         {{ $thread->user->username }}
                     </a>
                     posted
-                    <a href="" class="inherits-color link"><time class="font-bold">{{ $thread->created_at->diffForHumans() }}</time></a>
+                    <a href="" class="inherits-color link">
+                        <time class="font-bold">{{ $thread->created_at->diffForHumans() }}</time>
+                    </a>
                     @if($thread->hasUpdates())
                         <div class="border-solid border border-red text-red px-2 h-4 text-3xs rounded-full ml-2 inline-flex items-center leading-off">
                             Updated

@@ -41,7 +41,7 @@
                             </a>
                         </div>
                         <a class="font-semibold pt-1 md:pt-0 text-3xs text-grey-dark link">
-                            <span class="text-grey-dark">Posted {{ creationTime }}</span>
+                            <span class="text-grey-dark">Posted {{ thread.created_at | diffForHumans }}</span>
                         </a>
                     </div>
                 </header>
@@ -83,13 +83,6 @@ export default {
         },
         owner() {
             return this.thread.user
-        },
-        creationTime() {
-            return new Date(this.thread.created_at)
-                .toLocaleDateString("en-US")
-                .split('/')
-                .reverse()
-                .join('/');
         }
     },
     methods: {

@@ -5,7 +5,9 @@
                :href="notification.data.link"
                @click="markAsRead(notification.id)"
                class="block text-sm py-4 px-6 text-black hover:text-black hover:bg-grey-panel rounded-xl">
-                <strong class="block text-grey-dark font-bold text-2xs mb-1">4 minutes ago</strong>
+                <strong class="block text-grey-dark font-bold text-2xs mb-1">
+                    {{ notification.created_at | diffForHumans }}
+                </strong>
                 <span class="text-blue" v-text="'@' + notification.data.username"></span>
                 <span v-text="notification.data.message"></span>
                 <cite>"{{ notification.data.title }}"</cite>

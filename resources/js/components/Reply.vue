@@ -14,7 +14,7 @@
                             :alt="reply.user.username"
                             :src="reply.user.avatar"
                             style="border-radius: 9px;"
-                        /><!--TODO: append user avatar-->
+                        />
                     </div>
                 </a>
             </div>
@@ -38,7 +38,7 @@
                             ></a>
                         </div>
                         <a href="#" class="font-semibold pt-1 md:pt-0 text-3xs text-grey-dark link">
-                            <span class="text-grey-dark">Posted {{ creationTime }}</span>
+                            <span class="text-grey-dark">Posted {{ reply.created_at | diffForHumans }}</span>
                         </a>
                     </div>
                     <div v-if="isBest" class="flex relative" style="top: -5px;">
@@ -156,13 +156,6 @@
             }
         },
         computed: {
-            creationTime() {
-                return new Date(this.reply.created_at)
-                    .toLocaleDateString("en-US")
-                    .split('/')
-                    .reverse()
-                    .join('/');
-            },
             parentId() {
                 return this.reply.parent_id ?? this.reply.id
             },
