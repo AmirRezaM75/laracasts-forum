@@ -25,7 +25,7 @@ export default {
             reader.readAsDataURL(file)
 
             reader.onload = e => {
-                this.$store.commit('UPDATE_USER_AVATAR', e.target.result)
+                this.$auth.avatar = e.target.result
             }
 
             let data = new FormData

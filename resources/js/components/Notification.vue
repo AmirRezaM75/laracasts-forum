@@ -37,7 +37,7 @@ export default {
         clearAll() {
             axios.delete('/users/notifications/').then(res => {
                 if (res.status === 204) {
-                    this.$auth.update('notifications_count', 0)
+                    this.$auth.notifications_count = 0
                     this.notifications = []
                 }
             })

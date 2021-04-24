@@ -44,8 +44,16 @@ class User {
             : target[prop]
     }
 
-    update(column, value) {
-        this.user[column] = value
+    /*
+    * The set method should return a boolean value.
+    * Return true to indicate that assignment succeeded.
+    * If the set method returns false, and the assignment happened in strict-mode code, a TypeError will be thrown."
+    */
+    set(target, prop, value) {
+        if (target.user.hasOwnProperty(prop))
+            target.user[prop] = value
+
+        return true;
     }
 }
 

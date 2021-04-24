@@ -49,9 +49,6 @@ export default new Vuex.Store({
         },
         LOCK_THREAD(state, status = true) {
             state.thread['locked'] = status
-        },
-        UPDATE_USER_AVATAR(state, path) {
-            state.user['avatar'] = path
         }
     }
 })

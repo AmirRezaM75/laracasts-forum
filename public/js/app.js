@@ -2052,7 +2052,7 @@ __webpack_require__.r(__webpack_exports__);
       reader.readAsDataURL(file);
 
       reader.onload = function (e) {
-        _this.$store.commit('UPDATE_USER_AVATAR', e.target.result);
+        _this.$auth.avatar = e.target.result;
       };
 
       var data = new FormData();
@@ -2625,8 +2625,7 @@ __webpack_require__.r(__webpack_exports__);
 
       axios["delete"]('/users/notifications/').then(function (res) {
         if (res.status === 204) {
-          _this.$auth.update('notifications_count', 0);
-
+          _this.$auth.notifications_count = 0;
           _this.notifications = [];
         }
       });
@@ -4445,9 +4444,6 @@ vue__WEBPACK_IMPORTED_MODULE_0__.default.use(vuex__WEBPACK_IMPORTED_MODULE_1__.d
     LOCK_THREAD: function LOCK_THREAD(state) {
       var status = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
       state.thread['locked'] = status;
-    },
-    UPDATE_USER_AVATAR: function UPDATE_USER_AVATAR(state, path) {
-      state.user['avatar'] = path;
     }
   }
 }));
@@ -4580,10 +4576,17 @@ var User = /*#__PURE__*/function () {
     value: function get(target, prop) {
       return typeof target[prop] === 'undefined' ? target.user[prop] : target[prop];
     }
+    /*
+    * The set method should return a boolean value.
+    * Return true to indicate that assignment succeeded.
+    * If the set method returns false, and the assignment happened in strict-mode code, a TypeError will be thrown."
+    */
+
   }, {
-    key: "update",
-    value: function update(column, value) {
-      this.user[column] = value;
+    key: "set",
+    value: function set(target, prop, value) {
+      if (target.user.hasOwnProperty(prop)) target.user[prop] = value;
+      return true;
     }
   }]);
 
