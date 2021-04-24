@@ -195,7 +195,13 @@ class ReplyTest extends TestCase
 
         $this->post(route('threads.replies.store', $thread), $reply);
 
-        Notification::assertSentTo($user, UserMention::class);
+        Notification::assertSentTo($user, UserMention::class, function($notification) use ($thread) {
+            $data  = $notification->toArray(null);
+            return $data['username'] === auth()->user()->username
+                && $data['title'] === $thread->title
+                && $data['message'] === 'mentioned you in'
+                && ! empty($data['link']);
+        });
     }
 
     /** @test */

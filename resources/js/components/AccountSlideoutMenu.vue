@@ -21,57 +21,68 @@
                     </a>
                 </div>
                 <div class="tabs relative flex justify-center mx-8">
-                    <a class="tab flex-1 text-sm relative pb-4 font-semibold hover:text-black current-tab text-black">Me</a>
-                    <a class="tab text-sm relative pb-4 font-semibold hover:text-black flex-1 inline-flex items-center px-2 text-grey">Notifications</a>
+                    <a class="tab flex-1 text-sm relative pb-4 font-semibold hover:text-black"
+                       :class="tab === 'me' ? 'current-tab text-black' : 'text-grey' "
+                       @click="tab = 'me'"
+                    >Me</a>
+                    <a class="tab text-sm relative pb-4 font-semibold hover:text-black flex-1 inline-flex items-center px-2"
+                       :class="tab === 'notification' ? 'current-tab text-black' : 'text-grey' "
+                       @click="tab = 'notification'"
+                    >
+                        Notifications
+                        <span v-show="$auth.notifications_count" class="bg-blue is-circle w-2 h-2 absolute right-0 top-0 -mr-1"></span>
+                    </a>
                 </div>
             </header>
-            <div class="text-center">
-                <div>
-                    <div class="flex flex-col items-center text-center">
-                        <ul class="text-center w-full">
-                            <li class="py-2">
-                                <a :href="'/threads?by=' + $auth.username"
-                                   class="block hover:text-blue border border-solid border-transparent hover:border-blue hover:bg-blue-lighter rounded-full py-2 text-grey-dark font-semibold">
+            <div v-show="tab === 'me'" class="text-center">
+                <div class="flex flex-col items-center text-center">
+                    <ul class="text-center w-full">
+                        <li class="py-2">
+                            <a :href="'/threads?by=' + $auth.username"
+                               class="block hover:text-blue border border-solid border-transparent hover:border-blue hover:bg-blue-lighter rounded-full py-2 text-grey-dark font-semibold">
                                 Questions
-                                </a>
-                            </li>
-                            <li class="py-2">
-                                <a :href="'/@' + $auth.username"
-                                   class="block hover:text-blue border border-solid border-transparent hover:border-blue hover:bg-blue-lighter rounded-full py-2 text-grey-dark font-semibold">
-                                    Profile
-                                </a>
-                            </li>
-                            <li class="py-2">
-                                <a href="/profile/account"
-                                    class="block hover:text-blue border border-solid border-transparent hover:border-blue hover:bg-blue-lighter rounded-full py-2 text-grey-dark font-semibold">
+                            </a>
+                        </li>
+                        <li class="py-2">
+                            <a :href="'/@' + $auth.username"
+                               class="block hover:text-blue border border-solid border-transparent hover:border-blue hover:bg-blue-lighter rounded-full py-2 text-grey-dark font-semibold">
+                                Profile
+                            </a>
+                        </li>
+                        <li class="py-2">
+                            <a href="/profile/account"
+                               class="block hover:text-blue border border-solid border-transparent hover:border-blue hover:bg-blue-lighter rounded-full py-2 text-grey-dark font-semibold">
                                 Settings
-                                </a>
-                            </li>
-                            <li class="py-2">
-                                <a href="/logout"
-                                   @click.prevent="logout"
-                                   class="block hover:text-blue border border-solid border-transparent hover:border-blue hover:bg-blue-lighter rounded-full py-2 text-grey-dark font-semibold">
-                                    Logout
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+                            </a>
+                        </li>
+                        <li class="py-2">
+                            <a href="/logout"
+                               @click.prevent="logout"
+                               class="block hover:text-blue border border-solid border-transparent hover:border-blue hover:bg-blue-lighter rounded-full py-2 text-grey-dark font-semibold">
+                                Logout
+                            </a>
+                        </li>
+                    </ul>
                 </div>
             </div>
-            <div style="display: none;">
-                <div class="overflow-y-auto pb-6">
-                    <p class="text-center">You have no notifications at this time.</p>
-                    <div class="pt-8 px-4">
-                    </div>
-                </div>
+            <div v-show="tab === 'notification'">
+                <notification></notification>
             </div>
         </div>
     </modal>
 </template>
 
 <script>
+import Notification from "./Notification";
+
 export default {
     name: "AccountSlideoutMenu",
+    components: { Notification },
+    data() {
+        return {
+            tab: 'me'
+        }
+    },
     methods: {
         logout() {
             axios.post('/logout').then(() => location.reload())

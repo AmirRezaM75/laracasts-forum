@@ -24,14 +24,17 @@ class NotificationTest extends TestCase
 
         $this->assertCount(0, auth()->user()->notifications);
 
-        $reply = $thread->createReply(['user_id' => User::factory()->create()->id, 'body' => 'message']);
+        $user = User::factory()->create();
+
+        $reply = $thread->createReply(['user_id' => $user->id, 'body' => 'message']);
 
         $notifications = auth()->user()->fresh()->notifications;
 
         $this->assertCount(1, $notifications);
 
-        $this->assertNotEmpty($notifications->first()->data['message']);
-
+        $this->assertEquals('replied to', $notifications->first()->data['message']);
+        $this->assertEquals($user->username, $notifications->first()->data['username']);
+        $this->assertEquals($thread->title, $notifications->first()->data['title']);
         $this->assertEquals($reply->path(), $notifications->first()->data['link']);
     }
 }

@@ -24,8 +24,9 @@ class UserMention extends Notification
     public function toArray($notifiable)
     {
         return [
-            'message' => $this->reply->user->username . ' mentioned you.',
-            'description' => $this->reply->thread->title,
+            'username' => $this->reply->user->username,
+            'title' => $this->reply->thread->title,
+            'message' => 'mentioned you in',
             'link' => $this->reply->path()
         ];
     }

@@ -22,6 +22,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'private' => 'boolean',
     ];
 
+    protected $appends = ['notifications_count'];
+
     public function activities()
     {
         return $this->hasMany(Activity::class);
@@ -53,5 +55,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function visitedThreadCacheKey($threadId)
     {
         return sprintf("user.%s.visited.%s", $this, $threadId);
+    }
+
+    public function getNotificationsCountAttribute()
+    {
+        return $this->unreadNotifications()->count();
     }
 }

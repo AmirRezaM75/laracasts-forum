@@ -33,10 +33,24 @@
         </div>
         <div class="hidden md:block relative flex-1">
             <div class="flex items-center justify-end leading-none">
-                <notification></notification>
 
                 @auth
                     <div class="flex items-center cursor-pointer ml-4 relative">
+                        <div v-show="$auth.notifications_count"
+                             id="user-notifications-toggle"
+                             class="absolute rounded-full z-500 border-none p-0 text-center">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                 width="10"
+                                 height="13"
+                                 viewBox="0 0 10 13"
+                                 class="block relative w-full h-full"
+                                 style="padding: 4px;"
+                            >
+                                <g fill="#FFF" fill-rule="evenodd">
+                                    <path d="M5.001.435c.995 0 1.517 1.301.824 2.088 1.586.408 2.762 1.959 2.762 3.78 0 1.384-.145 2.454.721 3.586.116.15.056.386-.12.445-1.875.622-4.46.702-6.44.43-.44-.06-1.85-.323-2.023-.484-.413-.381.692-.726.692-2.526V6.302c0-1.82 1.175-3.371 2.76-3.78a1.31 1.31 0 0 1 .02-1.725V.795c.206-.222.49-.36.804-.36zM5.984 11.42c0 .928-1.062 1.37-1.673.738-.34-.353-.421-1.016-.038-1.016H5.73c.14 0 .254.125.254.277z"></path>
+                                </g>
+                            </svg>
+                        </div>
                         <a @click.prevent="$modal.show('account-slideout-menu')"
                             class="block leading-none">
                             <img

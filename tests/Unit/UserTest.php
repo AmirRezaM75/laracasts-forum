@@ -4,6 +4,7 @@ namespace Tests\Unit;
 
 use App\Models\Reply;
 use App\Models\User;
+use Database\Factories\NotificationFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -61,5 +62,17 @@ class UserTest extends TestCase
         $user = User::factory()->create(['private' => '1']);
 
         $this->assertTrue($user->private);
+    }
+
+    /** @test */
+    public function it_appends_notifications_count()
+    {
+        $this->login();
+
+        NotificationFactory::new()->create();
+
+        $this->assertTrue(auth()->user()->hasAppended('notifications_count'));
+
+        $this->assertEquals(1, auth()->user()->notifications_count);
     }
 }
