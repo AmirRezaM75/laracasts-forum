@@ -2607,6 +2607,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Notification",
   data: function data() {
@@ -2617,14 +2619,25 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     markAsRead: function markAsRead(notificationId) {
       axios["delete"]('/users/notifications/' + notificationId);
+    },
+    clearAll: function clearAll() {
+      var _this = this;
+
+      axios["delete"]('/users/notifications/').then(function (res) {
+        if (res.status === 204) {
+          _this.$auth.update('notifications_count', 0);
+
+          _this.notifications = [];
+        }
+      });
     }
   },
   mounted: function mounted() {
-    var _this = this;
+    var _this2 = this;
 
     if (!this.$auth.check()) return;
     axios.get('/users/notifications').then(function (response) {
-      _this.notifications = response.data;
+      _this2.notifications = response.data;
     });
   }
 });
@@ -4566,6 +4579,11 @@ var User = /*#__PURE__*/function () {
     key: "get",
     value: function get(target, prop) {
       return typeof target[prop] === 'undefined' ? target.user[prop] : target[prop];
+    }
+  }, {
+    key: "update",
+    value: function update(column, value) {
+      this.user[column] = value;
     }
   }]);
 
@@ -58085,7 +58103,18 @@ var render = function() {
               )
             }),
             _vm._v(" "),
-            _vm._m(0)
+            _c("div", { staticClass: "pt-8 px-4 text-center" }, [
+              _c(
+                "button",
+                {
+                  staticClass:
+                    "btn mx-auto text-black border-grey border-solid border",
+                  attrs: { type: "button" },
+                  on: { click: _vm.clearAll }
+                },
+                [_vm._v("Clear All")]
+              )
+            ])
           ]
         : _c("p", { staticClass: "text-center" }, [
             _vm._v("You have no notifications at this time.")
@@ -58094,23 +58123,7 @@ var render = function() {
     2
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "pt-8 px-4 text-center" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn mx-auto text-black border-grey border-solid border",
-          attrs: { type: "submit" }
-        },
-        [_vm._v("Clear All")]
-      )
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

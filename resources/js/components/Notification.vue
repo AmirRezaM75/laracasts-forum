@@ -13,7 +13,9 @@
                 <cite>"{{ notification.data.title }}"</cite>
             </a>
             <div class="pt-8 px-4 text-center">
-                <button type="submit" class="btn mx-auto text-black border-grey border-solid border">Clear All</button>
+                <button type="button"
+                        @click="clearAll"
+                        class="btn mx-auto text-black border-grey border-solid border">Clear All</button>
             </div>
         </template>
         <p v-else class="text-center">You have no notifications at this time.</p>
@@ -31,6 +33,14 @@ export default {
     methods: {
         markAsRead(notificationId) {
             axios.delete('/users/notifications/' + notificationId)
+        },
+        clearAll() {
+            axios.delete('/users/notifications/').then(res => {
+                if (res.status === 204) {
+                    this.$auth.update('notifications_count', 0)
+                    this.notifications = []
+                }
+            })
         }
     },
     mounted() {

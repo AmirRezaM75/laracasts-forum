@@ -43,6 +43,10 @@ class User {
             ? target.user[prop]
             : target[prop]
     }
+
+    update(column, value) {
+        this.user[column] = value
+    }
 }
 
 export default User;

@@ -38,7 +38,7 @@ Route::delete('replies/{reply}/favorites', [FavoriteController::class, 'destroy'
 
 
 Route::get('users/notifications', [NotificationController::class, 'index']);
-Route::delete('users/notifications/{notification}', [NotificationController::class, 'destroy']);
+Route::delete('users/notifications/{notification?}', [NotificationController::class, 'destroy']);
 
 Route::get('@{username}', [ProfileController::class, 'show'])
     ->where('username', trim(Regex::USERNAME, '/'))

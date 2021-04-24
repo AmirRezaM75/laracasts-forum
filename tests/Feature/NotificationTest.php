@@ -36,4 +36,20 @@ class NotificationTest extends TestCase
             $this->assertCount(0, $user->fresh()->unreadNotifications);
         });
     }
+
+    /** @test */
+    public function users_can_mark_all_notifications_as_read()
+    {
+        $this->withoutExceptionHandling();
+        NotificationFactory::new()->create();
+
+        tap(auth()->user(), function($user) {
+            $this->assertCount(2, $user->unreadNotifications);
+
+            $this->delete('/users/notifications');
+
+            $this->assertCount(0, $user->fresh()->unreadNotifications);
+            $this->assertCount(0, $user->fresh()->notifications);
+        });
+    }
 }
