@@ -117,23 +117,21 @@
             </div>
         </section>
 
-        @unless($items->isEmpty())
-            <div class="section bg-grey-panel">
-                <div class="py-3">
-                    <div>
-                        <ul role="tablist" class="flex justify-center mb-4 border-b border-gray-400 mb-8">
-                            <li class="pb-1 lg:px-4 mx-4 mb-1 lg:text-xl border-blue border-b-2 border-solid">
-                                <button role="tab"
-                                        aria-selected="true"
-                                        class="focus:outline-none text-black">
-                                    Activity
-                                </button>
-                            </li>
-                        </ul>
-                        @include('profiles.activity')
-                    </div>
+        <div class="section bg-grey-panel">
+            <div class="py-3">
+                <div>
+                    <ul role="tablist" class="flex justify-center mb-4 border-b border-gray-400 mb-8">
+                        <li class="pb-1 lg:px-4 mx-4 mb-1 lg:text-xl border-blue border-b-2 border-solid">
+                            <button role="tab"
+                                    aria-selected="true"
+                                    class="focus:outline-none text-black">
+                                Activity
+                            </button>
+                        </li>
+                    </ul>
+                    @include('profiles.activity')
                 </div>
             </div>
-        @endunless
+        </div>
     </div>
 @endsection

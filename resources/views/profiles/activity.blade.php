@@ -1,7 +1,7 @@
 <div role="tabpanel">
     <div class="container">
         <div class="lg:w-2/3 lg:mx-auto">
-            @foreach($items as $date => $activities)
+            @forelse($items as $date => $activities)
                 @php
                     $date = Illuminate\Support\Carbon::createFromDate($date);
                 @endphp
@@ -33,7 +33,21 @@
                         @endforeach
                     </div>
                 </div>
-            @endforeach
+            @empty
+                <div class="text-center py-6">
+                    <h2 class="text-4xl text-black-light mb-8">
+                        <a href="{{ route('threads.index') }}" class="inherits-color">
+                            {{ auth()->id() === $user->id ? 'Start your first discussion' : 'No activity yet' }}
+                        </a>
+                    </h2>
+                    <a href="{{ route('threads.index') }}">
+                        <img src="{{ asset('images/profiles/start-first-discussion@2x.png') }}"
+                             alt="Start Your First Discussion"
+                             width="529"
+                             height="272">
+                    </a>
+                </div>
+            @endforelse
         </div>
     </div>
 </div>
