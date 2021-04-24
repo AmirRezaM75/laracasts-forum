@@ -57193,11 +57193,11 @@ var render = function() {
                       {
                         staticClass:
                           "block hover:text-blue border border-solid border-transparent hover:border-blue hover:bg-blue-lighter rounded-full py-2 text-grey-dark font-semibold",
-                        attrs: { href: "/@" + _vm.$auth.username }
+                        attrs: { href: "/profile/account" }
                       },
                       [
                         _vm._v(
-                          "\n                            Profile\n                        "
+                          "\n                            Settings\n                        "
                         )
                       ]
                     )
@@ -57209,11 +57209,11 @@ var render = function() {
                       {
                         staticClass:
                           "block hover:text-blue border border-solid border-transparent hover:border-blue hover:bg-blue-lighter rounded-full py-2 text-grey-dark font-semibold",
-                        attrs: { href: "/profile/account" }
+                        attrs: { href: "/@" + _vm.$auth.username }
                       },
                       [
                         _vm._v(
-                          "\n                            Settings\n                        "
+                          "\n                            Profile\n                        "
                         )
                       ]
                     )

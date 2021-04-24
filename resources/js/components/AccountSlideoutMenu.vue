@@ -44,15 +44,15 @@
                             </a>
                         </li>
                         <li class="py-2">
-                            <a :href="'/@' + $auth.username"
-                               class="block hover:text-blue border border-solid border-transparent hover:border-blue hover:bg-blue-lighter rounded-full py-2 text-grey-dark font-semibold">
-                                Profile
-                            </a>
-                        </li>
-                        <li class="py-2">
                             <a href="/profile/account"
                                class="block hover:text-blue border border-solid border-transparent hover:border-blue hover:bg-blue-lighter rounded-full py-2 text-grey-dark font-semibold">
                                 Settings
+                            </a>
+                        </li>
+                        <li class="py-2">
+                            <a :href="'/@' + $auth.username"
+                               class="block hover:text-blue border border-solid border-transparent hover:border-blue hover:bg-blue-lighter rounded-full py-2 text-grey-dark font-semibold">
+                                Profile
                             </a>
                         </li>
                         <li class="py-2">
