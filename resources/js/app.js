@@ -21,10 +21,11 @@ Vue.component('user-account-form', require('./components/UserAccountForm').defau
 Vue.component('user-profile-form', require('./components/UserProfileForm').default)
 Vue.component('auth-modal', require('./components/AuthModal').default)
 Vue.component('conversation-modal', require('./components/ConversationModal').default)
+Vue.component('account-slideout-menu', require('./components/AccountSlideoutMenu').default)
 Vue.component('thread-view', require('./views/Thread').default)
 Vue.component('threads-view', require('./views/Threads').default)
 
-Vue.use(VueJSModal, { dynamic: true });
+Vue.use(VueJSModal);
 
 Vue.mixin(Auth);
 

@@ -3661,7 +3661,7 @@ a.ais-refinement-list__count:hover.is-primary,a.tag:hover.is-primary {
 }
 
 .account-slideout-menu {
-    border-radius: 0!important;
+    border-radius: .9rem!important;
     box-shadow: 0 0 15px 0 rgba(0,0,0,.09);
     overflow-y: auto!important
 }
@@ -3674,17 +3674,25 @@ a.ais-refinement-list__count:hover.is-primary,a.tag:hover.is-primary {
     transition: all .3s ease-out
 }
 
-.account-slideout-menu header a.is-selected:after {
-    content: "";
-    width: calc(100% + 30px);
-    display: block;
-    border-bottom: 5px solid #00adec;
-    position: absolute;
-    bottom: -3px;
-    left: -15px;
+.account-slideout-menu .tabs:after {
     border-radius: 9999px;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0
+    border: 2px solid rgba(237,237,237,var(--tw-border-opacity))
+}
+
+.account-slideout-menu .tabs:after,.account-slideout-menu header a.current-tab:after {
+    bottom: -3px;
+    left: 0;
+    position: absolute;
+    content: "";
+    width: 100%;
+    display: block;
+    --tw-border-opacity: 1
+}
+
+.account-slideout-menu header a.current-tab:after {
+    border: 2px solid rgba(50,138,241,var(--tw-border-opacity));
+    border-radius: 9999px;
+    z-index: 2
 }
 
 .v--modal-overlay {

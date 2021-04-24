@@ -34,7 +34,7 @@
 
                 <conversation-modal></conversation-modal>
 
-                <modals-container></modals-container>
+                <account-slideout-menu></account-slideout-menu>
 
                 <flash message="{{ session('flash') }}"></flash>
             </div>

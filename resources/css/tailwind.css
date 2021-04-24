@@ -751,6 +751,10 @@
     margin: 1rem
 }
 
+.m-6 {
+    margin: 1.5rem
+}
+
 .m-auto {
     margin: auto
 }

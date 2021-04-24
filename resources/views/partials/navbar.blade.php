@@ -20,20 +20,6 @@
             </a>
         </div>
         <div class="md:hidden flex items-center">
-            <button
-                title="Tip: press / or s anywhere to instantly activate me."
-                class="leading-none inline-flex"
-            >
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" viewBox="0 0 15 15" class="text-white">
-                    <g fill="none" fill-rule="evenodd">
-                        <path d="M-2-2h20v20H-2z"></path>
-                        <path
-                            d="M10.443 9.232h-.638l-.226-.218A5.223 5.223 0 0 0 10.846 5.6 5.247 5.247 0 1 0 5.6 10.846c1.3 0 2.494-.476 3.414-1.267l.218.226v.638l4.036 4.028 1.203-1.203-4.028-4.036zm-4.843 0A3.627 3.627 0 0 1 1.967 5.6 3.627 3.627 0 0 1 5.6 1.967 3.627 3.627 0 0 1 9.232 5.6 3.627 3.627 0 0 1 5.6 9.232z"
-                            class="fill-current"
-                        ></path>
-                    </g>
-                </svg>
-            </button>
             @auth
                 <a class="block leading-none ml-4">
                     <img
@@ -49,40 +35,32 @@
             <div class="flex items-center justify-end leading-none">
                 <notification></notification>
 
-                <button
-                    title="Tip: press / or s anywhere to instantly activate me."
-                    class="leading-none inline-flex mr-1 leading-none bg-transparent-10 hover:bg-transparent-25 p-3 rounded-xl"
-                >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" viewBox="0 0 15 15" class="text-white">
-                        <g fill="none" fill-rule="evenodd">
-                            <path d="M-2-2h20v20H-2z"></path>
-                            <path
-                                d="M10.443 9.232h-.638l-.226-.218A5.223 5.223 0 0 0 10.846 5.6 5.247 5.247 0 1 0 5.6 10.846c1.3 0 2.494-.476 3.414-1.267l.218.226v.638l4.036 4.028 1.203-1.203-4.028-4.036zm-4.843 0A3.627 3.627 0 0 1 1.967 5.6 3.627 3.627 0 0 1 5.6 1.967 3.627 3.627 0 0 1 9.232 5.6 3.627 3.627 0 0 1 5.6 9.232z"
-                                class="fill-current"
-                            ></path>
-                        </g>
-                    </svg>
-                </button>
+                @auth
+                    <div class="flex items-center cursor-pointer ml-4 relative">
+                        <a @click.prevent="$modal.show('account-slideout-menu')"
+                            class="block leading-none">
+                            <img
+                                :src="$auth.avatar"
+                                :alt="$auth.username"
+                                width="35"
+                                class="is-circle"
+                            />
+                        </a>
+                    </div>
+                @else
+                    <a href="{{ route('login') }}"
+                       @click.prevent="$modal.show('auth-modal', { type: 'login' })"
+                       class="text-white hover:text-white link font-semibold uppercase mx-6 text-xs"
+                    >
+                        Sign In
+                    </a>
 
-                <div>
-                    <ul class="flex items-center cursor-pointer ml-4 relative">
-                        @auth
-                            <li>
-                                <div>
-                                    <a class="block leading-none">
-                                        <img
-                                            :src="$auth.avatar"
-                                            :alt="$auth.username"
-                                            width="35"
-                                            class="is-circle"
-                                        />
-                                    </a>
-                                </div>
-                            </li>
-                            </li>
-                        @endauth
-                    </ul>
-                </div>
+                    <a href="{{ route('register') }}"
+                       @click.prevent="$modal.show('auth-modal', { type: 'register' })"
+                       class="text-white hover:bg-white hover:text-blue font-semibold uppercase border rounded-full text-xs px-3 py-2 leading-tight">
+                        Get Started
+                    </a>
+                @endauth
             </div>
         </div>
     </div>
