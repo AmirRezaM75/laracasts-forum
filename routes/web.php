@@ -48,6 +48,8 @@ Route::patch('profile', [ProfileController::class, 'update']);
 
 Route::get('profile/account', [ProfileAccountController::class, 'show']);
 Route::patch('profile/account', [ProfileAccountController::class, 'update']);
+Route::get('profile/subscriptions', [SubscriptionController::class, 'show']);
+Route::delete('profile/subscriptions', [SubscriptionController::class, 'destroy']);
 
 Route::post('users/{user}/avatar', [AvatarController::class, 'store']);
 

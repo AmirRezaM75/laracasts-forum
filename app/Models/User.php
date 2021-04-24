@@ -29,6 +29,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Activity::class);
     }
 
+    public function subscriptions()
+    {
+        return $this->belongsToMany(Thread::class, 'subscriptions');
+    }
+
     public function recentReply()
     {
         return $this->hasOne(Reply::class)->latest();

@@ -44,7 +44,7 @@ class ProfileTest extends TestCase
 
         $this->get('profile/account')
             ->assertStatus(200)
-            ->assertViewIs('profiles.account');
+            ->assertViewIs('profiles.settings.account');
     }
 
     /** @test */

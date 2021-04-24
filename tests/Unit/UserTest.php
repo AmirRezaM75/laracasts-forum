@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use App\Models\Reply;
+use App\Models\Thread;
 use App\Models\User;
 use Database\Factories\NotificationFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -74,5 +75,17 @@ class UserTest extends TestCase
         $this->assertTrue(auth()->user()->hasAppended('notifications_count'));
 
         $this->assertEquals(1, auth()->user()->notifications_count);
+    }
+
+    /** @test */
+    public function it_knows_about_subscriptions()
+    {
+        $this->login();
+
+        $threads = Thread::factory(2)->create();
+
+        $threads->each->subscribe();
+
+        $this->assertCount(2, auth()->user()->subscriptions);
     }
 }

@@ -35,7 +35,7 @@
         </div>
         <div class="control">
             <div class="bg-black-transparent-1 border border-solid border-black-transparent-3 rounded-xl px-4 py-2 control flex justify-between items-center label text-grey-40 font-semibold text-xs">
-                <span class="mr-4">Profile is Visible</span>
+                <span class="mr-4">Profile is Private</span>
                 <label for="private" class="switch">
                     <input type="checkbox" id="private" v-model="private">
                     <div class="slider round"></div>
