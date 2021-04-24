@@ -6,7 +6,6 @@ use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 

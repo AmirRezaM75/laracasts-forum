@@ -27,6 +27,17 @@ class ReplyTest extends TestCase
     }
 
     /** @test */
+    public function users_must_have_verified_email_to_create_reply()
+    {
+        $this->login(User::factory()->unverified()->create());
+
+        $thread = Thread::factory()->create();
+
+        $this->postJson(route('threads.replies.store', $thread), [])
+            ->assertStatus(403);
+    }
+
+    /** @test */
     public function users_can_leave_a_reply()
     {
         $this->login();
