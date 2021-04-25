@@ -41,7 +41,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function getAvatarAttribute($avatar)
     {
-        return asset($avatar ? "storage/avatars/{$avatar}"  : 'images/avatars/default-avatar-1.png');
+        return asset($avatar ? "storage/avatars/{$avatar}"  : 'images/avatars/default-avatar-' . $this->id % 21 .'.png');
     }
 
     public function read($thread)

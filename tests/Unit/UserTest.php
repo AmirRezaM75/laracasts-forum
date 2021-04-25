@@ -88,4 +88,16 @@ class UserTest extends TestCase
 
         $this->assertCount(2, auth()->user()->subscriptions);
     }
+
+    /** @test */
+    public function users_have_random_avatar()
+    {
+        $user = User::factory()->create(['id' => 5]);
+
+        $this->assertEquals(asset('images/avatars/default-avatar-5.png'), $user->avatar);
+
+        $user = User::factory()->create(['id' => 30]);
+
+        $this->assertEquals(asset('images/avatars/default-avatar-9.png'), $user->avatar);
+    }
 }
