@@ -1,6 +1,6 @@
 # Laracasts forum clone
-A laracasts forum clone website developed using the [Laravel](https://laravel.com) and [Vue.js](https://vuejs.org).
-> Designed by [Tuds](https://twitter.com/tudssss) and all design rights reserved for [Laracasts](https://laracasts.com/discuss). Yes, all of them. That means icons, css and profile images.
+A laracasts forum clone website developed using [Laravel](https://laravel.com) and [Vue.js](https://vuejs.org).
+> Designed by [Tuds](https://twitter.com/tudssss) and all design rights belongs to [Laracasts](https://laracasts.com/discuss). Yes, all of them. That means icons, css and profile images.
   
 ## Installation
 1) Clone this repo
@@ -32,7 +32,16 @@ A laracasts forum clone website developed using the [Laravel](https://laravel.co
     ```
     php artisanb migrate --seed
     ```
-7) Run
+7) Update Meilisearch ranking orders and searchable field
+   ```
+   php artisanb scout:setting
+   ```
+   Or reset to default:
+   ```
+   php artisanb scout:setting -d
+   ```
+   
+8) Run
     ```
     php artisan serve
     ```

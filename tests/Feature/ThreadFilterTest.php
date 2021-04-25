@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Reply;
 use App\Models\Thread;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -49,17 +50,22 @@ class ThreadFilterTest extends TestCase
     {
         Thread::factory()
             ->has(Reply::factory(3))
-            ->create();
+            ->create(['created_at' => Carbon::now()->subDay()]);
 
         Thread::factory()
             ->has(Reply::factory(2))
-            ->create();
+            ->create(['created_at' => Carbon::now()->subMinutes(30)]);
+
+        Thread::factory()
+            ->has(Reply::factory(2))
+            ->create(['created_at' => Carbon::now()->subMinute()]);
 
         // Notice: We are creating a thread with no reply before each test.
 
         $response = $this->getJson('threads?popular=1')->json();
 
-        $this->assertEquals([3, 2, 0], array_column($response['data'], 'replies_count'));
+        $this->assertEquals([3, 2, 2, 0], array_column($response['data'], 'replies_count'));
+        $this->assertEquals([2, 4, 3, 1], array_column($response['data'], 'id'));
     }
 
     /** @test */
