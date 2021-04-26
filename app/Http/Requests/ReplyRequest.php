@@ -14,7 +14,7 @@ class ReplyRequest extends FormRequest
     {
         if ($this->isMethod('POST'))
             return $this->route('thread')->locked
-                ? Response::deny('Thread is locked.')
+                ? Response::deny('Thread is locked.')->authorize()
                 : Gate::authorize('create', new Reply);
 
         return Gate::authorize('update', $this->route('reply'));

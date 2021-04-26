@@ -61,9 +61,13 @@ class ThreadRestrictionTest extends TestCase
     /** @test */
     public function locked_thread_can_not_receive_new_reply()
     {
+        $this->login();
+
         $thread = Thread::factory()->create(['locked' => true]);
 
         $this->post(route('threads.replies.store', $thread), ['body' => 'something'])
-            ->assertStatus(302);
+            ->assertStatus(403);
+
+        $this->assertCount(0, $thread->fresh()->replies);
     }
 }
