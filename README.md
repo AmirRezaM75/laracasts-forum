@@ -48,14 +48,20 @@ A laracasts forum clone website developed using [Laravel](https://laravel.com) a
    ```
    php artisan vendor:publish --provider="Stevebauman\Purify\PurifyServiceProvider"
    ```
-9) Run
+   
+9) Link storage
+    ```
+    php artisan storage:link
+    ```
+
+10) Run
     ```
     php artisan serve
     ```
    
 ## Screenshots
 
-![screencapture](https://i.postimg.cc/9Q9KKK3P/screencapture-localhost-8000-threads-envoyer-1-2021-04-24-20-00-09.png)
+![Laracasts Forum Clone](/storage/screenshot.png?raw=true "Laracasts Forum Clone")
 
 ## Contributing
 
