@@ -5,7 +5,7 @@ A laracasts forum clone website developed using [Laravel](https://laravel.com) a
 ## Installation
 1) Clone this repo
     ``` 
-    git clone https://github.com/amirrezam75/laracasts_forum
+    git clone git@github.com:AmirRezaM75/laracasts_forum.git && cd laracasts_forum
     ```
 2) Install the project dependencies
     ```
@@ -20,6 +20,9 @@ A laracasts forum clone website developed using [Laravel](https://laravel.com) a
     Configure SMTP
     > Email verification required during registration
     
+    Configure Redis
+    > Thread's visits stores in redis
+    
     ``SCOUT_DRIVER=meilisearch``
     
     ``ADMIN_EMAIL=admin@example.com``
@@ -30,18 +33,22 @@ A laracasts forum clone website developed using [Laravel](https://laravel.com) a
 5) Run [Meilisearch](https://github.com/meilisearch/MeiliSearch)
 6) Prepare database
     ```
-    php artisanb migrate --seed
+    php artisan migrate --seed
     ```
 7) Update Meilisearch ranking orders and searchable field
    ```
-   php artisanb scout:setting
+   php artisan scout:setting
    ```
    Or reset to default:
    ```
-   php artisanb scout:setting -d
+   php artisan scout:setting -d
    ```
    
-8) Run
+8) Create purifier cache directory
+   ```
+   php artisan vendor:publish --provider="Stevebauman\Purify\PurifyServiceProvider"
+   ```
+9) Run
     ```
     php artisan serve
     ```

@@ -8,8 +8,8 @@
     <!-- TODO: https://css-tricks.com/essential-meta-tags-social-media/ -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Chatter Web Development Forum</title>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&amp;display=swap"
-          rel="stylesheet">
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}"/>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&amp;display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <script>
         window.App = {!! json_encode(['user' => auth()->user()]) !!}
@@ -32,9 +32,11 @@
 
                 <auth-modal></auth-modal>
 
-                <conversation-modal></conversation-modal>
+                @auth
+                    <conversation-modal></conversation-modal>
 
-                <account-slideout-menu></account-slideout-menu>
+                    <account-slideout-menu></account-slideout-menu>
+                @endauth
 
                 <flash message="{{ session('flash') }}"></flash>
             </div>
