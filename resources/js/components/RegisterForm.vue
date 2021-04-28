@@ -85,8 +85,13 @@
                             <p v-show="errors.has('password')" class="text-red text-xs mt-2" v-text="errors.get('password')"></p>
                         </div>
                         <div class="control text-center mt-10">
-                            <button type="submit" class="btn btn-blue w-full md:max-w-2/3 mx-auto">Create Account</button>
-                            <a class="block mt-4 text-grey-darkest text-sm hover:underline"
+                            <button type="submit"
+                                    :disabled="loader"
+                                    class="btn btn-blue w-full md:max-w-2/3 mx-auto flex items-center justify-center">
+                                <loader v-show="loader"></loader>
+                                Create Account
+                            </button>
+                            <a class="block mt-4 text-sm hover:underline"
                                @click.prevent="$parent.$emit('toggle-form')">
                                 Already Have an Account?
                             </a>
@@ -112,11 +117,13 @@ export default {
             email: '',
             password: '',
             username: '',
-            privateMode: true
+            privateMode: true,
+            loader: false
         }
     },
     methods: {
         register() {
+            this.loader = true
             axios.post('/register', {
                 email: this.email,
                 password: this.password,
@@ -125,6 +132,7 @@ export default {
                 if (response.status === 204)
                     location.reload()
             }).catch(error => {
+                this.loader = false
                 this.handler(error, false)
             })
         }

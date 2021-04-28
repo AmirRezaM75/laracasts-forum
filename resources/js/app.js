@@ -20,6 +20,7 @@ window.flash = (message, level = 'primary') => { window.events.$emit('flash', { 
 Vue.component('paginator', require('./components/Paginator').default)
 Vue.component('flash', require('./components/Flash').default)
 Vue.component('avatar-form', require('./components/AvatarForm').default)
+Vue.component('loader', require('./components/Loader').default)
 Vue.component('auth-modal', require('./components/AuthModal').default)
 Vue.component('conversation-modal', require('./components/ConversationModal').default)
 Vue.component('account-slideout-menu', require('./components/AccountSlideoutMenu').default)
