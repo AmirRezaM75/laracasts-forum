@@ -15,7 +15,7 @@ class ThreadController extends Controller
     public function __construct()
     {
         $this->middleware('auth')->except(['show', 'index']);
-        $this->middleware('auth.admin')->only('lock');
+        $this->middleware('auth.admin')->only(['lock', 'unlock']);
     }
 
     public function index(Request $request, Category $category, ThreadFilters $filters)
